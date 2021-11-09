@@ -1,0 +1,26 @@
+{
+  "name": "discord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Horizons-gg/Discord.git"
+  },
+  "author": "Jessica Lancelot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Horizons-gg/Discord/issues"
+  },
+  "homepage": "https://github.com/Horizons-gg/Discord#readme",
+  "dependencies": {
+    "discord.js": "^13.3.1",
+    "express": "^4.17.1",
+    "gamedig": "^3.0.7",
+    "mongodb": "^4.1.4",
+    "node-fetch": "^2.6.6"
+  }
+}
