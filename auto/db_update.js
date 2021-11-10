@@ -1,14 +1,14 @@
 
-module.exports = function (app, client, mongodb) {
+module.exports = function () {
 
-    if (process.env.DISCORD_ID !== '610606066451087370') return
+    /*if (process.env.DISCORD_ID !== '610606066451087370') return
 
-    client.on('ready', async () => {
-        var db = await mongodb.db("horizons").collection("users")
+    process.client.on('ready', async () => {
+        var Users = await process.db.collection("users")
 
-        var guild = await client.guilds.fetch(process.env.DISCORD_ID)
+        var guild = await process.client.guilds.fetch(process.env.DISCORD_ID)
 
-        var users = await db.find({}).toArray()
+        var users = await Users.find({}).toArray()
 
         for (user of users) {
             var member
@@ -16,7 +16,7 @@ module.exports = function (app, client, mongodb) {
                 member = await guild.members.fetch(user.discord.id)
             } catch (error) {
                 if (error.code !== 10007) continue
-                db.deleteOne({ "_id": user.discord.id })
+                Users.deleteOne({ "_id": user.discord.id })
                 console.log(`${user.discord.username}#${user.discord.discriminator} (${user.discord.id}) Deleted from the Database!`)
                 continue
             }
@@ -31,14 +31,14 @@ module.exports = function (app, client, mongodb) {
                 }
             }
 
-            await db.updateOne({ "_id": member.id }, userUpdate)
+            await Users.updateOne({ "_id": member.id }, userUpdate)
         }
     })
 
-    client.on('messageCreate', async msg => {
-        var db = await mongodb.db("horizons").collection("users")
+    process.client.on('messageCreate', async msg => {
+        var Users = await mongoUsers.Users("horizons").collection("users")
 
-        var user = await db.findOne({ "_id": msg.author.id })
+        var user = await Users.findOne({ "_id": msg.author.id })
         if (!user) return
 
         user.discord.avatar = msg.author.avatar
@@ -51,7 +51,7 @@ module.exports = function (app, client, mongodb) {
             }
         }
 
-        await db.updateOne({ "_id": msg.author.id }, userUpdate)
-    })
+        await Users.updateOne({ "_id": msg.author.id }, userUpdate)
+    })*/
 
 }

@@ -1,7 +1,7 @@
 
-module.exports = function (app, client, mongodb) {
+module.exports = function () {
 
-    client.on('guildMemberRemove', member => {
+    process.client.on('guildMemberRemove', member => {
         if (member.guild.id !== process.env.DISCORD_ID) return
         var embed = {
             color: '#f51b1b',

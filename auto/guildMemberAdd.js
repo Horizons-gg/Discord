@@ -1,9 +1,9 @@
 const { MessageActionRow, MessageButton } = require('discord.js')
 
-module.exports = function (app, client, mongodb) {
+module.exports = function () {
 
-    client.on('guildMemberAdd', member => {
-        if (member.guild.id !== process.env.DISCORD_ID) return;
+    process.client.on('guildMemberAdd', member => {
+        if (member.guild.id !== process.env.DISCORD_ID) return
 
         const embed = {
             color: '#03dbfc',
@@ -36,7 +36,7 @@ module.exports = function (app, client, mongodb) {
         member.send({ embeds: [embed], components: [links] });
     });
 
-    client.on('guildMemberAdd', member => {
+    process.client.on('guildMemberAdd', member => {
         if (member.guild.id !== process.env.DISCORD_ID) return
         var embed = {
             color: '#1bf531',
@@ -44,7 +44,7 @@ module.exports = function (app, client, mongodb) {
         }
 
         member.guild.channels.cache.find(channel => channel.name === "🪂landing-pad").send({ embeds: [embed] })
-            .then(msg => {
+            .then(() => {
                 function sendWelcome() {
                     var embed = {
                         color: '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'),
@@ -67,7 +67,7 @@ module.exports = function (app, client, mongodb) {
     });
 
 
-    /*client.on('messageCreate', message => {
+    /*process.client.on('messageCreate', message => {
 
         if (message.content === '!motd')
 

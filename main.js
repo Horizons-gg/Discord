@@ -23,6 +23,20 @@ MongoClient.connect(`mongodb://${process.env.db.host}:${process.env.db.port}`, f
 
 
 //!
+//! Discord.js
+//!
+
+const { Client, Intents } = require('discord.js')
+var selectedIntents = []
+for (intent in Intents.FLAGS) { selectedIntents.push(Intents.FLAGS[intent]) }
+const client = new Client({ intents: selectedIntents })
+client.login(process.env.token)
+
+process.client = client
+
+
+
+//!
 //! Express
 //!
 
@@ -41,3 +55,16 @@ process.app = app
 for (game in process.env.games) {
     if (process.env.games[game]) require(`./games/${game}.js`).Start(process.env.games[game], game)
 }
+
+for (server in process.env.servers) {
+    if (process.env.servers[server]) require(`./server.js`).Start(process.env.servers[server], server)
+}
+
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}, Starting Primary Discord Framework...`)
+
+    for (file of fs.readdirSync('./auto')) {
+        if (file.includes('.js')) require(`./auto/${file}`)()
+    }
+
+})

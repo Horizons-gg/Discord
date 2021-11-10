@@ -1,10 +1,10 @@
 var guild
 
-module.exports = async function (app, client, mongodb) {
+module.exports = async function () {
 
     if (process.env.DISCORD_ID !== '610606066451087370') return
 
-    guild = client.guilds.cache.get('610606066451087370')
+    guild = process.client.guilds.cache.get('610606066451087370')
     var channel = guild.channels.cache.get('719381556145160232')
 
     //Pronouns
@@ -38,11 +38,11 @@ module.exports = async function (app, client, mongodb) {
     message = await channel.messages.fetch('825147164102754364')
     await message.edit({ embeds: [embed] })
         .then(message.react('🚀'))
-        .then(message.react(client.emojis.cache.get("871231649252270170")))
+        .then(message.react(process.client.emojis.cache.get("871231649252270170")))
         .then(message.react('🌏'))
-        .then(message.react(client.emojis.cache.get("874434456004472944")))
+        .then(message.react(process.client.emojis.cache.get("874434456004472944")))
         .then(message.react('🔨'))
-        .then(message.react(client.emojis.cache.get("749717235731398696")))
+        .then(message.react(process.client.emojis.cache.get("749717235731398696")))
 
 
     //Notifications
@@ -63,10 +63,10 @@ module.exports = async function (app, client, mongodb) {
 
 
     //Reaction Added
-    client.on('messageReactionAdd', async (reaction, user) => {
+    process.client.on('messageReactionAdd', async (reaction, user) => {
         if (user.bot) return
         var member = await guild.members.fetch(user.id)
-        if (member.id === client.user.id) return
+        if (member.id === process.client.user.id) return
 
         if (guild.id === '610606066451087370') {
 
@@ -88,19 +88,19 @@ module.exports = async function (app, client, mongodb) {
                 if (reaction.emoji.name === '🚀') {
                     member.roles.add('622634027484184616')
                 }
-                if (reaction.emoji === client.emojis.cache.get("871231649252270170")) {
+                if (reaction.emoji === process.client.emojis.cache.get("871231649252270170")) {
                     member.roles.add('871234654424952873')
                 }
                 if (reaction.emoji.name === '🌏') {
                     member.roles.add('776939425056817162')
                 }
-                if (reaction.emoji === client.emojis.cache.get("874434456004472944")) {
+                if (reaction.emoji === process.client.emojis.cache.get("874434456004472944")) {
                     member.roles.add('874233439501561856')
                 }
                 if (reaction.emoji.name === '🔨') {
                     member.roles.add('709653288634548325')
                 }
-                if (reaction.emoji === client.emojis.cache.get("749717235731398696")) {
+                if (reaction.emoji === process.client.emojis.cache.get("749717235731398696")) {
                     member.roles.add('713305276563849367')
                 }
             }
@@ -122,10 +122,10 @@ module.exports = async function (app, client, mongodb) {
     });
 
     //Reaction Removed
-    client.on('messageReactionRemove', async (reaction, user) => {
+    process.client.on('messageReactionRemove', async (reaction, user) => {
         if (user.bot) return
         var member = await guild.members.fetch(user.id)
-        if (member.id === client.user.id) return
+        if (member.id === process.client.user.id) return
 
         if (guild.id === '610606066451087370') {
 
@@ -147,19 +147,19 @@ module.exports = async function (app, client, mongodb) {
                 if (reaction.emoji.name === '🚀') {
                     member.roles.remove('622634027484184616')
                 }
-                if (reaction.emoji === client.emojis.cache.get("871231649252270170")) {
+                if (reaction.emoji === process.client.emojis.cache.get("871231649252270170")) {
                     member.roles.remove('871234654424952873')
                 }
                 if (reaction.emoji.name === '🌏') {
                     member.roles.remove('776939425056817162')
                 }
-                if (reaction.emoji === client.emojis.cache.get("874434456004472944")) {
+                if (reaction.emoji === process.client.emojis.cache.get("874434456004472944")) {
                     member.roles.remove('874233439501561856')
                 }
                 if (reaction.emoji.name === '🔨') {
                     member.roles.remove('709653288634548325')
                 }
-                if (reaction.emoji === client.emojis.cache.get("749717235731398696")) {
+                if (reaction.emoji === process.client.emojis.cache.get("749717235731398696")) {
                     member.roles.remove('713305276563849367')
                 }
             }
