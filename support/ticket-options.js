@@ -1,22 +1,22 @@
 const { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js')
 
-const ticketData = './database/tickets.json'
+const ticketData = './cache/tickets.json'
 
-const openCatagory = process.env.DISCORD_OPEN
-const closedCatagory = process.env.DISCORD_CLOSED
+const openCatagory = process.env.support.open
+const closedCatagory = process.env.support.closed
 
 const controller = require('./functions/controller')
 
 const fs = require('fs')
 
-module.exports = function (app, client) {
+module.exports = function () {
 
-    client.on('interactionCreate', async interaction => {
+    process.client.on('interactionCreate', async interaction => {
         if (!interaction.customId.startsWith('ticket') && !interaction.customId.startsWith('support')) return
         var user = interaction.user
         var guild = interaction.guild
 
-        if (guild.id !== process.env.DISCORD_ID) return
+        if (guild.id !== process.env.guild) return
 
         var openTickets = await guild.channels.cache.get(openCatagory).children.map(channel => channel.id)
         var closedTickets = await guild.channels.cache.get(closedCatagory).children.map(channel => channel.id)

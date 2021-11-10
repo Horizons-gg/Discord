@@ -1,14 +1,12 @@
-const ticketData = './database/tickets.json'
-
-const prefix = process.env.DISCORD_PREFIX
-
-const controller = require('./functions/controller')
-
+const ticketData = './cache/tickets.json'
+const prefix = process.env.prefix
 const fs = require('fs')
 
-module.exports = async function (app, client) {
+module.exports = async function () {
 
-    client.on('message', async (msg) => {
+    if (!fs.existsSync(ticketData)) fs.writeFileSync(ticketData, '{}')
+
+    process.client.on('message', async (msg) => {
 
         var dataRAW = JSON.parse(fs.readFileSync(ticketData))
         var data = dataRAW[msg.channel.id]

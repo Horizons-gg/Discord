@@ -1,10 +1,10 @@
 var prefix = '%'
 
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { MessageActionRow, MessageButton } = require('discord.js')
 
-module.exports = async function (app, client, mongodb) {
+module.exports = async function () {
 
-    client.on('messageCreate', async msg => {
+    process.client.on('messageCreate', async msg => {
 
         var args = msg.content.toLowerCase().trim().split(' ')
 
@@ -18,8 +18,8 @@ module.exports = async function (app, client, mongodb) {
 
 
 
-    /*client.on('messageCreate', async message => {
-        if (!client.application?.owner) await client.application?.fetch();
+    /*process.client.on('messageCreate', async message => {
+        if (!process.client.application?.owner) await process.client.application?.fetch();
 
         if (message.content.toLowerCase() === '!deploy') {
             const data = {
@@ -27,14 +27,14 @@ module.exports = async function (app, client, mongodb) {
                 description: 'Replies with Pong!',
             };
 
-            const command = await client.guilds.cache.get('847246917654151168')?.commands.create(data);
+            const command = await process.client.guilds.cache.get('847246917654151168')?.commands.create(data);
             console.log(command);
         }
     });
 
 
 
-    client.on('interactionCreate', async interaction => {
+    process.client.on('interactionCreate', async interaction => {
         if (!interaction.isCommand()) return;
 
         if (interaction.commandName === 'ping') {

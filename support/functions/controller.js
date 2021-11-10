@@ -1,13 +1,13 @@
 const { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js')
 
-const ticketData = './database/tickets.json'
+const ticketData = './cache/tickets.json'
 
 const fs = require('fs')
 
-const prefix = process.env.DISCORD_PREFIX
+const prefix = process.env.prefix
 const commands = `**User Allowed**\n\`${prefix}add <Member ID>\` - Add more users to Ticket\n\`${prefix}remove <Member ID>\` - Remove users from Ticket\n\`${prefix}update <general, se, squad, eco, scum, mc>\` - Designation\n\n**Admin Only**\n\`${prefix}assign @User\` - Assign a Staff Member to the Ticket\n\`${prefix}withdraw @User\` - Withdraw a Staff Member from this Ticket`
 
-exports.bulkMessage = async (ticketOwner, roles, type, interaction, data, dataRAW, guild) => {
+async function bulkMessage(ticketOwner, roles, type, interaction, data, dataRAW, guild) {
     var members = []
     var channelPing = `<@&685774855903248394> `
 
@@ -55,7 +55,7 @@ exports.bulkMessage = async (ticketOwner, roles, type, interaction, data, dataRA
 
 
 
-exports.openTicket = async (ticketOwner, interaction, data, dataRAW, guild, stage) => {
+async function openTicket(ticketOwner, interaction, data, dataRAW, guild, stage) {
 
     var assigned = ''
     for (assistant of data.assigned) {
@@ -104,7 +104,7 @@ exports.openTicket = async (ticketOwner, interaction, data, dataRAW, guild, stag
 
 
 
-exports.closeTicket = async (ticketOwner, interaction, data, dataRAW, guild, emojis) => {
+async function closeTicket(ticketOwner, interaction, data, dataRAW, guild, emojis) {
     var assigned = ''
     for (assistant of data.assigned) {
         assigned += `<@${assistant}>\n`
@@ -143,4 +143,12 @@ exports.closeTicket = async (ticketOwner, interaction, data, dataRAW, guild, emo
     })
 
     ticketOwner.roles.remove(guild.roles.cache.find(role => role.name === "Receiving Support"))
+}
+
+
+
+module.exports = {
+    bulkMessage: bulkMessage,
+    openTicket: openTicket,
+    closeTicket: closeTicket
 }

@@ -1,17 +1,17 @@
 const { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js')
 
-const ticketData = './database/tickets.json'
+const ticketData = './cache/tickets.json'
 
 var blocked = []
 
 const fs = require('fs')
 
-module.exports = function (app, client) {
+module.exports = function () {
 
-    client.once('ready', async () => {
+    process.client.once('ready', async () => {
 
-        var guild = client.guilds.cache.get(process.env.DISCORD_ID)
-        var ticketChannel = guild.channels.cache.get(process.env.DISCORD_TICKET_CHANNEL)
+        var guild = process.client.guilds.cache.get(process.env.guild)
+        var ticketChannel = guild.channels.cache.get(process.env.support.channel)
 
         var embed = {
             title: "<:support:845624848466182164> **Horizons Community Support**",
@@ -22,7 +22,7 @@ module.exports = function (app, client) {
             }
         }
 
-        message = await ticketChannel.messages.fetch(process.env.DISCORD_TICKET_MSG)
+        message = await ticketChannel.messages.fetch(process.env.support.msg)
 
         const ticketOptions = new MessageActionRow()
             .addComponents(
@@ -38,12 +38,12 @@ module.exports = function (app, client) {
 
 
 
-    client.on('interactionCreate', async interaction => {
+    process.client.on('interactionCreate', async interaction => {
         var user = interaction.user
         var guild = interaction.guild
 
         if (interaction.customId !== 'support_button') return
-        if (guild.id !== process.env.DISCORD_ID) return
+        if (guild.id !== process.env.guild) return
 
         function msToMinutesAndSeconds(ms) {
             var minutes = Math.floor(ms / 60000);
@@ -64,8 +64,8 @@ module.exports = function (app, client) {
 
 
         var tickets = []
-        var openTickets = await guild.channels.cache.get(process.env.DISCORD_OPEN).children.map(channel => channel)
-        var closedTickets = await guild.channels.cache.get(process.env.DISCORD_CLOSED).children.map(channel => channel)
+        var openTickets = await guild.channels.cache.get(process.env.support.open).children.map(channel => channel)
+        var closedTickets = await guild.channels.cache.get(process.env.support.closed).children.map(channel => channel)
 
         for (ticket of openTickets) {
             tickets.push(ticket)
@@ -100,7 +100,7 @@ module.exports = function (app, client) {
 
         const zeroPad = (num, places) => String(num).padStart(places, '0')
 
-        guild.channels.create(`ticket-${zeroPad(ticketId, 2)}`, { parent: process.env.DISCORD_OPEN, position: ticketId.toString() })
+        guild.channels.create(`ticket-${zeroPad(ticketId, 2)}`, { parent: process.env.support.open, position: ticketId.toString() })
             .then(ticketChannel => {
 
                 data[ticketChannel.id] = data[ticketChannel.id] || {}

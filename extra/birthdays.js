@@ -1,5 +1,6 @@
-module.exports = function (app, client, mongodb) {
+module.exports = function () {
 
+    /*
     async function checkBirthdays() {
         var now = new Date()
 
@@ -55,5 +56,6 @@ module.exports = function (app, client, mongodb) {
         countdown += 86400000
     }
     setTimeout(checkBirthdays, countdown)
+    */
 
 }

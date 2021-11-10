@@ -4,6 +4,8 @@ const fs = require('fs')
 
 module.exports = async function () {
 
+    if (process.guild !== '610606066451087370') return
+
     var guild = await process.client.guilds.fetch(process.env.guild)
 
     async function statsUpdate() {

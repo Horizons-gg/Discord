@@ -2,9 +2,9 @@ var prefix = '.'
 
 const dns = require('dns')
 
-module.exports = function(app, client, mongodb) {
+module.exports = function() {
 
-    client.on('messageCreate', async msg => {
+    process.client.on('messageCreate', async msg => {
 
         var args = msg.content.toLowerCase().trim().split(' ')
 

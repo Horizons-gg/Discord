@@ -66,5 +66,11 @@ client.on('ready', () => {
     for (file of fs.readdirSync('./auto')) {
         if (file.includes('.js')) require(`./auto/${file}`)()
     }
+    for (file of fs.readdirSync('./extra')) {
+        if (file.includes('.js')) require(`./extra/${file}`)()
+    }
+    for (file of fs.readdirSync('./support')) {
+        if (file.includes('.js')) require(`./support/${file}`)()
+    }
 
 })
