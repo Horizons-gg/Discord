@@ -15,6 +15,9 @@ function Start(token, game) {
         client.user.setStatus('idle')
 
         async function refresh() {
+
+            process.data.games[game] = status
+
             if (mode === 0) {
                 mode = 1
 

@@ -13,6 +13,9 @@ function Start(token, game) {
         client.user.setStatus('idle')
 
         async function refresh() {
+
+            process.data.games[game] = status
+
             try {
                 var res = await fetch(`https://www.battlemetrics.com/servers/scum/12949331`)
                 var body = await res.text()
@@ -45,7 +48,6 @@ function Start(token, game) {
                 client.user.setActivity(`Failed to Scrape Data`, { type: 'WATCHING' })
                 client.user.setStatus('dnd')
             }
-
 
         }
         setInterval(refresh, 60000)

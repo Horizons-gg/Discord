@@ -15,6 +15,9 @@ function Start(token, game) {
         client.user.setStatus('idle')
 
         function refresh() {
+
+            process.data.games[game] = status
+
             if (!switcher) {
                 switcher = true
 
@@ -73,6 +76,7 @@ function Start(token, game) {
                         client.user.setStatus('dnd')
                     })
             }
+
         }
         setInterval(refresh, 6000)
 

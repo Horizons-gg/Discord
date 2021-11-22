@@ -56,6 +56,8 @@ module.exports = function (app) {
                     client.user.setStatus('dnd')
                 })
 
+                process.data.games[game] = status
+
         }
         setInterval(refresh, 6000), refresh()
 

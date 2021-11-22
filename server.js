@@ -9,52 +9,46 @@ function Start(token, server) {
     client.on('ready', async () => {
         console.log(`Logged in as ${client.user.tag}!`);
         client.user.setActivity('Connecting to DS...', { type: 'WATCHING' })
+        refresh()
     })
 
     var page = 0
-    var data = undefined
-    var error = undefined
-
     var status = {}
 
-    function refresh() {
+    async function refresh() {
+        process.data.servers[server] = status
 
-        fetch(`http://${server}:7010`)
+        await fetch(`http://${server}:7010`)
             .then(res => res.json())
-            .then(json => data = json)
-            .catch(err => error = err)
+            .then(res => {
+                status = res
 
-        if (data !== undefined) {
-            status = data
-        } else {
-            status = {}
-        }
+                client.user.setStatus('online')
+                if (page === 0) {
+                    page = 1
+                    client.user.setActivity(`${res.ping}ms to Sydney`, { type: 'WATCHING' })
+                    return
+                }
+                if (page === 1) {
+                    page = 2
+                    client.user.setActivity(`${res.cpu}% CPU Usage`)
+                    return
+                }
+                if (page === 2) {
+                    page = 0
+                    client.user.setActivity(`${res.ramc}GB / ${res.ramx}GB`, { type: 'WATCHING' })
+                    return
+                }
+            })
+            .catch(err => {
+                status = {}
 
-        if (error !== undefined) {
-            client.user.setActivity('Connection Error', { type: 'WATCHING' })
-            client.user.setStatus('dnd')
-        }
+                client.user.setActivity('Connection Error', { type: 'WATCHING' })
+                client.user.setStatus('dnd')
+            })
 
-        if (data !== undefined) {
-            client.user.setStatus('online')
-            if (page === 0) {
-                page = 1
-                client.user.setActivity(`${data.ping}ms to Sydney`, { type: 'WATCHING' })
-                return setTimeout(refresh, 5000), data = undefined, error = undefined
-            }
-            if (page === 1) {
-                page = 2
-                client.user.setActivity(`${data.cpu}% CPU Usage`)
-                return setTimeout(refresh, 5000), data = undefined, error = undefined
-            }
-            if (page === 2) {
-                page = 0
-                client.user.setActivity(`${data.ramc}GB / ${data.ramx}GB`, { type: 'WATCHING' })
-                return setTimeout(refresh, 5000), data = undefined, error = undefined
-            }
-        }
+        setTimeout(refresh, 10000)
     }
-    setInterval(refresh, 5000)
 
     process.app.get(`/server/${server}`, (req, res) => {
         res.send(status)

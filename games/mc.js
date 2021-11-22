@@ -13,6 +13,9 @@ function Start(token, game) {
         client.user.setStatus('idle')
 
         function refresh() {
+
+            process.data.games[game] = status
+
             Gamedig.query({
                 type: 'minecraft',
                 host: 'horizons.gg',
@@ -34,6 +37,7 @@ function Start(token, game) {
                 client.user.setActivity(`Server Offline`, { type: 'WATCHING' })
                 client.user.setStatus('dnd')
             })
+
         }
         setInterval(refresh, 10000)
 

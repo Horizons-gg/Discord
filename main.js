@@ -6,6 +6,10 @@ const fs = require('fs')
 
 if (!fs.existsSync('config.json')) return console.log('config.json not found!'), setTimeout(() => process.exit(1), 5000)
 process.env = JSON.parse(fs.readFileSync('config.json', 'utf8'))
+process.data = {
+    servers: {},
+    games: {}
+}
 
 
 
@@ -42,6 +46,8 @@ process.client = client
 
 const express = require('express')
 const app = express()
+const cors = require('cors')
+app.use(cors())
 app.listen(process.env.port, () => console.log(`Listening on port ${process.env.port}`))
 
 process.app = app
@@ -72,5 +78,13 @@ client.on('ready', () => {
     for (file of fs.readdirSync('./support')) {
         if (file.includes('.js')) require(`./support/${file}`)()
     }
+
+    app.get('/', (req, res) => {
+        res.send(process.data)
+    })
+
+    app.get('/discord', (req, res) => {
+        res.send(client.guilds.cache.get(process.env.guild))
+    })
 
 })
