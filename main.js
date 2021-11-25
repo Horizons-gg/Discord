@@ -70,7 +70,7 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}, Starting Primary Discord Framework...`)
 
     for (file of fs.readdirSync('./auto')) {
-        if (file.includes('.js')) require(`./auto/${file}`)()
+        if (file.includes('.js')) require(`./auto/${file}`)(client)
     }
     for (file of fs.readdirSync('./extra')) {
         if (file.includes('.js')) require(`./extra/${file}`)()

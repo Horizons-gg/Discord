@@ -2,17 +2,16 @@ const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js')
 
 const fs = require('fs')
 
-module.exports = async function () {
+module.exports = async function (client) {
+    if (process.env.guild !== '610606066451087370') return
 
-    if (process.guild !== '610606066451087370') return
-
-    var guild = await process.client.guilds.fetch(process.env.guild)
+    var guild = await client.guilds.fetch(process.env.guild)
 
     async function statsUpdate() {
-        process.client.user.setActivity(`${process.client.guilds.cache.get(process.env.guild).memberCount} Members`, { type: 'WATCHING' })
+        client.user.setActivity(`${client.guilds.cache.get(process.env.guild).memberCount} Members`, { type: 'WATCHING' })
     } setInterval(statsUpdate, 1000 * 20), statsUpdate()
 
-    process.client.on('interactionCreate', async interaction => {
+    client.on('interactionCreate', async interaction => {
         if (!interaction.isButton()) return
 
         var user = await guild.members.fetch(interaction.user.id)

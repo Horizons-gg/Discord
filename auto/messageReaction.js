@@ -2,7 +2,7 @@ var guild
 
 module.exports = async function () {
 
-    if (process.env.DISCORD_ID !== '610606066451087370') return
+    if (process.env.guild !== '610606066451087370') return
 
     guild = process.client.guilds.cache.get('610606066451087370')
     var channel = guild.channels.cache.get('719381556145160232')

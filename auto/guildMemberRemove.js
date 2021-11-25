@@ -1,8 +1,8 @@
 
-module.exports = function () {
+module.exports = function (client) {
 
-    process.client.on('guildMemberRemove', member => {
-        if (member.guild.id !== process.env.DISCORD_ID) return
+    client.on('guildMemberRemove', member => {
+        if (member.guild.id !== process.env.guild) return
         var embed = {
             color: '#f51b1b',
             description: `${member.user.tag} left the server`,

@@ -3,7 +3,7 @@ const { MessageActionRow, MessageButton } = require('discord.js')
 module.exports = function () {
 
     process.client.on('guildMemberAdd', member => {
-        if (member.guild.id !== process.env.DISCORD_ID) return
+        if (member.guild.id !== process.env.guild) return
 
         const embed = {
             color: '#03dbfc',
@@ -37,7 +37,7 @@ module.exports = function () {
     });
 
     process.client.on('guildMemberAdd', member => {
-        if (member.guild.id !== process.env.DISCORD_ID) return
+        if (member.guild.id !== process.env.guild) return
         var embed = {
             color: '#1bf531',
             description: `<@${member.id}> (${member.user.tag}) joined the server`,
