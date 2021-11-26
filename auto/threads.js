@@ -150,6 +150,12 @@ module.exports = async function (client) {
         }
 
 
+
+        //? Space Engineers Suggestions
+        var thread = await GetThread('🚀space-engineers', '✨suggestions')
+        
+
+
         fs.writeFileSync('./cache/threads.json', JSON.stringify(strg, null, '\t'))
     } setInterval(Refresh, 1000 * 60), Refresh()
 
