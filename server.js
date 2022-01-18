@@ -26,7 +26,7 @@ function Start(token, server) {
                 client.user.setStatus('online')
                 if (page === 0) {
                     page = 1
-                    client.user.setActivity(`${res.ping}ms to Sydney`, { type: 'WATCHING' })
+                    client.user.setActivity(`${res.ping}ms to ${res.city || 'City'}`, { type: 'WATCHING' })
                     return
                 }
                 if (page === 1) {
