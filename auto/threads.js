@@ -152,7 +152,7 @@ module.exports = async function (client) {
 
 
         //? Space Engineers Suggestions
-        var thread = await GetThread('🚀se-oceania', '✨suggestions')
+        var thread = await GetThread('🚀se-oceania', '✨ Suggestions')
         
 
 
