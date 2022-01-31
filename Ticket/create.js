@@ -30,7 +30,7 @@ module.exports = async (interaction, flag) => {
 
 
     //? Validate users age in guild
-    if (parseInt(User.joinedTimestamp) + 1200000 > new Date().getMilliseconds() && !await User.roles.cache.find(role => role.name === "Member")) return interaction.reply({ content: `You need to be in this discord for at least 20 minutes before you can open tickets, you can open tickets at <t:${Math.floor(parseInt(User.joinedTimestamp) / 1000 + 1200)}:t>`, ephemeral: true })
+    if (parseInt(User.joinedTimestamp) + 1200000 > new Date().getTime() && !await User.roles.cache.find(role => role.name === "Member")) return interaction.reply({ content: `You need to be in this discord for at least 20 minutes before you can open tickets, you can open tickets at <t:${Math.floor(parseInt(User.joinedTimestamp) / 1000 + 1200)}:t>`, ephemeral: true })
 
 
     //? Check for already open tickets
@@ -66,7 +66,11 @@ module.exports = async (interaction, flag) => {
         channel: Channel.id,
         controls: Controls.id,
         designation: null,
-        region: null
+        region: null,
+        created: new Date(),
+        closed: null,
+        users: {},
+        history: []
     })
 
 

@@ -42,11 +42,35 @@ client.on('ready', () => console.log(`Logged into ${client.user.tag}`))
 
 
 
+//? Interactions
 client.on('interactionCreate', interaction => {
-    
+
     if (interaction.isCommand()) return require(`./Commands/${interaction.commandName}.js`)(interaction)
 
     if (interaction.customId.includes('-')) var flag = interaction.customId.split('-')
     if (flag[0] === 'ticket') return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
 
+})
+
+
+//? Ticket Messages
+client.on('messageCreate', async message => {
+    if (![process.env.ticket.open, process.env.ticket.closed].includes(message.channel.parentId)) return
+    if (message.author.bot) return
+
+    var Ticket = await process.db.collection('tickets').findOne({ channel: message.channel.id })
+    if (!Ticket) return
+
+    Ticket.users[message.author.id] = {
+        username: message.author.username,
+        avatar: message.author.avatarURL()
+    }
+
+    Ticket.history.push({
+        user: message.author.id,
+        content: message.content,
+        timestamp: message.createdTimestamp
+    })
+
+    await process.db.collection('tickets').updateOne({ channel: message.channel.id }, { $set: { users: Ticket.users, history: Ticket.history } })
 })

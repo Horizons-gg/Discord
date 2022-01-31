@@ -24,7 +24,7 @@ module.exports = async (interaction) => {
 
     //? Validate Selection
     var Designation = interaction.values[0]
-    if (!Raw[Designation][1]) return interaction.reply({ content: 'All Regions', ephemeral: true })
+    if (Raw[Designation][1] === '*') return await Tickets.updateOne({ channel: interaction.channel.id }, { $set: { designation: Designation, region: 'All' } }), require('./open.js')(interaction, null, true)
     if (!Raw[Designation][1].includes(',')) var Regions = [Raw[Designation][1]]
     else var Regions = Raw[Designation][1].split(',')
 
