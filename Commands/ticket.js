@@ -34,6 +34,12 @@ module.exports = async (interaction) => {
 
 
     if (interaction.options._subcommand === 'add') {
+
+        //? Check if User was Mentioned
+        if (!interaction.options._hoistedOptions[0]) return interaction.reply({content: 'Please specify a user to add to the ticket.', ephemeral: true})
+
+
+        //? Prerequisites
         var Tickets = await process.db.collection('tickets')
         var Ticket = await Tickets.findOne({ channel: interaction.channel.id })
         var User = interaction.options._hoistedOptions[0].member
@@ -46,20 +52,26 @@ module.exports = async (interaction) => {
         })
 
         interaction.reply({ embeds: [{ "description": `✅ <@${User.id}> has been granted access to this Ticket!` }] })
-        User.send({ embeds: [{ "description": `📩 <@${interaction.user.id}> has granted you access to Ticket <#${interaction.channel.id}>` }] })
+        User.send({ embeds: [{ "description": `📩 <@${interaction.user.id}> has granted you access to Ticket <#${interaction.channel.id}>` }] }).catch(() => console.log('Failed to send direct message'))
     }
 
     if (interaction.options._subcommand === 'remove') {
+
+        //? Check if User was Mentioned
+        if (!interaction.options._hoistedOptions[0]) return interaction.reply({content: 'Please specify a user to add to the ticket.', ephemeral: true})
+
+        //? Prerequisites
         var Tickets = await process.db.collection('tickets')
         var Ticket = await Tickets.findOne({ channel: interaction.channel.id })
         var User = interaction.options._hoistedOptions[0].member
 
         if (Ticket.owner === User.id) return interaction.reply('You cannot remove the ticket owner from the ticket.')
 
-        interaction.channel.permissionOverwrites.cache.get(User.id).delete()
+        if (interaction.channel.permissionOverwrites.cache.get(User.id)) interaction.channel.permissionOverwrites.cache.get(User.id).delete()
+        else return interaction.reply({content: 'User does not exist in this ticket.', ephemeral: true})
 
         interaction.reply({ embeds: [{ "description": `❌ <@${User.id}>'s access to this Ticket has been revoked!` }] })
-        User.send({ embeds: [{ "description": `⛔ <@${interaction.user.id}> has revoked your access to Ticket <#${interaction.channel.id}>` }] })
+        User.send({ embeds: [{ "description": `⛔ <@${interaction.user.id}> has revoked your access to Ticket <#${interaction.channel.id}>` }] }).catch(() => console.log('Failed to send direct message'))
     }
 
 }

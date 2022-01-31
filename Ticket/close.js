@@ -16,7 +16,7 @@ const Options = new MessageActionRow()
             .setStyle('PRIMARY'),
 
         new MessageButton()
-            .setCustomId('ticket-cancel')
+            .setCustomId('ticket-delete')
             .setLabel('🛡️ Delete Ticket')
             .setStyle('DANGER')
             .setDisabled(false)
@@ -31,7 +31,7 @@ module.exports = async (interaction) => {
     var Ticket = await Tickets.findOne({ channel: interaction.channel.id })
     var Client = process.client
     var Guild = Client.guilds.cache.get(process.env.discord.guild)
-    var User = await Guild.members.fetch(interaction.user.id)
+    var User = await Guild.members.fetch(Ticket.owner)
 
 
     //? Update Controls
@@ -45,7 +45,7 @@ module.exports = async (interaction) => {
             fields: [
                 { name: 'Ticker Owner', value: `<@${User.id}>`, inline: true },
                 { name: 'Designation', value: `\`${Raw[Ticket.designation][0]}\``, inline: true },
-                { name: 'Region', value: Ticket.region, inline: true },
+                { name: 'Region', value: `\`${Ticket.region}\``, inline: true },
                 { name: 'Created', value: `<t:${Math.floor(new Date(Ticket.created).getTime() / 1000)}:F>`, inline: true },
                 { name: 'Closed', value: `<t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true }
             ],

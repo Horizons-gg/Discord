@@ -17,10 +17,6 @@ module.exports = async (interaction) => {
 
     //? Prerequisites
     var Tickets = await process.db.collection('tickets')
-    var Client = process.client
-    var Guild = Client.guilds.cache.get(process.env.discord.guild)
-    var User = await Guild.members.fetch(interaction.user.id)
-
 
     //? Validate Selection
     var Designation = interaction.values[0]
