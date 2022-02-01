@@ -99,6 +99,12 @@ client.on('ready', () => {
     app.get('/discord', (req, res) => {
         res.send(client.guilds.cache.get(process.env.guild))
     })
+
+
+    //? Member Count
+    async function Update() {
+        client.user.setActivity(`${client.guilds.cache.get(process.env.discord.guild).memberCount} Members`, { type: 'WATCHING' })
+    } setInterval(Update, 1000 * 60), Update()
 })
 
 
