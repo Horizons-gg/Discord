@@ -4,6 +4,12 @@
 
 process.env = require('./config.json')
 
+process.data = {
+    servers: {},
+    games: {}
+}
+
+
 const Patreon = require('./lib/patreon')
 const Panel = require('./lib/panels')
 
@@ -68,6 +74,15 @@ process.app = app
 
 
 //? Initialization
+
+for (game in process.env.games) {
+    if (process.env.games[game]) require(`./Bots/${game}.js`).Start(process.env.games[game], game)
+}
+
+for (server in process.env.servers) {
+    if (process.env.servers[server]) require(`./lib/servers.js`).Start(process.env.servers[server], server)
+}
+
 client.on('ready', () => {
     console.log(`Logged into ${client.user.tag}`)
 
