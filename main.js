@@ -13,6 +13,7 @@ for (opt in process.env.ticket.options) {
 }
 
 const Patreon = require('./lib/patreon')
+const Panel = require('./lib/panels')
 
 
 
@@ -64,7 +65,18 @@ client.on('interactionCreate', interaction => {
 
     if (interaction.customId.includes('-')) var flag = interaction.customId.split('-')
     if (flag[0] === 'ticket') return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
+    if (flag[0] === 'role') return require(`./Roles/${flag[1]}.js`)(interaction, flag)
 
+})
+
+
+//? Message Commands
+client.on('messageCreate', async message => {
+    if (message.author.id !== "240786290600181761") return
+
+    var args = message.content.trim().split(' ')
+    if (args[0] !== '!panel') return
+    message.channel.send(await Panel(args[1]))
 })
 
 
