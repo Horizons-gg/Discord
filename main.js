@@ -12,6 +12,8 @@ for (opt in process.env.ticket.options) {
     })
 }
 
+const Patreon = require('./lib/patreon')
+
 
 
 //!
@@ -38,8 +40,21 @@ const client = new Client({ intents: selectedIntents })
 client.login(process.env.discord.token)
 process.client = client
 
-client.on('ready', () => console.log(`Logged into ${client.user.tag}`))
+client.on('ready', () => {
+    console.log(`Logged into ${client.user.tag}`)
 
+    //? Init
+    Patreon.Init()
+    require('./lib/threads.js')(client)
+    require('./lib/embeds.js')()
+})
+
+
+
+//? Notifications
+client.on('guildMemberAdd', member => require('./Notifications/guildMemberAdd.js')(member))
+client.on('guildMemberRemove', member => require('./Notifications/guildMemberRemove.js')(member))
+client.on('guildMemberUpdate', (oldMember, newMember) => require('./Notifications/guildMemberUpdate.js')(oldMember, newMember))
 
 
 //? Interactions
