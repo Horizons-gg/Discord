@@ -51,14 +51,42 @@ const client = new Client({ intents: selectedIntents })
 client.login(process.env.discord.token)
 process.client = client
 
+
+
+//!
+//! Express
+//!
+
+const express = require('express')
+const app = express()
+const cors = require('cors')
+app.use(cors())
+app.listen(process.env.port, () => console.log(`API Listening on localhost:${process.env.port}`))
+
+process.app = app
+
+
+
+//? Initialization
 client.on('ready', () => {
     console.log(`Logged into ${client.user.tag}`)
 
     //? Init
     Patreon.Init()
     require('./lib/threads.js')(client)
-    require('./lib/embeds.js')()
+
+
+    //? API
+    app.get('/', (req, res) => {
+        res.send(process.data)
+    })
+
+    app.get('/discord', (req, res) => {
+        res.send(client.guilds.cache.get(process.env.guild))
+    })
 })
+
+
 
 
 
