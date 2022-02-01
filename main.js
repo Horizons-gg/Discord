@@ -4,6 +4,10 @@
 
 process.env = require('./config.json')
 
+const Patreon = require('./lib/patreon')
+const Panel = require('./lib/panels')
+
+
 process.env.ticket['raw'] = []
 for (opt in process.env.ticket.options) {
     process.env.ticket.raw.push({
@@ -12,8 +16,14 @@ for (opt in process.env.ticket.options) {
     })
 }
 
-const Patreon = require('./lib/patreon')
-const Panel = require('./lib/panels')
+process.env.roles['raw'] = []
+for (opt in process.env.roles.options) {
+    process.env.roles.raw.push({
+        value: opt,
+        label: process.env.roles.options[opt][0],
+        description: process.env.roles.options[opt][1]
+    })
+}
 
 
 
@@ -65,7 +75,7 @@ client.on('interactionCreate', interaction => {
 
     if (interaction.customId.includes('-')) var flag = interaction.customId.split('-')
     if (flag[0] === 'ticket') return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
-    if (flag[0] === 'role') return require(`./Roles/${flag[1]}.js`)(interaction, flag)
+    if (flag[0] === 'roles') return require(`./Roles/${flag[1]}.js`)(interaction, flag)
 
 })
 
@@ -77,6 +87,7 @@ client.on('messageCreate', async message => {
     var args = message.content.trim().split(' ')
     if (args[0] !== '!panel') return
     message.channel.send(await Panel(args[1]))
+    message.delete()
 })
 
 
