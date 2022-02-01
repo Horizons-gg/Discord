@@ -31,7 +31,10 @@ module.exports = async (interaction) => {
     var Ticket = await Tickets.findOne({ channel: interaction.channel.id })
     var Client = process.client
     var Guild = Client.guilds.cache.get(process.env.discord.guild)
-    var User = await Guild.members.fetch(Ticket.owner)
+
+    if (!Ticket.owner) return require('./cancel')(interaction)
+    var User = await Guild.members.fetch(Ticket.owner).catch(() => console.log('Failed to fetch user'))
+    if (!User) return require('./cancel')(interaction)
 
 
     //? Update Controls
