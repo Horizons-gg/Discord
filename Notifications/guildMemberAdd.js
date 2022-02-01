@@ -65,7 +65,7 @@ module.exports = (member) => {
             }
         }]
     }).then(message => {
-        setTimeout(() => { message.delete().catch(() => console.log('Failed to delete welcome message!')) }, 10000)
+        setTimeout(() => { message.delete().catch(() => console.log('Failed to delete welcome message!')) }, 1000 * 60 * 15)
     })
     
 }
