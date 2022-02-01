@@ -22,6 +22,6 @@ module.exports = async (interaction) => {
         })
     }
 
-    interaction.reply({ content: 'Your Notifications have been updated!', ephemeral: true })
+    interaction.reply({ content: 'Your Game roles have been updated!', ephemeral: true })
 
 }
