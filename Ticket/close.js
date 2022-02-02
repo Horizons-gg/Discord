@@ -75,4 +75,7 @@ module.exports = async (interaction) => {
     await Tickets.updateOne({ channel: interaction.channel.id }, { $set: { status: 'closed', closed: new Date() } })
 
 
+    //? Send Notification
+    interaction.channel.send({ embeds: [{ description: `🔒 Ticket has been closed by <@${interaction.user.id}>` }] })
+
 }

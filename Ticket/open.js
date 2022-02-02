@@ -75,7 +75,7 @@ module.exports = async (interaction, flag, fresh) => {
 
 
     //? Notify Staff
-    if (!fresh) return
+    if (!fresh) return interaction.channel.send({ embeds: [{ description: `🔓 Ticket has been opened by <@${interaction.user.id}>` }] })
     var Ping = []
     Raw[Ticket.designation][2].split(',').forEach(role => {
         Guild.roles.cache.some(r => {
@@ -85,6 +85,5 @@ module.exports = async (interaction, flag, fresh) => {
         })
     })
     interaction.channel.send(Ping.join(' '))
-
 
 }
