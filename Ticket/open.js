@@ -33,7 +33,7 @@ module.exports = async (interaction, flag, fresh) => {
 
 
     //? Update Access
-    interaction.channel.permissionOverwrites.edit(User, {
+    await interaction.channel.permissionOverwrites.edit(User, {
         VIEW_CHANNEL: true,
         SEND_MESSAGES: true
     })
@@ -45,7 +45,7 @@ module.exports = async (interaction, flag, fresh) => {
 
 
     //? Update Channel
-    interaction.channel.edit({ parent: process.env.ticket.open, lockPermissions: false })
+    await interaction.channel.edit({ parent: process.env.ticket.open, lockPermissions: false })
 
 
     //? Update Controls
