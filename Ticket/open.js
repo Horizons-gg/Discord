@@ -38,6 +38,15 @@ module.exports = async (interaction, flag, fresh) => {
         SEND_MESSAGES: true
     })
 
+    Guild.roles.cache.find(role => {
+        if (role.name !== "Receiving Support") return
+        User.roles.add(role)
+    })
+
+
+    //? Update Channel
+    interaction.channel.edit({ parent: process.env.ticket.open, lockPermissions: false })
+
 
     //? Update Controls
     interaction.update({

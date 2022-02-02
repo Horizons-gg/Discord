@@ -37,6 +37,17 @@ module.exports = async (interaction) => {
     if (!User) return require('./cancel')(interaction)
 
 
+    //? Update Access
+    Guild.roles.cache.find(role => {
+        if (role.name !== "Receiving Support") return
+        User.roles.remove(role)
+    })
+
+
+    //? Update Channel
+    interaction.channel.edit({ parent: process.env.ticket.closed, lockPermissions: false })
+
+
     //? Update Controls
     interaction.update({
         embeds: [{
