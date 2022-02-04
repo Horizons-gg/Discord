@@ -1,17 +1,20 @@
 const Patreon = require('../lib/patreon')
 
 
-module.exports = async (oldMember, newMember) => {
+module.exports = async(oldMember, newMember) => {
 
     //? Guild Check
-    if (process.env.guild !== '610606066451087370') return
+    if (process.env.discord.guild !== '610606066451087370') return
+
+    var guild = process.client.guilds.cache.get('610606066451087370')
 
 
     var oldRoles = oldMember._roles
     var newRoles = newMember._roles
     if (oldRoles.length >= newRoles.length) return
 
-    for (role of oldRoles) if (newRoles.includes(role)) newRoles.splice(newRoles.indexOf(role), 1)
+    for (role of oldRoles)
+        if (newRoles.includes(role)) newRoles.splice(newRoles.indexOf(role), 1)
     var role = newRoles[0]
     var dynamicRole = await guild.roles.fetch(role)
 
@@ -26,26 +29,24 @@ module.exports = async (oldMember, newMember) => {
     else return
 
 
-    var channel = await guild.channels.fetch('610976456495071243')
+        var channel = await guild.channels.fetch('610976456495071243')
     channel.send({
         content: `Thankyou <@${newMember.user.id}> for Supporting us on Patreon!`,
-        embeds: [
-            {
-                author: {
-                    name: newMember.user.tag,
-                    icon_url: newMember.user.avatarURL({ dynamic: true })
-                },
-                title: `${newMember.user.username} has become ${head} ${tier} Tier Patreon!`,
-                description: `Thankyou for becoming ${head} ${tier} Tier Patreon <@${newMember.user.id}>, this supports the community greatly and will help us to keep the servers running!\n\n> Check out <#916103943044599808> to see all our Patreons!`,
-                color: `#${dynamicRole.color.toString('16')}`,
-                thumbnail: {
-                    url: icon
-                },
-                footer: {
-                    text: `${tier} Tier Patreons donate $${price} every month!`
-                }
+        embeds: [{
+            author: {
+                name: newMember.user.tag,
+                icon_url: newMember.user.avatarURL({ dynamic: true })
+            },
+            title: `${newMember.user.username} has become ${head} ${tier} Tier Patreon!`,
+            description: `Thankyou for becoming ${head} ${tier} Tier Patreon <@${newMember.user.id}>, this supports the community greatly and will help us to keep the servers running!\n\n> Check out <#916103943044599808> to see all our Patreons!`,
+            color: `#${dynamicRole.color.toString('16')}`,
+            thumbnail: {
+                url: icon
+            },
+            footer: {
+                text: `${tier} Tier Patreons donate $${price} every month!`
             }
-        ]
+        }]
     }).then(msg => msg.react('💖'))
 
     Patreon.UpdateList()
