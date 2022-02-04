@@ -25,7 +25,7 @@ function Start(token, game) {
             }).then((body) => {
                 status = body
                 if (body.raw.numplayers > 0) {
-                    client.user.setActivity(`${body.raw.numplayers} / ${body.maxplayers} Players`, { type: 'WATCHING' })
+                    client.user.setActivity(`${body.raw.numplayers} / 300 Players`, { type: 'WATCHING' })
                     client.user.setStatus('online')
                 } else {
                     client.user.setActivity(`No Players Online`, { type: 'WATCHING' })
