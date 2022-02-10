@@ -9,7 +9,7 @@ var status = {}
 function Start(token, game) {
     client.login(token)
 
-    client.on('ready', async () => {
+    client.on('ready', async() => {
         console.log(`Logged in as ${client.user.tag}!`);
         client.user.setActivity(`Collecting Data...`, { type: 'WATCHING' })
         client.user.setStatus('idle')
@@ -21,15 +21,14 @@ function Start(token, game) {
             if (!switcher) {
                 switcher = true
 
-                fetch('http://horizons.gg:3001/info')
+                fetch('http://103.1.215.227:5006/info')
                     .then(res => res.json())
                     .then(body => {
                         status = body
                         if (body.OnlinePlayers > 0) {
                             client.user.setActivity(`${body.OnlinePlayers} / ${body.TotalPlayers} Players`, { type: 'WATCHING' })
                             client.user.setStatus('online')
-                        }
-                        else {
+                        } else {
                             client.user.setActivity(`No Players Online`, { type: 'WATCHING' })
                             client.user.setStatus('idle')
                         }
@@ -39,11 +38,10 @@ function Start(token, game) {
                         client.user.setActivity(`Server Offline`, { type: 'WATCHING' })
                         client.user.setStatus('dnd')
                     })
-            }
-            else {
+            } else {
                 switcher = false
 
-                fetch('http://horizons.gg:3001/info')
+                fetch('http://103.1.215.227:5006/info')
                     .then(res => res.json())
                     .then(body => {
                         status = body

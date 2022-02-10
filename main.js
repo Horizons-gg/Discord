@@ -38,7 +38,7 @@ for (opt in process.env.roles.options) {
 //!
 
 const MongoClient = require('mongodb').MongoClient
-MongoClient.connect(`mongodb://${process.env.mongo.host}`, async function (err, db) {
+MongoClient.connect(`mongodb://${process.env.mongo.host}`, async function(err, db) {
     if (err) throw err;
     console.log('Connected to the database.')
     process.db = db.db(process.env.mongo.database)
@@ -104,7 +104,9 @@ client.on('ready', () => {
     //? Member Count
     async function Update() {
         client.user.setActivity(`${client.guilds.cache.get(process.env.discord.guild).memberCount} Members`, { type: 'WATCHING' })
-    } setInterval(Update, 1000 * 60), Update()
+    }
+    setInterval(Update, 1000 * 60), Update()
+
 })
 
 
@@ -160,4 +162,11 @@ client.on('messageCreate', async message => {
     })
 
     await process.db.collection('tickets').updateOne({ channel: message.channel.id }, { $set: { users: Ticket.users, history: Ticket.history } })
+})
+
+
+
+
+client.on('messageCreate', async message => {
+    if (message.author.id === "463580501857533962") message.react('655738909518725141')
 })
