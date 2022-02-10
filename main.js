@@ -146,7 +146,7 @@ client.on('messageCreate', async message => {
     var args = message.content.trim().split(' ')
     if (args[0] !== '!panel') return
     message.channel.send(await Panel(args[1]))
-    message.delete()
+    //message.delete()
 })
 
 
