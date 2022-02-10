@@ -1,4 +1,12 @@
 //!
+//! Essentials
+//!
+
+const fs = require('fs')
+
+
+
+//!
 //! Initialization
 //!
 
@@ -125,8 +133,8 @@ client.on('interactionCreate', interaction => {
     if (interaction.isCommand()) return require(`./Commands/${interaction.commandName}.js`)(interaction)
 
     if (interaction.customId.includes('-')) var flag = interaction.customId.split('-')
-    if (flag[0] === 'ticket') return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
-    if (flag[0] === 'roles') return require(`./Roles/${flag[1]}.js`)(interaction, flag)
+    if (flag[0] === 'ticket') if (fs.existsSync(`./Ticket/${flag[1]}.js`)) return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
+    if (flag[0] === 'roles') if (fs.existsSync(`./Roles/${flag[1]}.js`)) return require(`./Roles/${flag[1]}.js`)(interaction, flag)
 
 })
 
@@ -162,11 +170,4 @@ client.on('messageCreate', async message => {
     })
 
     await process.db.collection('tickets').updateOne({ channel: message.channel.id }, { $set: { users: Ticket.users, history: Ticket.history } })
-})
-
-
-
-
-client.on('messageCreate', async message => {
-    if (message.author.id === "463580501857533962") message.react('655738909518725141')
 })
