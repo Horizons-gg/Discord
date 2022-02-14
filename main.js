@@ -105,7 +105,7 @@ client.on('ready', () => {
     })
 
     app.get('/discord', (req, res) => {
-        res.send(client.guilds.cache.get(process.env.guild))
+        res.send(client.guilds.cache.get(process.env.discord.guild))
     })
 
 
