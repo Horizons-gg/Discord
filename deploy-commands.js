@@ -41,6 +41,7 @@ const commands = [
         .setDescription('Warn a user on the Network')
         .addUserOption(option => option.setName('user').setDescription('Target User').setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription('Reason for warning').setRequired(true))
+        .addIntegerOption(option => option.setName('violation').setDescription('Violation ID (Retrieve by using \`/violation fetch\`)').setRequired(true))
         .addIntegerOption(option => option.setName('rating').setDescription('Custom Violation Rating (1 Low-Risk | 10 High-Risk)').setRequired(false).setMinValue(0).setMaxValue(10)),
 
     new ContextMenuCommandBuilder().setName('Warn').setType(3).setDefaultPermission(true),
@@ -68,28 +69,29 @@ const commands = [
         .addSubcommand(subcommand =>
             subcommand.setName('fetch')
                 .setDescription('Fetch Information on a Violation/s')
-                //.addIntegerOption(option => option.setName('violation').setDescription('Violation ID to Fetch').setRequired(false))
+            //.addIntegerOption(option => option.setName('violation').setDescription('Violation ID to Fetch').setRequired(false))
         )
 ]
     .map(command => command.toJSON())
 
 
 
-const rest = new REST({ version: '9' }).setToken(config.discord.token)
 
+const rest = new REST({ version: '9' }).setToken(config.discord.token);
 
+(async () => {
+    await rest.get(Routes.applicationGuildCommands(config.discord.client, config.discord.guild))
+        .then(data => {
+            const promises = []
+            for (const command of data) {
+                const deleteUrl = `${Routes.applicationGuildCommands(config.discord.client, config.discord.guild)}/${command.id}`
+                promises.push(rest.delete(deleteUrl))
+            }
+            console.log('Removed all application commands.')
+            return Promise.all(promises)
+        })
 
-if (process.argv[2] === 'add') rest.put(Routes.applicationGuildCommands(config.discord.client, config.discord.guild), { body: commands })
-    .then(() => console.log('Successfully registered application commands.'))
-    .catch(console.error)
-
-if (process.argv[2] === 'remove') rest.get(Routes.applicationGuildCommands(config.discord.client, config.discord.guild))
-    .then(data => {
-        const promises = []
-        for (const command of data) {
-            const deleteUrl = `${Routes.applicationGuildCommands(config.discord.client, config.discord.guild)}/${command.id}`
-            promises.push(rest.delete(deleteUrl))
-        }
-        console.log('Removed all application commands.')
-        return Promise.all(promises)
-    })
+    await rest.put(Routes.applicationGuildCommands(config.discord.client, config.discord.guild), { body: commands })
+        .then(() => console.log('Successfully registered application commands.'))
+        .catch(console.error)
+})()

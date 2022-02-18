@@ -77,7 +77,7 @@ module.exports = async interaction => {
 
         var Violations = await process.db.collection('storage').findOne({ '_id': 'violations' })
         if (!Violations) return interaction.reply({ content: 'No Violation Presets Found.', ephemeral: true })
-        if (Violations.presets.length - 1 < interaction.options._hoistedOptions[0].value) return interaction.reply({ content: `There is no Violation Preset ID matching \`${interaction.options._hoistedOptions[0].value}\``, ephemeral: true })
+        if (!Violations.presets[interaction.options._hoistedOptions[0].value]) return interaction.reply({ content: `Violation Preset does not Exist!`, ephemeral: true })
 
         var Selected = Violations.presets[interaction.options._hoistedOptions[0].value]
         Violations.presets.splice(interaction.options._hoistedOptions[0].value, 1)
