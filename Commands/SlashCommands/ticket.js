@@ -10,7 +10,7 @@ const row = new MessageActionRow()
 
 
 
-module.exports = async (interaction) => {
+module.exports = async interaction => {
 
     if (interaction.options._subcommand === 'assist') {
         interaction.reply({
@@ -27,7 +27,7 @@ module.exports = async (interaction) => {
     }
 
     if (interaction.options._subcommand === 'create') {
-        require(`../Ticket/create.js`)(interaction)
+        require(`../../Ticket/create.js`)(interaction)
     }
 
 

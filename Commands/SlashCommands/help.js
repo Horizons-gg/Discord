@@ -1,4 +1,4 @@
-module.exports = (interaction) => {
+module.exports = interaction => {
 
     interaction.reply({
         embeds: [{
