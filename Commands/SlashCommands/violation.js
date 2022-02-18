@@ -1,5 +1,7 @@
 const { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js')
 
+const Permission = require('../../lib/permission')
+
 
 module.exports = async interaction => {
 
@@ -20,6 +22,10 @@ module.exports = async interaction => {
 
     //? Add Violation
     if (interaction.options._subcommand === 'add') {
+
+        //? Check Permissions
+        if (!await Permission.Check(interaction.user, process.env.permissions.violation)) return interaction.reply({ content: 'You do not have permission to add violations.', ephemeral: true })
+
 
         //? Violation Prep
         var Preset = {
@@ -75,6 +81,11 @@ module.exports = async interaction => {
     //? Remove Violation
     if (interaction.options._subcommand === 'remove') {
 
+        //? Check Permissions
+        if (!await Permission.Check(interaction.user, process.env.permissions.violation)) return interaction.reply({ content: 'You do not have permission to add violations.', ephemeral: true })
+
+
+        //? Remove Violation
         var Violations = await process.db.collection('storage').findOne({ '_id': 'violations' })
         if (!Violations) return interaction.reply({ content: 'No Violation Presets Found.', ephemeral: true })
         if (!Violations.presets[interaction.options._hoistedOptions[0].value]) return interaction.reply({ content: `Violation Preset does not Exist!`, ephemeral: true })

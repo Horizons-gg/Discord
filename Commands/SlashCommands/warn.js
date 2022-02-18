@@ -1,7 +1,13 @@
 const { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js')
 
+const Permission = require('../../lib/permission')
+
 
 module.exports = async interaction => {
+
+    //? Check Permissions
+    if (!await Permission.Check(interaction.user, process.env.permissions.warn)) return interaction.reply({ content: 'You do not have permission to warn members.', ephemeral: true })
+
 
     var Violations = await process.db.collection('storage').findOne({ '_id': 'violations' }), Violations = Violations.presets
 
@@ -40,7 +46,10 @@ module.exports = async interaction => {
     if (!User) await Warnings.insertOne({
         _id: Member.id,
         warnings: [{
-            executor: interaction.user.id,
+            executor: {
+                id: interaction.user.id,
+                name: interaction.user.tag
+            },
             reason: Reason,
             violation: Violations[Violation],
             rating: Rating,
