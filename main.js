@@ -130,7 +130,8 @@ client.on('guildMemberUpdate', (oldMember, newMember) => require('./Notification
 //? Interactions
 client.on('interactionCreate', interaction => {
 
-    if (interaction.isCommand()) return require(`./Commands/${interaction.commandName}.js`)(interaction)
+    if (interaction.isCommand()) return require(`./Commands/SlashCommands/${interaction.commandName}.js`)(interaction)
+    if (interaction.isContextMenu()) return require(`./Commands/ContextMenuCommands/${interaction.commandName}.js`)(interaction)
 
     if (interaction.customId.includes('-')) var flag = interaction.customId.split('-')
     if (flag[0] === 'ticket') if (fs.existsSync(`./Ticket/${flag[1]}.js`)) return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
