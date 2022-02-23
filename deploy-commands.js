@@ -80,7 +80,7 @@ const commands = [
     //? Vote Mute Npb
     new SlashCommandBuilder().setName('npb')
         .setDescription('Commands to Punish Npb')
-        .addSubcommand(subcommand => subcommand.setName('timeout').setDescription(' Vot to timeout Npb for 10 minutes'))
+        .addSubcommand(subcommand => subcommand.setName('timeout').setDescription(' Vot to timeout Npb for 15 minutes'))
 ]
     .map(command => command.toJSON())
 
