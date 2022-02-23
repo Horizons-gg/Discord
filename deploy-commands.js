@@ -70,7 +70,17 @@ const commands = [
             subcommand.setName('fetch')
                 .setDescription('Fetch Information on a Violation/s')
             //.addIntegerOption(option => option.setName('violation').setDescription('Violation ID to Fetch').setRequired(false))
-        )
+        ),
+
+
+    //? Moderation Commands
+
+
+
+    //? Vote Mute Npb
+    new SlashCommandBuilder().setName('npb')
+        .setDescription('Commands to Punish Npb')
+        .addSubcommand(subcommand => subcommand.setName('timeout').setDescription(' Vot to timeout Npb for 10 minutes'))
 ]
     .map(command => command.toJSON())
 
