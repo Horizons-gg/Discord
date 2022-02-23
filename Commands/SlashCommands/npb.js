@@ -24,7 +24,7 @@ module.exports = async interaction => {
                 embeds: [{
                     title: "Timeout Npb for 10 Minutes",
                     color: "#f55742",
-                    description: `Type \`/npb timeout\` to add your vote to timeout Npb for 10 minutes.\n\nVotes Remaining to Mute: **${10 - Votes.length}**\n\nVote ends in <t:${Timer}:R>!`,
+                    description: `Type \`/npb timeout\` to add your vote to timeout Npb for 10 minutes.\n\nVotes Remaining to Mute: **${5 - Votes.length}**\n\nVote ends in <t:${Timer}:R>!`,
                 }]
             })
 
@@ -41,14 +41,14 @@ module.exports = async interaction => {
                 embeds: [{
                     title: "Timeout Npb for 10 Minutes",
                     color: "#f55742",
-                    description: `Type \`/npb timeout\` to add your vote to timeout Npb for 10 minutes.\n\nVotes Remaining to Mute: **${10 - Votes.length}**\n\nVote ends in <t:${Timer}:R>!`
+                    description: `Type \`/npb timeout\` to add your vote to timeout Npb for 10 minutes.\n\nVotes Remaining to Mute: **${5 - Votes.length}**\n\nVote ends in <t:${Timer}:R>!`
                 }]
             })
 
             interaction.reply({ content: 'Your vote has been counted!', ephemeral: true })
 
 
-            if (Votes.length >= 10) {
+            if (Votes.length >= 5) {
                 clearTimeout(Timeout)
 
                 interaction.guild.members.fetch('463580501857533962').then(member => member.timeout(1000 * 600)).catch(() => console.log('Failed to timeout Npb.')).catch(() => console.log('Failed to fetch Npb.'))
