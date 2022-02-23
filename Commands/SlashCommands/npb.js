@@ -15,10 +15,6 @@ module.exports = async interaction => {
     if (interaction.options._subcommand === 'timeout') {
 
         if (!Timer) {
-
-            var Member = await interaction.guild.members.fetch('463580501857533962').catch(() => console.log('Failed to fetch Npb.'))
-            if (Member.communicationDisabledUntilTimestamp) return interaction.reply({ content: 'Npb is Already Timed Out!.', ephemeral: true })
-
             Votes = [interaction.user.id]
             Timer = Math.floor(new Date().getTime() / 1000 + 300)
             Channel = interaction.channel
@@ -33,11 +29,8 @@ module.exports = async interaction => {
             })
 
             Timeout = setTimeout(Cleanup, 1000 * 300)
-        }
-
-
-        else {
-            //if (Votes.includes(interaction.user.id)) return interaction.reply({ content: 'You have already voted to timeout Npb.', ephemeral: true })
+        } else {
+            if (Votes.includes(interaction.user.id)) return interaction.reply({ content: 'You have already voted to timeout Npb.', ephemeral: true })
 
             Votes.push(interaction.user.id)
 
@@ -56,7 +49,7 @@ module.exports = async interaction => {
                 clearTimeout(Timeout)
 
                 interaction.guild.members.fetch('463580501857533962').then(member => member.timeout(1000 * 600).catch(() => console.log('Failed to timeout Npb.'))).catch(() => console.log('Failed to fetch Npb.'))
-                
+
                 Interaction.deleteReply().catch(() => {})
                 Interaction.channel.send({
                     embeds: [{
