@@ -42,7 +42,7 @@ module.exports = (member) => {
                 }
             ]
         }], components: [Links]
-    })
+    }).catch(() => console.log('Failed to Send Message to User!'))
 
 
     //? Landing Pad Notification
