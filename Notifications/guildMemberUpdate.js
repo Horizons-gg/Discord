@@ -1,7 +1,7 @@
 const Patreon = require('../lib/patreon')
 
 
-module.exports = async(oldMember, newMember) => {
+module.exports = async (oldMember, newMember) => {
 
     //? Guild Check
     if (process.env.discord.guild !== '610606066451087370') return
@@ -29,7 +29,7 @@ module.exports = async(oldMember, newMember) => {
     else return
 
 
-        var channel = await guild.channels.fetch('610976456495071243')
+    var channel = await guild.channels.fetch('610976456495071243')
     channel.send({
         content: `Thankyou <@${newMember.user.id}> for Supporting us on Patreon!`,
         embeds: [{
