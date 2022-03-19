@@ -77,6 +77,8 @@ const cors = require('cors')
 app.use(cors())
 app.listen(process.env.port, () => console.log(`API Listening on localhost:${process.env.port}`))
 
+app.set('trust proxy', 'loopback')
+
 process.app = app
 
 
@@ -102,6 +104,7 @@ client.on('ready', () => {
     //? API
     app.get('/', (req, res) => {
         res.send(process.data)
+        console.log(req.ip)
     })
 
     app.get('/discord', (req, res) => {
