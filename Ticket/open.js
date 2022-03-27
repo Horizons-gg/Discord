@@ -1,5 +1,5 @@
 const Raw = process.env.ticket.options
-const { MessageActionRow, MessageButton } = require('discord.js')
+const { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js')
 
 
 
@@ -84,6 +84,32 @@ module.exports = async (interaction, flag, fresh) => {
             }
         })
     })
-    interaction.channel.send(Ping.join(' '))
+
+    const FAQ = process.env.ticket.options[Ticket.designation][3]
+
+    if (FAQ) {
+        
+        //? Create FAQ Controls
+        let FAQArray = []
+        FAQ.forEach((question, index) => {
+            FAQArray.push({
+                value: index.toString(),
+                label: question.title
+            })
+        })
+
+        const List = new MessageActionRow()
+            .addComponents(
+                new MessageSelectMenu()
+                    .setCustomId('ticket-faq')
+                    .setPlaceholder('Select a FAQ to speed up the process!')
+                    .addOptions(FAQArray)
+            )
+
+        interaction.channel.send({ content: Ping.join(' '), components: [List] })
+
+    } else {
+        interaction.channel.send(Ping.join(' '))
+    }
 
 }
