@@ -77,6 +77,8 @@ const cors = require('cors')
 app.use(cors())
 app.listen(process.env.port, () => console.log(`API Listening on localhost:${process.env.port}`))
 
+app.set('trust proxy', 'loopback')
+
 process.app = app
 
 
@@ -102,6 +104,7 @@ client.on('ready', () => {
     //? API
     app.get('/', (req, res) => {
         res.send(process.data)
+        console.log(req.ip)
     })
 
     app.get('/discord', (req, res) => {
@@ -134,8 +137,10 @@ client.on('interactionCreate', interaction => {
     if (interaction.isContextMenu()) return require(`./Commands/ContextMenuCommands/${interaction.commandName}.js`)(interaction)
 
     if (interaction.customId.includes('-')) var flag = interaction.customId.split('-')
-    if (flag[0] === 'ticket') if (fs.existsSync(`./Ticket/${flag[1]}.js`)) return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
-    if (flag[0] === 'roles') if (fs.existsSync(`./Roles/${flag[1]}.js`)) return require(`./Roles/${flag[1]}.js`)(interaction, flag)
+    if (flag[0] === 'ticket')
+        if (fs.existsSync(`./Ticket/${flag[1]}.js`)) return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
+    if (flag[0] === 'roles')
+        if (fs.existsSync(`./Roles/${flag[1]}.js`)) return require(`./Roles/${flag[1]}.js`)(interaction, flag)
 
 })
 
@@ -147,7 +152,7 @@ client.on('messageCreate', async message => {
     var args = message.content.trim().split(' ')
     if (args[0] !== '!panel') return
     message.channel.send(await Panel(args[1]))
-    //message.delete()
+        //message.delete()
 })
 
 

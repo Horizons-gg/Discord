@@ -10,6 +10,7 @@ var Timeout = null
 
 module.exports = async interaction => {
 
+    return
 
     //? Timeout Npb for 15 Minutes
     if (interaction.options._subcommand === 'timeout') {
