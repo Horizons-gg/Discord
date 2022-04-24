@@ -10,21 +10,18 @@ const Sectors = [
     "au.horizons.gg:27032",
     "au.horizons.gg:27033",
     "au.horizons.gg:27034",
-    "au.horizons.gg:27035",
 
     "de.horizons.gg:27015",
     "de.horizons.gg:27016",
     "de.horizons.gg:27017",
     "de.horizons.gg:27018",
     "de.horizons.gg:27019",
-    "de.horizons.gg:27020",
 
     "us.horizons.gg:27015",
     "us.horizons.gg:27016",
     "us.horizons.gg:27017",
     "us.horizons.gg:27018",
-    "us.horizons.gg:27019",
-    "us.horizons.gg:27020"
+    "us.horizons.gg:27019"
 
 ]
 
@@ -35,7 +32,7 @@ let online = 0
 function Start(token, game) {
     client.login(token)
 
-    client.on('ready', async () => {
+    client.on('ready', async() => {
         console.log(`Logged in as ${client.user.tag}!`);
         client.user.setActivity(`Collecting Data...`, { type: 'WATCHING' })
         client.user.setStatus('idle')
