@@ -21,7 +21,7 @@ function Start(token, game) {
             if (!switcher) {
                 switcher = true
 
-                fetch('http://103.1.215.227:5006/info')
+                fetch('http://127.0.0.1:3001/info')
                     .then(res => res.json())
                     .then(body => {
                         status = body
@@ -41,7 +41,7 @@ function Start(token, game) {
             } else {
                 switcher = false
 
-                fetch('http://103.1.215.227:5006/info')
+                fetch('http://127.0.0.1:3001/info')
                     .then(res => res.json())
                     .then(body => {
                         status = body
