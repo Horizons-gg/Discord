@@ -69,7 +69,7 @@ function Start(token, game) {
             if (mode === 1) {
                 mode = 0
 
-                client.user.setActivity(`${players} / 200 Players`, { type: 'WATCHING' })
+                client.user.setActivity(`${players} / 300 Players`, { type: 'WATCHING' })
 
                 return setTimeout(refresh, 1000 * 5)
             }
