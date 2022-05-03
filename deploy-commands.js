@@ -11,6 +11,8 @@ const commands = [
     new SlashCommandBuilder().setName('help').setDescription('Replies with help information'),
     new SlashCommandBuilder().setName('se').setDescription('Replies with Space Engineers Server Connections'),
 
+
+    //? Ticket Commands
     new SlashCommandBuilder()
         .setName('ticket')
         .setDescription('Commands related to tickets')
@@ -73,14 +75,22 @@ const commands = [
         ),
 
 
+    //? System Commands
+    new SlashCommandBuilder().setName('system')
+        .setDescription('Generate System Statistic Screenshots')
+        .addStringOption(option => option.setName('identification').setDescription('System Identification').setRequired(false))
+
+
     //? Moderation Commands
 
 
 
     //? Vote Mute Npb
-    new SlashCommandBuilder().setName('npb')
-        .setDescription('Commands to Punish Npb')
-        .addSubcommand(subcommand => subcommand.setName('timeout').setDescription(' Vot to timeout Npb for 15 minutes'))
+    // new SlashCommandBuilder().setName('npb')
+    //     .setDescription('Commands to Punish Npb')
+    //     .addSubcommand(subcommand => subcommand.setName('timeout').setDescription(' Vot to timeout Npb for 15 minutes'))
+
+
 ]
     .map(command => command.toJSON())
 

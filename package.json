@@ -2,7 +2,7 @@
   "name": "discord",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Horizons-gg/Discord.git"
@@ -19,9 +19,12 @@
     "cors": "^2.8.5",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
+    "ejs": "^3.1.7",
     "express": "^4.17.2",
     "gamedig": "^3.0.8",
+    "jquery": "^3.6.0",
     "mongodb": "^4.3.1",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "puppeteer": "^13.7.0"
   }
 }

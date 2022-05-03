@@ -16,7 +16,7 @@ client.on('ready', () => {
 
 
 function Start() {
-    Process = Spawn('node', ['./main.js'])
+    Process = Spawn('node', ['./app.js'])
 
     Process.stdout.on('data', data => console.log(data.toString()))
     Process.stderr.on('data', data => {
