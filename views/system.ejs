@@ -8,16 +8,16 @@
 
     <link href="/fontawesome/css/all.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
     <script src="/jquery/jquery.min.js"></script>
 
 </head>
 
-<body class="m-0" style="background-color: #36393e;">
+<body class="m-0" style="background-color: #36393e; color: #F6F6F6;">
 
     <div id="card_window">
-        <div class="card">
-            <div class="card-header">
+        <div class="card" style="background-color: #23272A;">
+            <div class="card-header" style="background-color: #404EED;">
                 <%= IPv4 %> in <%= Location.city %>, <%= Location.country %>
             </div>
             <div class="card-body">
@@ -100,13 +100,13 @@
 
                             <% Memory.layout.forEach(Stick => { %>
 
-                            <div class="card">
+                            <div class="card" style="border-style: none;">
                                 
-                                <div class="card-header">
+                                <div class="card-header" style="background-color: #404EED; border-style: none;">
                                     <%= Stick.bank %>
                                 </div>
 
-                                <div class="card-body">
+                                <div class="card-body" style="background-color: #36393e;">
                                     Class: <%= Stick.type %><br />
                                     Speed: <%= Stick.clockSpeed %><br />
                                     Size: <%= Stick.size / 1024 / 1024 / 1024 %>GB
