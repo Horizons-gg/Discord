@@ -45,7 +45,7 @@
 
                         <h5>Usage</h5>
 
-                        <div class="row progress" style="height: 40px; margin: 10px 0px;">
+                        <div class="row progress" style="height: 40px; margin: 10px 0px; background-color: #464a50;">
                             <div class="progress-bar <% if (CPU.usage < 25) { %> bg-success <% } else if (CPU.usage < 75) { %> bg-primary <% } else if (CPU.usage < 90) { %> bg-warning <% } else if (CPU.usage > 90) { %>bg-danger<% } %>" role="progressbar" style="width: <%= CPU.usage %>%;" aria-valuenow="<%= CPU.usage %>" aria-valuemin="0" aria-valuemax="100"><%= Math.round(CPU.usage) %>%</div>
                         </div>
 
@@ -123,7 +123,7 @@
                         <h5 class="d-inline-block">&nbsp;|&nbsp;</h5>
                         <h6 class="d-inline-block"><%= Memory.used %>GB / <%= Math.round(Memory.total) %>GB (<%= Math.round((Memory.used / Memory.total) * 100) %>%)</h6>
 
-                        <div class="row progress" style="height: 40px; margin: 10px 0px;">
+                        <div class="row progress" style="height: 40px; margin: 10px 0px; background-color: #464a50;">
                             <div class="progress-bar <% if ((Memory.used / Memory.total) * 100 < 25) { %> bg-success <% } else if ((Memory.used / Memory.total) * 100 < 75) { %> bg-primary <% } else if ((Memory.used / Memory.total) * 100 < 90) { %> bg-warning <% } else if ((Memory.used / Memory.total) * 100 > 90) { %>bg-danger<% } %>" role="progressbar" style="width: <%= (Memory.used / Memory.total) * 100 %>%;" aria-valuenow="<%= (Memory.used / Memory.total) * 100 %>" aria-valuemin="0" aria-valuemax="100"><%= Memory.used %>GB / <%= Math.round(Memory.total) %>GB</div>
                         </div>
                         
@@ -150,7 +150,7 @@
                             <h6 class="d-inline-block"><%= disk.used.toFixed(2) %>GB / <%= Math.round(disk.size) %>GB</h6>
                         </div>
 
-                        <div class="row progress" style="height: 40px; margin: 10px 0px;">
+                        <div class="row progress" style="height: 40px; margin: 10px 0px; background-color: #464a50;">
                             <div class="progress-bar <% if (diskUsage < 25) { %> bg-success <% } else if (diskUsage < 75) { %> bg-primary <% } else if (diskUsage < 90) { %> bg-warning <% } else if (diskUsage > 90) { %>bg-danger<% } %>" role="progressbar" style="width: <%= diskUsage %>%;" aria-valuenow="<%= diskUsage %>" aria-valuemin="0" aria-valuemax="100"><%= disk.used.toFixed(2) %>GB / <%= Math.round(disk.size) %>GB</div>
                         </div>
                     </div>
