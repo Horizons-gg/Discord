@@ -156,6 +156,8 @@ client.on('interactionCreate', interaction => {
         if (fs.existsSync(`./Ticket/${flag[1]}.js`)) return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
     if (flag[0] === 'roles')
         if (fs.existsSync(`./Roles/${flag[1]}.js`)) return require(`./Roles/${flag[1]}.js`)(interaction, flag)
+    if (flag[0] === 'application')
+        if (fs.existsSync(`./Application/${flag[1]}.js`)) return require(`./Application/${flag[1]}.js`)(interaction, flag)
 
 })
 

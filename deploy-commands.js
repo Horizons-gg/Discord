@@ -38,6 +38,22 @@ const commands = [
         ),
 
 
+    //? Application Commands
+    new SlashCommandBuilder()
+        .setName('application')
+        .setDescription('Commands related to applications')
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('assist').
+                setDescription('Replies with Application Quick access to assist confused users')
+        )
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('create').
+                setDescription('Activates the Application System for the user')
+        ),
+
+
     //? Warning Commands
     new SlashCommandBuilder().setName('warn')
         .setDescription('Warn a user on the Network')
@@ -100,18 +116,18 @@ const commands = [
 const rest = new REST({ version: '9' }).setToken(config.discord.token);
 
 (async () => {
-    await rest.get(Routes.applicationGuildCommands(config.discord.client, config.discord.guild))
-        .then(data => {
-            const promises = []
-            for (const command of data) {
-                const deleteUrl = `${Routes.applicationGuildCommands(config.discord.client, config.discord.guild)}/${command.id}`
-                promises.push(rest.delete(deleteUrl))
-            }
-            console.log('Removed all application commands.')
-            return Promise.all(promises)
-        })
+    // await rest.get(Routes.applicationGuildCommands(config.discord.client, config.discord.guild))
+    //     .then(data => {
+    //         const promises = []
+    //         for (const command of data) {
+    //             const deleteUrl = `${Routes.applicationGuildCommands(config.discord.client, config.discord.guild)}/${command.id}`
+    //             promises.push(rest.delete(deleteUrl))
+    //         }
+    //         console.log('Removed all application commands.')
+    //         return Promise.all(promises)
+    //     })
 
     await rest.put(Routes.applicationGuildCommands(config.discord.client, config.discord.guild), { body: commands })
-        .then(() => console.log('Successfully registered application commands.'))
+        .then(res => console.log('Successfully registered application commands.\n', res))
         .catch(console.error)
 })()
