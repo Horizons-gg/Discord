@@ -5,11 +5,11 @@ const Discord = require('discord.js')
 const client = new Discord.Client({ intents: ['GUILDS'] })
 
 const Sectors = [
-    "horizons.gg:27030",
-    "au.horizons.gg:27031",
-    "au.horizons.gg:27032",
-    "au.horizons.gg:27033",
-    "au.horizons.gg:27034",
+    "horizons.gg:27015",
+    "au.horizons.gg:27016",
+    "au.horizons.gg:27017",
+    "au.horizons.gg:27018",
+    "au.horizons.gg:27019",
 
     "de.horizons.gg:27015",
     "de.horizons.gg:27016",
