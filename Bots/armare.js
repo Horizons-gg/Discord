@@ -24,7 +24,7 @@ function Start(token, game) {
 
             if (!OnlinePlayers) return client.user.setActivity(`Server Offline`, { type: 'WATCHING' }), client.user.setStatus('dnd'), status = { online: false }
 
-            if (parseInt(OnlinePlayers) > 0) client.user.setActivity(`${OnlinePlayers} / 100 Players`, { type: 'WATCHING' }), client.user.setStatus('online'), { online: true, players: OnlinePlayers }
+            if (parseInt(OnlinePlayers) > 0) client.user.setActivity(`${OnlinePlayers} / 64 Players`, { type: 'WATCHING' }), client.user.setStatus('online'), { online: true, players: OnlinePlayers }
             else client.user.setActivity(`No Players Online`, { type: 'WATCHING' }), client.user.setStatus('idle'), { online: true, players: OnlinePlayers }
 
         }
