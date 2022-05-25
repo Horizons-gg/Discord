@@ -1,4 +1,4 @@
-const Permission = require('../lib/permission')
+const Permission = require('../../lib/permission')
 
 
 module.exports = async (interaction) => {

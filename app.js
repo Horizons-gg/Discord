@@ -30,7 +30,7 @@ const Panel = require('./lib/panels')
 
 
 process.env.ticket['raw'] = []
-for (opt in process.env.ticket.options) {
+for (const opt in process.env.ticket.options) {
     process.env.ticket.raw.push({
         value: opt,
         label: process.env.ticket.options[opt][0]
@@ -38,7 +38,7 @@ for (opt in process.env.ticket.options) {
 }
 
 process.env.roles['raw'] = []
-for (opt in process.env.roles.options) {
+for (const opt in process.env.roles.options) {
     process.env.roles.raw.push({
         value: opt,
         label: process.env.roles.options[opt][0],
@@ -47,7 +47,7 @@ for (opt in process.env.roles.options) {
 }
 
 process.env.systemsArray = []
-for (system in process.env.servers) {
+for (const system in process.env.servers) {
     process.env.systemsArray.push(system)
 }
 
@@ -71,7 +71,7 @@ MongoClient.connect(`mongodb://${process.env.mongo.host}`, async function (err, 
 //!
 
 const { Client, Intents } = require('discord.js')
-var selectedIntents = []
+let selectedIntents = []
 for (intent in Intents.FLAGS) { selectedIntents.push(Intents.FLAGS[intent]) }
 const client = new Client({ intents: selectedIntents })
 client.login(process.env.discord.token)
@@ -100,11 +100,11 @@ process.app = app
 
 //? Initialization
 
-for (game in process.env.games) {
+for (const game in process.env.games) {
     if (process.env.games[game]) require(`./Bots/${game}.js`).Start(process.env.games[game], game)
 }
 
-for (server in process.env.servers) {
+for (const server in process.env.servers) {
     if (process.env.servers[server]) require(`./lib/servers.js`).Start(process.env.servers[server], server)
 }
 
@@ -148,14 +148,19 @@ client.on('guildMemberUpdate', (oldMember, newMember) => require('./Notification
 //? Interactions
 client.on('interactionCreate', interaction => {
 
+    //? Commands
+
     if (interaction.isCommand()) return require(`./Commands/SlashCommands/${interaction.commandName}.js`)(interaction)
     if (interaction.isContextMenu()) return require(`./Commands/ContextMenuCommands/${interaction.commandName}.js`)(interaction)
 
-    if (interaction.customId.includes('-')) var flag = interaction.customId.split('-')
-    if (flag[0] === 'ticket')
-        if (fs.existsSync(`./Ticket/${flag[1]}.js`)) return require(`./Ticket/${flag[1]}.js`)(interaction, flag)
-    if (flag[0] === 'roles')
-        if (fs.existsSync(`./Roles/${flag[1]}.js`)) return require(`./Roles/${flag[1]}.js`)(interaction, flag)
+
+
+    //? Interfaces
+
+    if (!interaction.customId) return
+    const Flag = interaction.customId.split('-') || interaction.customId
+
+    if (fs.existsSync(`./Interfaces/${Flag[0]}/${Flag[1]}.js`)) return require(`./Interfaces/${Flag[0]}/${Flag[1]}.js`)(interaction, Flag)
 
 })
 
@@ -164,7 +169,7 @@ client.on('interactionCreate', interaction => {
 client.on('messageCreate', async message => {
     if (message.author.id !== "240786290600181761") return
 
-    var args = message.content.trim().split(' ')
+    let args = message.content.trim().split(' ')
     if (args[0] !== '!panel') return
     message.channel.send(await Panel(args[1]))
     //message.delete()
@@ -176,7 +181,7 @@ client.on('messageCreate', async message => {
     if (![process.env.ticket.open, process.env.ticket.closed].includes(message.channel.parentId)) return
     if (message.author.bot) return
 
-    var Ticket = await process.db.collection('tickets').findOne({ channel: message.channel.id })
+    let Ticket = await process.db.collection('tickets').findOne({ channel: message.channel.id })
     if (!Ticket) return
 
     Ticket.users[message.author.id] = {
