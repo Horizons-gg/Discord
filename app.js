@@ -4,6 +4,7 @@
 
 const fs = require('fs')
 
+if (fs.existsSync('./undefined')) fs.rmSync('./undefined', { recursive: true, force: true })
 if (!fs.existsSync('./undefined')) fs.mkdirSync('./undefined')
 if (!fs.existsSync('./undefined/temp')) fs.mkdirSync('./undefined/temp')
 
@@ -26,7 +27,6 @@ process.data = {
 
 
 const Patreon = require('./lib/patreon')
-const Panel = require('./lib/panels')
 
 
 process.env.ticket['raw'] = []
@@ -165,41 +165,8 @@ client.on('interactionCreate', interaction => {
 })
 
 
-//? Message Commands
-client.on('messageCreate', async message => {
-    if (message.author.id !== "240786290600181761") return
-
-    let args = message.content.trim().split(' ')
-    if (args[0] !== '!panel') return
-    message.channel.send(await Panel(args[1]))
-    //message.delete()
-})
-
-
-//? Ticket Messages
-client.on('messageCreate', async message => {
-    if (![process.env.ticket.open, process.env.ticket.closed].includes(message.channel.parentId)) return
-    if (message.author.bot) return
-
-    let Ticket = await process.db.collection('tickets').findOne({ channel: message.channel.id })
-    if (!Ticket) return
-
-    Ticket.users[message.author.id] = {
-        username: message.author.username,
-        avatar: message.author.avatarURL()
-    }
-
-    Ticket.history.push({
-        user: message.author.id,
-        content: message.content,
-        timestamp: message.createdTimestamp
-    })
-
-    await process.db.collection('tickets').updateOne({ channel: message.channel.id }, { $set: { users: Ticket.users, history: Ticket.history } })
-})
-
-
-
+//? Events
+fs.readdirSync('./Events').filter(dir => dir.endsWith('.js')).forEach(controller => require(`./Events/${controller}`)(client))
 
 
 //? System Statistics
