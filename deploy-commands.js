@@ -78,7 +78,23 @@ const commands = [
     //? System Commands
     new SlashCommandBuilder().setName('system')
         .setDescription('Generate System Statistic Screenshots')
-        .addStringOption(option => option.setName('identification').setDescription('System Identification').setRequired(false))
+        .addStringOption(option => option.setName('identification').setDescription('System Identification').setRequired(false)),
+
+
+    //? Level Commands
+    new SlashCommandBuilder().setName('level')
+        .setDescription('Commands Related to the Horizons Level System')
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('me')
+                .setDescription('View your Level and XP')
+        )
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('member')
+                .setDescription('View another members Level and XP')
+                .addUserOption(option => option.setName('user').setDescription('Target User').setRequired(true))
+        )
 
 
     //? Moderation Commands
