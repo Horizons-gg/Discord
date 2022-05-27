@@ -16,7 +16,7 @@ module.exports = async (client, message) => {
     const Last = History[message.author.id]
 
     //? If the time diff is greater than the cooldown, ignore it.
-    if (Now - Last < 1000 * 1) return
+    if (Now - Last < 1000 * 0) return
 
 
     //? Update Users History then add xp.
