@@ -22,7 +22,6 @@ const Sectors = [
     "us.horizons.gg:27017",
     "us.horizons.gg:27018",
     "us.horizons.gg:27019"
-
 ]
 
 let status = {}
@@ -56,11 +55,11 @@ function Start(token, game) {
 
                 client.user.setActivity(`${online} / ${Sectors.length} Sectors Online`, { type: 'WATCHING' })
 
-                if (online === Sectors.length) client.user.setStatus('online')
-                if (online < Sectors.length && online > 0) client.user.setStatus('idle')
+                if (online >= Sectors.length) client.user.setStatus('online')
+                else if (online < Sectors.length && online > 0) client.user.setStatus('idle')
                 else client.user.setStatus('dnd')
 
-                return setTimeout(refresh, 1000 * 5)
+                return setTimeout(refresh, 1000 * 6)
             }
 
             if (mode === 1) {
@@ -68,7 +67,7 @@ function Start(token, game) {
 
                 client.user.setActivity(`${players} / 300 Players`, { type: 'WATCHING' })
 
-                return setTimeout(refresh, 1000 * 5)
+                return setTimeout(refresh, 1000 * 8)
             }
 
         }
