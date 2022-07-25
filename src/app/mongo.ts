@@ -3,6 +3,7 @@ import * as Mongo from 'mongodb'
 
 export const Collections: {
     Users?: Mongo.Collection
+    Tickets?: Mongo.Collection
 } = {}
 
 export async function connect() {
@@ -13,8 +14,10 @@ export async function connect() {
 
 
     const Users: Mongo.Collection = db.collection('users')
+    const Tickets: Mongo.Collection = db.collection('tickets')
     
     Collections.Users = Users
+    Collections.Tickets = Tickets
 
 
     console.log(`Successfully connected to database: ${db.databaseName}`)

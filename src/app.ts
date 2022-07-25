@@ -10,7 +10,7 @@ import * as Discord from "discord.js"
 //! Discord.js
 //!
 
-import {connect as ConnectToDiscord} from '@app/discord'
+import { connect as ConnectToDiscord } from '@app/discord'
 ConnectToDiscord()
 
 
@@ -28,9 +28,10 @@ Mongo.connect()
 //! App Ready
 //!
 
-import {client as Client} from '@app/discord'
+import { client as Client } from '@app/discord'
 
 import * as Commands from './Commands'
+import * as Interfaces from './Interfaces'
 import * as Notifications from './Notifications'
 
 
@@ -41,8 +42,16 @@ Client.on('guildMemberRemove', (member) => Notifications.guildMemberRemove(membe
 
 
 //? Interactions
-Client.on('interactionCreate', interaction => {
+Client.on('interactionCreate', (interaction: any) => {
 
+    //? Commands
     if (interaction.type === Discord.InteractionType.ApplicationCommand) Commands.SlashCommands[interaction.commandName](interaction)
+
+
+    //? Interfaces
+    if (!interaction) return
+    const Flag = interaction.customId.split('-') || interaction.customId
+
+
 
 })
