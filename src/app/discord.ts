@@ -1,16 +1,19 @@
 import Config from '@lib/config'
-import * as Discord from 'discord.js'
+import { Client, IntentsBitField } from 'discord.js'
+import { Refresh } from '@lib/commands'
 
-export let Client: Discord.Client
+export let client: Client
 
 export function connect() {
 
-    let All = []
-    for (const intent in Discord.Intents.FLAGS) All.push(Discord.Intents.FLAGS[intent])
+    client = new Client({ intents: new IntentsBitField(32767) })
 
-    Client = new Discord.Client({ intents: All })
+    client.login(Config.discord.token)
 
-    Client.login(Config.discord.token)
-
-    Client.on('ready', () => console.log(`Logged in as ${Client.user.tag}`))
+    client.on('ready', () => console.log(`Logged in as ${client.user.tag}`))
 }
+
+
+
+//? Refresh Slash Commands
+Refresh()
