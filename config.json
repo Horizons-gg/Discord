@@ -1,0 +1,14 @@
+{
+    "port": 9082,
+
+    "mongo": {
+        "host": "127.0.0.1:27017",
+        "database": "horizons"
+    },
+    
+    "discord": {
+        "client": "937809885532413982",
+        "token": "OTM3ODA5ODg1NTMyNDEzOTgy.YfhJhA.vrR8vZBpIlfiCoDYk8c9kHQQv24",
+        "guild": "847246917654151168"
+    }
+}
