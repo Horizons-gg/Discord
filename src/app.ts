@@ -28,7 +28,7 @@ Mongo.connect()
 //! App Ready
 //!
 
-import { client as Client } from '@app/discord'
+import { Client } from '@app/discord'
 
 import * as Commands from './Commands'
 import * as Interfaces from './Interfaces'

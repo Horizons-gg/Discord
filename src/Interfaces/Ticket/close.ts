@@ -1,40 +1,43 @@
-const Raw = process.env.ticket.options
-const { MessageActionRow, MessageButton } = require('discord.js')
+import Config from "@lib/config"
+import { TicketsConfig } from "@lib/tickets"
+
+import { Client } from "@app/discord"
+import { Collections } from "@app/mongo"
+import { Ticket as Tickets } from "@interfaces/ticket"
+
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "discord.js"
 
 
-
-const Options = new MessageActionRow()
+const Options = new ActionRowBuilder()
     .addComponents(
-        new MessageButton()
+        new ButtonBuilder()
             .setCustomId('ticket-open')
             .setLabel('🔓 Open Ticket')
-            .setStyle('SUCCESS'),
+            .setStyle(ButtonStyle.Success),
 
-        new MessageButton()
+        new ButtonBuilder()
             .setCustomId('ticket-archive')
             .setLabel('📂 Archive Ticket')
-            .setStyle('PRIMARY'),
+            .setStyle(ButtonStyle.Primary),
 
-        new MessageButton()
+        new ButtonBuilder()
             .setCustomId('ticket-delete')
             .setLabel('🛡️ Delete Ticket')
-            .setStyle('DANGER')
+            .setStyle(ButtonStyle.Danger)
             .setDisabled(false)
     )
 
 
 
-module.exports = async (interaction) => {
+export async function main(interaction) {
 
     //? Prerequisites
-    var Tickets = await process.db.collection('tickets')
-    var Ticket = await Tickets.findOne({ channel: interaction.channel.id })
-    var Client = process.client
-    var Guild = Client.guilds.cache.get(process.env.discord.guild)
+    const Ticket = await Collections.Tickets.findOne({ channel: interaction.channel.id })
+    const Guild = Client.guilds.cache.get(Config.discord.guild)
 
-    if (!Ticket.owner) return require('./cancel')(interaction)
-    var User = await Guild.members.fetch(Ticket.owner).catch(() => console.log('Failed to fetch user'))
-    if (!User) return require('./cancel')(interaction)
+    if (!Ticket.owner) return Ticket.cancel(interaction)
+    const User = Guild.members.cache.get(Ticket.owner) || await Guild.members.fetch(Ticket.owner).catch(() => console.log('Failed to fetch user'))
+    if (!User) return Ticket.cancel(interaction)
 
 
     //? Update Access

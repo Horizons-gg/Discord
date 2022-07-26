@@ -1,16 +1,16 @@
 import Config from '@lib/config'
-import { Client, IntentsBitField } from 'discord.js'
+import { Client as client, IntentsBitField } from 'discord.js'
 import { Refresh } from '@lib/commands'
 
-export let client: Client
+export let Client: client
 
 export function connect() {
 
-    client = new Client({ intents: new IntentsBitField(32767) })
+    Client = new client({ intents: new IntentsBitField(32767) })
 
-    client.login(Config.discord.token)
+    Client.login(Config.discord.token)
 
-    client.on('ready', () => console.log(`Logged in as ${client.user.tag}`))
+    Client.on('ready', () => console.log(`Logged in as ${Client.user.tag}`))
 }
 
 

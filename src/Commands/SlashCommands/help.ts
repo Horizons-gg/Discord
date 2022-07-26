@@ -1,4 +1,8 @@
-export function main(interaction) {
+import * as Discord from 'discord.js'
+
+
+
+export function main(interaction: Discord.CommandInteraction) {
     interaction.reply({
         embeds: [{
             title: "Horizons | Help",

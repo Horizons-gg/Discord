@@ -1,3 +1,7 @@
+import * as Discord from 'discord.js'
+
+
+
 export function main(interaction) {
     interaction.reply({
         embeds: [{

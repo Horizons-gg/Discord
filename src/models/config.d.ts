@@ -11,4 +11,18 @@ export interface Config {
         token: string
         guild: string
     }
+
+    ticket: {
+        open: string
+        closed: string
+        display: {
+            channel: string
+            message: string
+        }
+        options: object
+        permissions: {
+            archive: [string]
+            delete: [string]
+        }
+    }
 }
