@@ -2,6 +2,8 @@
 //! External Modules
 //!
 
+import Config from "@lib/config"
+
 import * as Discord from "discord.js"
 
 
@@ -30,6 +32,7 @@ Mongo.connect()
 
 import { Client } from '@app/discord'
 
+import * as Events from './Events'
 import * as Commands from './Commands'
 import * as Interfaces from '@interfaces/index'
 import * as Notifications from './Notifications'
@@ -57,5 +60,17 @@ Client.on('interactionCreate', (interaction: any) => {
     } catch {
         console.log(`[ERROR] Unknown Interface: ${Flag[0]}-${Flag[1]}`)
     }
+
+})
+
+
+//? Messages
+Client.on('messageCreate', message => {
+
+    const Channel: any = message.channel
+
+    
+    //? Add Messages to Ticket History
+    if ([Config.ticket.open, Config.ticket.closed].includes(Channel.parentId)) Events.MessageCreate.Tickets(message)
 
 })

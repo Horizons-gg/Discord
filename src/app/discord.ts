@@ -1,12 +1,23 @@
 import Config from '@lib/config'
-import { Client as client, IntentsBitField } from 'discord.js'
+import { Client as client, GatewayIntentBits } from 'discord.js'
 import { Refresh } from '@lib/commands'
 
 export let Client: client
 
 export function connect() {
 
-    Client = new client({ intents: new IntentsBitField(32767) })
+    Client = new client({
+        intents: [
+            GatewayIntentBits.GuildBans,
+            GatewayIntentBits.GuildEmojisAndStickers,
+            GatewayIntentBits.GuildMembers,
+            GatewayIntentBits.GuildMessageReactions,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.GuildPresences,
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.MessageContent
+        ]
+    })
 
     Client.login(Config.discord.token)
 
