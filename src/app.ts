@@ -48,7 +48,12 @@ Client.on('guildMemberRemove', (member) => Notifications.guildMemberRemove(membe
 Client.on('interactionCreate', (interaction: any) => {
 
     //? Commands
-    if (interaction.type === Discord.InteractionType.ApplicationCommand) Commands.SlashCommands[interaction.commandName](interaction)
+    try {
+        if (interaction.type === Discord.InteractionType.ApplicationCommand) Commands.SlashCommands[interaction.commandName](interaction)
+    } catch {
+        console.log(`Command "${interaction.commandName}" not found`)
+        interaction.reply({ content: 'An error occurred while processing your command, this command may no longer be in use or is not yet implemented.', ephemeral: true })
+    }
 
 
     //? Interfaces
@@ -69,7 +74,7 @@ Client.on('messageCreate', message => {
 
     const Channel: any = message.channel
 
-    
+
     //? Add Messages to Ticket History
     if ([Config.ticket.open, Config.ticket.closed].includes(Channel.parentId)) Events.MessageCreate.Tickets(message)
 

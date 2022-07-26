@@ -10,6 +10,15 @@ const commands = [
     new SlashCommandBuilder().setName('se').setDescription('Replies with Space Engineers Server Connections'),
 
 
+    //? Admin Commands
+    new SlashCommandBuilder()
+        .setName('panel')
+        .setDescription('Creates Interactive Panel in the current channel')
+        .setDefaultMemberPermissions(8)
+        .addStringOption(option => option.setName('name').setDescription('Name of the panel').setRequired(true)),
+
+
+
     //? Ticket Commands
     new SlashCommandBuilder()
         .setName('ticket')
@@ -77,6 +86,8 @@ const commands = [
     new SlashCommandBuilder().setName('system')
         .setDescription('Generate System Statistic Screenshots')
         .addStringOption(option => option.setName('identification').setDescription('System Identification').setRequired(false))
+
+        
 ].map(command => command.toJSON())
 
 

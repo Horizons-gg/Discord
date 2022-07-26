@@ -7,8 +7,6 @@ export async function main(message) {
     const Ticket = await Collections.Tickets.findOne({ channel: message.channel.id })
     if (!Ticket) return
 
-    console.log(message)
-
     Ticket.users[message.author.id] = {
         username: message.author.username,
         avatar: message.author.avatarURL()

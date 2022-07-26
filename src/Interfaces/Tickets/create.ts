@@ -1,5 +1,5 @@
 import Config from "@lib/config"
-import { TicketsConfig as Raw } from "@lib/tickets"
+import { TicketsConfig as Raw } from "@lib/config"
 
 import { Client } from "@app/discord"
 import { Collections } from "@app/mongo"

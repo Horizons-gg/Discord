@@ -12,6 +12,10 @@ export interface Config {
         guild: string
     }
 
+    roles: {
+        options: any
+    }
+
     ticket: {
         open: string
         closed: string
