@@ -9,14 +9,14 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "disc
 const Row = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('ticket-create')
+            .setCustomId('Tickets-create')
             .setLabel('Create Ticket')
             .setStyle(ButtonStyle.Success)
     )
 
 
 
-export async function main(interaction) {
+export async function main(interaction, flag) {
 
     if (interaction.options._subcommand === 'assist') {
         interaction.reply({
@@ -33,7 +33,7 @@ export async function main(interaction) {
     }
 
     if (interaction.options._subcommand === 'create') {
-        Tickets.create(interaction)
+        Tickets.create(interaction, flag)
     }
 
 

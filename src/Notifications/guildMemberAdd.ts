@@ -1,5 +1,5 @@
 import Config from '@lib/config'
-import { client as Client } from '@app/discord'
+import { Client } from '@app/discord'
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from 'discord.js'
 
 const Links = new ActionRowBuilder()

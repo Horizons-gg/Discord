@@ -1,5 +1,5 @@
 import Config from "@lib/config"
-import { client as Client } from "@app/discord"
+import { Client } from "@app/discord"
 import { resolveColor } from "discord.js"
 
 export function main(member) {

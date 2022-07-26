@@ -4,14 +4,15 @@ import { Check } from '@lib/permissions'
 
 
 
-export async function main(interaction) {
+export function main(interaction) {
 
     //? Check Permissions
-    if (!await Check(interaction.user, Config.ticket.permissions.archive)) return interaction.reply({ content: 'You do not have permission to archive tickets.', ephemeral: true })
-
-
-    //? Archive Ticket
-    await Collections.Tickets.updateOne({ channel: interaction.channel.id }, { $set: { status: 'archived' } })
-    interaction.channel.delete()
+    
+    Check(interaction.user, Config.ticket.permissions.archive)
+        .then(() => {
+            Collections.Tickets.updateOne({ channel: interaction.channel.id }, { $set: { status: 'archived' } })
+            interaction.channel.delete()
+        })
+        .catch(() => interaction.reply({ content: 'You do not have permission to archive tickets.', ephemeral: true }))
 
 }

@@ -31,7 +31,7 @@ Mongo.connect()
 import { Client } from '@app/discord'
 
 import * as Commands from './Commands'
-import * as Interfaces from './Interfaces'
+import * as Interfaces from '@interfaces/index'
 import * as Notifications from './Notifications'
 
 
@@ -49,9 +49,13 @@ Client.on('interactionCreate', (interaction: any) => {
 
 
     //? Interfaces
-    if (!interaction) return
+    if (!interaction.customId) return
     const Flag = interaction.customId.split('-') || interaction.customId
 
-
+    try {
+        Interfaces[Flag[0]][Flag[1]](interaction, Flag)
+    } catch {
+        console.log(`[ERROR] Unknown Interface: ${Flag[0]}-${Flag[1]}`)
+    }
 
 })

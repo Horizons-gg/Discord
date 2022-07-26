@@ -1,38 +1,43 @@
-const Raw = process.env.ticket.options
-const { MessageActionRow, MessageButton } = require('discord.js')
+import Config from "@lib/config"
+
+import { Client } from "@app/discord"
+import { Collections } from "@app/mongo"
+import { Tickets } from "@interfaces/index"
+
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor, PermissionFlagsBits, TextChannel, SelectMenuBuilder } from "discord.js"
 
 
 
-const Cancel = new MessageActionRow()
+const Raw = Config.ticket.options
+
+const Cancel = new ActionRowBuilder()
     .addComponents(
-        new MessageButton()
-            .setCustomId('ticket-cancel')
+        new ButtonBuilder()
+            .setCustomId('Tickets-cancel')
             .setLabel('Cancel Ticket')
-            .setStyle('DANGER')
+            .setStyle(ButtonStyle.Danger)
     )
 
 
 
-module.exports = async (interaction) => {
-
-    //? Prerequisites
-    var Tickets = await process.db.collection('tickets')
+export async function main(interaction) {
 
     //? Validate Selection
-    var Designation = interaction.values[0]
-    if (Raw[Designation][1] === '*') return await Tickets.updateOne({ channel: interaction.channel.id }, { $set: { designation: Designation, region: 'All' } }), require('./open.js')(interaction, null, true)
-    if (!Raw[Designation][1].includes(',')) var Regions = [Raw[Designation][1]]
-    else var Regions = Raw[Designation][1].split(',')
+    let Regions: any
+    const Designation = interaction.values[0]
+    if (Raw[Designation][1] === '*') return await Collections.Tickets.updateOne({ channel: interaction.channel.id }, { $set: { designation: Designation, region: 'All' } }), Tickets.open(interaction, null, true)
+    if (!Raw[Designation][1].includes(',')) Regions = [Raw[Designation][1]]
+    else Regions = Raw[Designation][1].split(',')
 
 
     //? Create Controls
-    var Options = new MessageActionRow()
+    const Options = new ActionRowBuilder()
     Regions.forEach(region => {
         Options.addComponents(
-            new MessageButton()
-                .setCustomId(`ticket-region-${region}`)
+            new ButtonBuilder()
+                .setCustomId(`Tickets-region-${region}`)
                 .setLabel(region)
-                .setStyle('PRIMARY')
+                .setStyle(ButtonStyle.Primary)
         )
     })
 
@@ -41,7 +46,7 @@ module.exports = async (interaction) => {
     interaction.update({
         embeds: [{
             title: 'Select an Available Region',
-            color: "#3098d9",
+            color: resolveColor("#3098d9"),
             author: {
                 name: `${Raw[Designation][0]} - Support`
             }
@@ -50,6 +55,6 @@ module.exports = async (interaction) => {
 
 
     //? Update Ticket
-    await Tickets.updateOne({ channel: interaction.channel.id }, { $set: { designation: Designation } })
+    await Collections.Tickets.updateOne({ channel: interaction.channel.id }, { $set: { designation: Designation } })
 
 }

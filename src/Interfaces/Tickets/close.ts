@@ -1,5 +1,4 @@
 import Config from "@lib/config"
-import { TicketsConfig as Raw } from "@lib/tickets"
 
 import { Client } from "@app/discord"
 import { Collections } from "@app/mongo"
@@ -8,20 +7,23 @@ import { Tickets } from "@interfaces/index"
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "discord.js"
 
 
+
+const Raw = Config.ticket.options
+
 const Options = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('ticket-open')
+            .setCustomId('Tickets-open')
             .setLabel('🔓 Open Ticket')
             .setStyle(ButtonStyle.Success),
 
         new ButtonBuilder()
-            .setCustomId('ticket-archive')
+            .setCustomId('Tickets-archive')
             .setLabel('📂 Archive Ticket')
             .setStyle(ButtonStyle.Primary),
 
         new ButtonBuilder()
-            .setCustomId('ticket-delete')
+            .setCustomId('Tickets-delete')
             .setLabel('🛡️ Delete Ticket')
             .setStyle(ButtonStyle.Danger)
             .setDisabled(false)

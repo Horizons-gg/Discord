@@ -12,7 +12,7 @@ import { ActionRowBuilder, ButtonBuilder, SelectMenuBuilder, ButtonStyle, resolv
 const Options: any = new ActionRowBuilder()
     .addComponents(
         new SelectMenuBuilder()
-            .setCustomId('ticket-option')
+            .setCustomId('Tickets-option')
             .setPlaceholder('Please Select a Support Option...')
             .addOptions(Raw)
     )
@@ -20,7 +20,7 @@ const Options: any = new ActionRowBuilder()
 const Cancel = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('ticket-cancel')
+            .setCustomId('Tickets-cancel')
             .setLabel('Cancel Ticket')
             .setStyle(ButtonStyle.Danger)
     )
@@ -45,7 +45,7 @@ export async function main(interaction, flag) {
     //? Prepare Ticket
     let TicketNumber: number
     const Order: any = await Collections.Tickets.find().sort({ id: 1 }).toArray()
-    if (Order.length > 0) TicketNumber = Order[Order.length - 1]._id + 1
+    if (Order.length > 0) TicketNumber = Order[Order.length - 1].id + 1
     else TicketNumber = 1
 
 

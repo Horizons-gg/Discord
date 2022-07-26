@@ -1,5 +1,4 @@
 import Config from "@lib/config"
-import { TicketsConfig as Raw } from "@lib/tickets"
 
 import { Client } from "@app/discord"
 import { Collections } from "@app/mongo"
@@ -9,15 +8,17 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor, PermissionF
 
 
 
+const Raw = Config.ticket.options
+
 const Options = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('ticket-close')
+            .setCustomId('Tickets-close')
             .setLabel('🔒 Close Ticket')
             .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-            .setCustomId('ticket-alert')
+            .setCustomId('Tickets-alert')
             .setLabel('🛎️ Alert Staff')
             .setStyle(ButtonStyle.Secondary)
             .setDisabled(true)
@@ -107,7 +108,7 @@ export async function main(interaction, flag, fresh) {
         const List = new ActionRowBuilder()
             .addComponents(
                 new SelectMenuBuilder()
-                    .setCustomId('ticket-faq')
+                    .setCustomId('Tickets-faq')
                     .setPlaceholder('Select a FAQ to speed up the process!')
                     .addOptions(FAQArray)
             )
