@@ -1,9 +1,9 @@
 import Config from "@lib/config"
-import { TicketsConfig } from "@lib/tickets"
+import { TicketsConfig as Raw } from "@lib/tickets"
 
 import { Client } from "@app/discord"
 import { Collections } from "@app/mongo"
-import { Ticket as Tickets } from "@interfaces/ticket"
+import { Tickets } from "@interfaces/index"
 
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "discord.js"
 
@@ -35,27 +35,24 @@ export async function main(interaction) {
     const Ticket = await Collections.Tickets.findOne({ channel: interaction.channel.id })
     const Guild = Client.guilds.cache.get(Config.discord.guild)
 
-    if (!Ticket.owner) return Ticket.cancel(interaction)
+    if (!Ticket.owner) return Tickets.cancel(interaction)
     const User = Guild.members.cache.get(Ticket.owner) || await Guild.members.fetch(Ticket.owner).catch(() => console.log('Failed to fetch user'))
-    if (!User) return Ticket.cancel(interaction)
+    if (!User) return Tickets.cancel(interaction)
 
 
     //? Update Access
-    Guild.roles.cache.find(role => {
-        if (role.name !== "Receiving Support") return
-        User.roles.remove(role)
-    })
+    User.roles.remove(Guild.roles.cache.find(role => role.name == 'Receiving Support'))
 
 
     //? Update Channel
-    interaction.channel.edit({ parent: process.env.ticket.closed, lockPermissions: false })
+    interaction.channel.edit({ parent: Config.ticket.closed, lockPermissions: false })
 
 
     //? Update Controls
     interaction.update({
         embeds: [{
             title: "🔒 Ticket Closed",
-            color: '#f35252',
+            color: resolveColor('#f35252'),
             author: {
                 name: `${Raw[Ticket.designation][0]} - Support`
             },
@@ -75,7 +72,7 @@ export async function main(interaction) {
 
 
     //? Update Ticket
-    await Tickets.updateOne({ channel: interaction.channel.id }, { $set: { status: 'closed', closed: new Date() } })
+    await Collections.Tickets.updateOne({ channel: interaction.channel.id }, { $set: { status: 'closed', closed: new Date() } })
 
 
     //? Send Notification

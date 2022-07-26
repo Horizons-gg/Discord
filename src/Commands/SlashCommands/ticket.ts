@@ -1,4 +1,7 @@
-import { Ticket } from "@interfaces/ticket"
+import Config from "@lib/config"
+
+import { Collections } from "@app/mongo"
+import { Tickets } from "@interfaces/index"
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "discord.js"
 
 
@@ -30,7 +33,7 @@ export async function main(interaction) {
     }
 
     if (interaction.options._subcommand === 'create') {
-        require(`../../Ticket/create.js`)(interaction)
+        Tickets.create(interaction)
     }
 
 
@@ -39,7 +42,7 @@ export async function main(interaction) {
     if (interaction.options._subcommand === 'add') {
 
         //? Check if channel is a ticket
-        if (![process.env.ticket.open, process.env.ticket.closed].includes(interaction.channel.parentId)) return interaction.reply({ content: 'You can only use this command in a ticket!', ephemeral: true })
+        if (![Config.ticket.open, Config.ticket.closed].includes(interaction.channel.parentId)) return interaction.reply({ content: 'You can only use this command in a ticket!', ephemeral: true })
 
 
         //? Check if User was Mentioned
@@ -47,9 +50,8 @@ export async function main(interaction) {
 
 
         //? Prerequisites
-        var Tickets = await process.db.collection('tickets')
-        var Ticket = await Tickets.findOne({ channel: interaction.channel.id })
-        var User = interaction.options._hoistedOptions[0].member
+        const Ticket = await Collections.Tickets.findOne({ channel: interaction.channel.id })
+        const User = interaction.options._hoistedOptions[0].member
 
         if (Ticket.owner === User.id) return interaction.reply('You cannot add the ticket owner to the ticket.')
 
@@ -65,16 +67,15 @@ export async function main(interaction) {
     if (interaction.options._subcommand === 'remove') {
 
         //? Check if channel is a ticket
-        if (![process.env.ticket.open, process.env.ticket.closed].includes(interaction.channel.parentId)) return interaction.reply({ content: 'You can only use this command in a ticket!', ephemeral: true })
+        if (![Config.ticket.open, Config.ticket.closed].includes(interaction.channel.parentId)) return interaction.reply({ content: 'You can only use this command in a ticket!', ephemeral: true })
 
 
         //? Check if User was Mentioned
         if (!interaction.options._hoistedOptions[0]) return interaction.reply({ content: 'Please specify a user to add to the ticket.', ephemeral: true })
 
         //? Prerequisites
-        var Tickets = await process.db.collection('tickets')
-        var Ticket = await Tickets.findOne({ channel: interaction.channel.id })
-        var User = interaction.options._hoistedOptions[0].member
+        const Ticket = await Collections.Tickets.findOne({ channel: interaction.channel.id })
+        const User = interaction.options._hoistedOptions[0].member
 
         if (Ticket.owner === User.id) return interaction.reply('You cannot remove the ticket owner from the ticket.')
 

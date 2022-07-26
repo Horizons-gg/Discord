@@ -2,7 +2,7 @@ import Config from '@lib/config'
 import { Client } from '@app/discord'
 import { Collections } from '@app/mongo'
 
-import { main as Open } from './open'
+import { Tickets } from '@interfaces/index'
 
 
 
@@ -18,6 +18,6 @@ export async function main(interaction, flag) {
 
 
     //? Finalize Ticket
-    Open(interaction, flag, true)
+    Tickets.open(interaction, flag, true)
 
 }
