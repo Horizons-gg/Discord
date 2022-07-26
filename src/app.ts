@@ -64,6 +64,7 @@ Client.on('interactionCreate', (interaction: any) => {
         Interfaces[Flag[0]][Flag[1]](interaction, Flag)
     } catch {
         console.log(`[ERROR] Unknown Interface: ${Flag[0]}-${Flag[1]}`)
+        interaction.reply({ content: 'An error occurred while processing your command, this command may no longer be in use or is not yet implemented.', ephemeral: true })
     }
 
 })
