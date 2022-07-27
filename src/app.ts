@@ -9,20 +9,16 @@ import * as Discord from "discord.js"
 
 
 //!
-//! Discord.js
+//! Initialize App
 //!
 
-import { connect as ConnectToDiscord } from '@app/discord'
-ConnectToDiscord()
+import {connect as ConnectMongo} from '@app/mongo'
+import { connect as ConnectExpress } from '@app/express'
+import { connect as ConnectDiscord } from '@app/discord'
 
-
-
-//!
-//! MongoDb
-//!
-
-import * as Mongo from '@app/mongo'
-Mongo.connect()
+ConnectMongo()
+ConnectExpress()
+ConnectDiscord()
 
 
 

@@ -13,7 +13,7 @@ export interface Config {
     }
 
     roles: {
-        options: any
+        options: object
     }
 
     ticket: {
@@ -29,4 +29,12 @@ export interface Config {
             delete: [string]
         }
     }
+
+    application: {
+        role: string
+        options: object
+    }
+
+    servers: object
+    games: object
 }
