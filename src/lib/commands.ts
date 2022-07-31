@@ -77,11 +77,13 @@ const commands = [
                 .addStringOption(option => option.setName('host').setDescription('The server address and port of the server (Game: 0.0.0.0:1234 | Server: 0.0.0.0/domain.com)').setRequired(false))
                 .addStringOption(option => option.setName('method').setDescription('The Method the Bot Uses to Query Data (Only for Game Servers)').setRequired(false).addChoices(
                     { name: 'Valve Standard', value: 'valve' },
+                    { name: 'Arma 3', value: 'arma3' },
+                    { name: 'Eco', value: 'eco' },
                     { name: 'Minecraft', value: 'minecraft' },
-                    { name: 'Eco', value: 'eco' }
+                    { name: 'Squad', value: 'squad' }
                 ))
         )
-        
+
         .addSubcommand(subcommand => subcommand.setName('enable').setDescription('Enable a Bot on the Network').addUserOption(option => option.setName('bot').setDescription('Target Bot to be enabled').setRequired(true)))
         .addSubcommand(subcommand => subcommand.setName('disable').setDescription('Disable a Bot on the Network').addUserOption(option => option.setName('bot').setDescription('Target Bot to be disabled').setRequired(true))),
 

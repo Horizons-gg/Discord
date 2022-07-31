@@ -1,6 +1,7 @@
 import Config from '@lib/config'
 import { Client as client, GatewayIntentBits, ActivityType } from 'discord.js'
 import { Refresh } from '@lib/commands'
+import * as Methods from '@lib/GameMethods'
 import { app } from '@app/express'
 import { Collections } from '@app/mongo'
 
@@ -49,7 +50,7 @@ function MemberCount() {
 
 
 //? Network Bots
-const Bots = {}
+export const Bots = {}
 
 export function EnableBot(id: string) {
     return new Promise(async (resolve, reject) => {
@@ -59,6 +60,12 @@ export function EnableBot(id: string) {
         const DBCheck = await Collections.Bots.findOne({ id: id })
         if (!DBCheck) return reject(`<@${id}> is not in the database!`)
 
+        if (DBCheck.type === 'game') {
+            if (!DBCheck.method) return reject(`<@${id}>'s method is not configured!`), Collections.Bots.updateOne({ id: id }, { $set: { enabled: false } })
+            if (!DBCheck.host) return reject(`<@${id}>'s host is not configured!`), Collections.Bots.updateOne({ id: id }, { $set: { enabled: false } })
+        }
+
+
         Bots[id] = new client({ intents: [GatewayIntentBits.Guilds] })
 
         Bots[id].login(DBCheck.token).catch(error => reject(error))
@@ -66,6 +73,12 @@ export function EnableBot(id: string) {
         Bots[id].on('ready', () => {
             console.log(`Network Bot: ${Bots[id].user.tag} has started!`)
             resolve(`<@${id}> has successfully been enabled!`)
+
+            Client.user.setActivity('Preparing Bot...', { type: ActivityType.Watching })
+            Client.user.setStatus('idle')
+
+            if (DBCheck.type === 'game') Methods[DBCheck.method](id, DBCheck.host.split(':'))
+            // if (DBCheck.type === 'server') GameServer(Bots[id])
         })
 
         Collections.Bots.updateOne({ id: id }, { $set: { enabled: true } })
@@ -76,7 +89,7 @@ export function EnableBot(id: string) {
 export function DisableBot(id: string) {
     return new Promise(async (resolve, reject) => {
 
-        if (!Bots[id]) return reject(`<@${id}> is not already running!`)
+        if (!Bots[id]) return reject(`<@${id}> is not running!`)
 
         const DBCheck = await Collections.Bots.findOne({ id: id })
         if (!DBCheck) return reject(`<@${id}> is not in the database!`)

@@ -21,6 +21,5 @@ export function ValidateClient(id: string, token: string) {
         }
         )
 
-
     })
 }

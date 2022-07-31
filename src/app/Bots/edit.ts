@@ -1,3 +1,4 @@
+import { DisableBot } from '@app/discord'
 import { Collections } from '@app/mongo'
 import { ValidateClient } from '@lib/discord'
 import * as Discord from 'discord.js'
@@ -37,4 +38,6 @@ export async function main(interaction) {
             interaction.reply({ content: `An Error Occurred while attempting to edit <@${User.id}> on the database!\nPlease read the console logs for more information on the error.`, ephemeral: true })
             console.log(error)
         })
+
+    DisableBot(User.id).catch(error => console.log(error))
 }
