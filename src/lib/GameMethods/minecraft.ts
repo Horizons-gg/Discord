@@ -14,12 +14,12 @@ export function main(id: string, Host: Array<string>) {
         port: Host[1]
     }).then(state => {
         if (state.raw.vanilla.raw.players.online === 0) Client.user.setActivity('No Players Online', { type: Discord.ActivityType.Watching }), Client.user.setStatus('idle')
-        else Client.user.setActivity(`${state.raw.vanilla.raw.players.online}/${state.raw.vanilla.raw.players.max}`, { type: Discord.ActivityType.Watching }), Client.user.setStatus('online')
+        else Client.user.setActivity(`${state.raw.vanilla.raw.players.online} / ${state.raw.vanilla.raw.players.max} Players`, { type: Discord.ActivityType.Watching }), Client.user.setStatus('online')
     }).catch(error => {
         Client.user.setActivity({ name: 'Server Offline', type: Discord.ActivityType.Watching })
         Client.user.setStatus('dnd')
     }
     )
 
-    setTimeout(main.bind(null, id, Host), 1000 * 30)
+    setTimeout(main.bind(null, id, Host), 1000 * 10)
 }
