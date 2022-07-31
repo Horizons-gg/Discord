@@ -45,6 +45,47 @@ const commands = [
         ),
 
 
+    //? Network Bot Commands
+    new SlashCommandBuilder().setName('bot')
+        .setDescription('Commands related to extra Horizons Bots such as Game & Dedicated Server Bots')
+        .setDefaultMemberPermissions(8)
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('add')
+                .setDescription('Add a new bot to the network')
+                .addStringOption(option => option.setName('type').setDescription('Type of bot').setRequired(true).addChoices(
+                    { name: 'Game Bot', value: 'game' },
+                    { name: 'Dedicated Server Bot', value: 'server' }
+                ))
+                .addUserOption(option => option.setName('bot').setDescription('Target Bot to be added').setRequired(true))
+                .addStringOption(option => option.setName('token').setDescription('The Token for the Bot').setRequired(true))
+                .addStringOption(option => option.setName('note').setDescription('Add a note to this bot to help keep track of it').setRequired(true))
+        )
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('remove')
+                .setDescription('Remove a bot from the network')
+                .addUserOption(option => option.setName('bot').setDescription('Target Bot to be removed').setRequired(true))
+        )
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('edit')
+                .setDescription('Edit a bot in the network')
+                .addUserOption(option => option.setName('bot').setDescription('Target Bot to be edited').setRequired(true))
+                .addStringOption(option => option.setName('token').setDescription('The Token for the Bot').setRequired(false))
+                .addStringOption(option => option.setName('note').setDescription('The note for this bot that helps keep track of it').setRequired(false))
+                .addStringOption(option => option.setName('host').setDescription('The server address and port of the server (Game: 0.0.0.0:1234 | Server: 0.0.0.0/domain.com)').setRequired(false))
+                .addStringOption(option => option.setName('method').setDescription('The Method the Bot Uses to Query Data (Only for Game Servers)').setRequired(false).addChoices(
+                    { name: 'Valve Standard', value: 'valve' },
+                    { name: 'Minecraft', value: 'minecraft' },
+                    { name: 'Eco', value: 'eco' }
+                ))
+        )
+        
+        .addSubcommand(subcommand => subcommand.setName('enable').setDescription('Enable a Bot on the Network').addUserOption(option => option.setName('bot').setDescription('Target Bot to be enabled').setRequired(true)))
+        .addSubcommand(subcommand => subcommand.setName('disable').setDescription('Disable a Bot on the Network').addUserOption(option => option.setName('bot').setDescription('Target Bot to be disabled').setRequired(true))),
+
+
     //? Warning Commands
     new SlashCommandBuilder().setName('warn')
         .setDescription('Warn a user on the Network')
@@ -52,8 +93,6 @@ const commands = [
         .addStringOption(option => option.setName('reason').setDescription('Reason for warning').setRequired(true))
         .addIntegerOption(option => option.setName('violation').setDescription('Violation ID (Retrieve by using \`/violation fetch\`)').setRequired(true))
         .addIntegerOption(option => option.setName('rating').setDescription('Custom Violation Rating (1 Low-Risk | 10 High-Risk)').setRequired(false).setMinValue(0).setMaxValue(10)),
-
-    new ContextMenuCommandBuilder().setName('Warn').setType(3).setDefaultPermission(true),
 
 
     //? Violation Commands
@@ -87,7 +126,7 @@ const commands = [
         .setDescription('Generate System Statistic Screenshots')
         .addStringOption(option => option.setName('identification').setDescription('System Identification').setRequired(false))
 
-        
+
 ].map(command => command.toJSON())
 
 

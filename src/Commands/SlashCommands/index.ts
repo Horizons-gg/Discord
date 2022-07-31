@@ -1,4 +1,5 @@
-export { main as se } from './se'
+export { main as bot } from './bot'
 export { main as help } from './help'
-export { main as ticket } from './ticket'
 export { main as panel } from './panel'
+export { main as se } from './se'
+export { main as ticket } from './ticket'
