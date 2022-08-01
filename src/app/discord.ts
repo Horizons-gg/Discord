@@ -18,7 +18,7 @@ export function connect() {
             GatewayIntentBits.GuildMessages,
             GatewayIntentBits.GuildPresences,
             GatewayIntentBits.Guilds,
-            GatewayIntentBits.MessageContent
+            GatewayIntentBits.MessageContent,
         ]
     })
 

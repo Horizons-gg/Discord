@@ -39,13 +39,8 @@ export async function main(interaction, flag, fresh) {
 
 
     //? Update Access
-    await Channel.edit({
-        permissionOverwrites:[
-            {
-                id: User.id,
-                allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages]
-            }
-        ]
+    await Channel.permissionOverwrites.edit(User.id, {
+        'SendMessages': true
     })
 
     User.roles.add(Guild.roles.cache.find(role => role.name == 'Receiving Support'))

@@ -54,19 +54,17 @@ export async function main(interaction, flag) {
         name: `ticket-${User.user.username.replace(/[^a-zA-Z0-9]/g, '')}`,
         reason: `Opened Channel for Ticket #${TicketNumber}`,
         type: ChannelType.GuildText,
-        parent: Config.ticket.open,
-        permissionOverwrites: [
-            {
-                id: User.id,
-                allow: [PermissionFlagsBits.ViewChannel],
-                deny: [PermissionFlagsBits.SendMessages]
-            }
-        ]
+        parent: Config.ticket.open
+    })
+
+    Channel.permissionOverwrites.create(User.id, {
+        'ViewChannel': true,
+        'SendMessages': true
     })
 
 
     //? Send Control Panel
-    const Controls = await Channel.send({content: "_ _", components: [Options, Cancel] }).then(message => message.pin())
+    const Controls = await Channel.send({ content: "_ _", components: [Options, Cancel] }).then(message => message.pin())
 
 
     //? Create Ticket
