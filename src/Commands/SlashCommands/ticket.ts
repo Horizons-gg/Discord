@@ -2,7 +2,7 @@ import Config from "@lib/config"
 
 import { Collections } from "@app/mongo"
 import { Tickets } from "@interfaces/index"
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "discord.js"
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, resolveColor, TextChannel } from "discord.js"
 
 
 
@@ -52,12 +52,13 @@ export async function main(interaction, flag) {
         //? Prerequisites
         const Ticket = await Collections.Tickets.findOne({ channel: interaction.channel.id })
         const User = interaction.options._hoistedOptions[0].member
+        const Channel: TextChannel = interaction.channel
 
         if (Ticket.owner === User.id) return interaction.reply('You cannot add the ticket owner to the ticket.')
 
-        interaction.channel.permissionOverwrites.edit(User, {
-            VIEW_CHANNEL: true,
-            SEND_MESSAGES: true
+        Channel.permissionOverwrites.create(User.id, {
+            'ViewChannel': true,
+            'SendMessages': true
         })
 
         interaction.reply({ embeds: [{ "description": `✅ <@${User.id}> has been granted access to this Ticket!` }] })
@@ -76,10 +77,11 @@ export async function main(interaction, flag) {
         //? Prerequisites
         const Ticket = await Collections.Tickets.findOne({ channel: interaction.channel.id })
         const User = interaction.options._hoistedOptions[0].member
+        const Channel: TextChannel = interaction.channel
 
         if (Ticket.owner === User.id) return interaction.reply('You cannot remove the ticket owner from the ticket.')
 
-        if (interaction.channel.permissionOverwrites.cache.get(User.id)) interaction.channel.permissionOverwrites.cache.get(User.id).delete()
+        if (interaction.channel.permissionOverwrites.cache.get(User.id)) Channel.permissionOverwrites.delete(User.id)
         else return interaction.reply({ content: 'User does not exist in this ticket.', ephemeral: true })
 
         interaction.reply({ embeds: [{ "description": `❌ <@${User.id}>'s access to this Ticket has been revoked!` }] })

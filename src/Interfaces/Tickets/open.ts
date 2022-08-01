@@ -39,13 +39,8 @@ export async function main(interaction, flag, fresh) {
 
 
     //? Update Access
-    await Channel.edit({
-        permissionOverwrites:[
-            {
-                id: User.id,
-                allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages]
-            }
-        ]
+    await Channel.permissionOverwrites.edit(User.id, {
+        'SendMessages': true
     })
 
     User.roles.add(Guild.roles.cache.find(role => role.name == 'Receiving Support'))
@@ -67,7 +62,9 @@ export async function main(interaction, flag, fresh) {
                 { name: 'Ticker Owner', value: `<@${User.id}>`, inline: true },
                 { name: 'Designation', value: `\`${Raw[Ticket.designation][0]}\``, inline: true },
                 { name: 'Region', value: `\`${Ticket.region}\``, inline: true },
-                { name: 'Created', value: `<t:${Math.floor(new Date(Ticket.created).getTime() / 1000)}:F>`, inline: true }
+                { name: 'Ticket Number', value: `\`#${Ticket.number.toString().padStart(5, '0')}\``, inline: true },
+                { name: 'Ticket UID', value: `\`${Ticket._id.toString()}\``, inline: true },
+                { name: 'Created', value: `<t:${Math.floor(new Date(Ticket.created).getTime() / 1000)}:F>`, inline: false }
             ],
             thumbnail: {
                 url: User.user.avatarURL()
