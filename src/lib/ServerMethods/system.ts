@@ -1,10 +1,11 @@
+import { Systems } from '@api/servers'
 import { Bots } from '@app/discord'
 import * as Discord from 'discord.js'
 
 let Mode = {}
 
 
-export function main(id: string, Host: string) {
+export function main(id: string, Host: string, Tag: string) {
 
     if (!Bots[id]) return
     const Client = Bots[id]
@@ -15,6 +16,9 @@ export function main(id: string, Host: string) {
     fetch(`http://${Host}`)
         .then(res => res.json())
         .then(json => {
+
+            Systems[Tag] = json
+
             setTimeout(main.bind(null, id, Host), 1000 * 10)
             Client.user.setStatus('online')
 
@@ -25,7 +29,7 @@ export function main(id: string, Host: string) {
             }
             if (Mode[id] === 1) {
                 Mode[id] = 2
-                Client.user.setActivity(`${Math.round(json.CPU.usage)}% CPU Usage`)
+                Client.user.setActivity(`${Math.round(json.CPU.usage)}% CPU Usage`, { type: Discord.ActivityType.Watching })
                 return
             }
             if (Mode[id] === 2) {
@@ -35,6 +39,9 @@ export function main(id: string, Host: string) {
             }
         })
         .catch(err => {
+
+            Systems[id] = null
+
             Client.user.setStatus('dnd')
             Client.user.setActivity('Connection Error', { type: Discord.ActivityType.Watching })
         })

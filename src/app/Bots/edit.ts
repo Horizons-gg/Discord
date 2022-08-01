@@ -18,13 +18,15 @@ export async function main(interaction) {
     //? Cycle through each edit option
     const Update = {}
 
-    await interaction.options._hoistedOptions.forEach(option => {
+    await interaction.options._hoistedOptions.forEach(async option => {
 
         if (option.name === 'token') ValidateClient(User.id, option.value)
             .then(() => Update['token'] = option.value)
             .catch(error => console.log(error))
 
-        if (option.name === 'tag') if (/^[a-zA-Z0-9_]+$/.test(option.value)) Update['tag'] = option.value.toLowerCase()
+        if (option.name === 'tag') {
+            if (/^[a-zA-Z0-9_]+$/.test(option.value)) if (!await Collections.Bots.findOne({ tag: option.value.toLowerCase() })) Update['tag'] = option.value.toLowerCase()
+        }
 
         if (option.name === 'host') Update['host'] = option.value
 
@@ -41,8 +43,3 @@ export async function main(interaction) {
 
     DisableBot(User.id).catch(error => console.log(error))
 }
-
-
-
-
-// TODO: Make sure user cannot add a tag that already exists

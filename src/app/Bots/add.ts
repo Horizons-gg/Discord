@@ -6,7 +6,7 @@ import { ValidateClient } from "@lib/discord"
 import * as Discord from 'discord.js'
 
 
-export function main(interaction) {
+export async function main(interaction) {
     const Data = interaction.options._hoistedOptions
 
     const Type: string = Data[0].value
@@ -17,6 +17,7 @@ export function main(interaction) {
 
     //? Validate the Tag
     if (!/^[a-zA-Z0-9_]+$/.test(Tag)) return interaction.reply({ content: `<@${User.id}>'s Tag is invalid!`, ephemeral: true })
+    if (await Collections.Bots.findOne({ tag: Tag })) return interaction.reply({ content: `<@${User.id}> cannot use the tag: "${Tag}" as another bot already has this tag!`, ephemeral: true })
 
 
     //? Validate that the User is a Bot

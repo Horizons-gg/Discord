@@ -1,7 +1,7 @@
 import Config from '@lib/config'
 import { Client as client, GatewayIntentBits, ActivityType } from 'discord.js'
 import { Refresh } from '@lib/commands'
-import * as Methods from '@lib/GameMethods'
+import * as Methods from '@lib/ServerMethods'
 import { app } from '@app/express'
 import { Collections } from '@app/mongo'
 
@@ -51,10 +51,6 @@ function MemberCount() {
 
 //? Network Bots
 export const Bots = {}
-export let API = {
-    servers: {},
-    games: {}
-}
 
 export function EnableBot(id: string) {
     return new Promise(async (resolve, reject) => {
@@ -81,8 +77,8 @@ export function EnableBot(id: string) {
             Client.user.setActivity('Preparing Bot...', { type: ActivityType.Watching })
             Client.user.setStatus('idle')
 
-            if (DBCheck.type === 'game') Methods[DBCheck.method](id, DBCheck.host.split(':'))
-            if (DBCheck.type === 'server') Methods.system(id, DBCheck.host)
+            if (DBCheck.type === 'game') Methods[DBCheck.method](id, DBCheck.host.split(':'), DBCheck.tag)
+            if (DBCheck.type === 'server') Methods.system(id, DBCheck.host, DBCheck.tag)
         })
 
         Collections.Bots.updateOne({ id: id }, { $set: { enabled: true } })

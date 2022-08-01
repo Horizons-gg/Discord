@@ -1,10 +1,11 @@
+import { Games } from '@api/servers'
 import { Bots } from '@app/discord'
 import * as Discord from 'discord.js'
 
 let Mode = {}
 
 
-export function main(id: string, Host: Array<string>) {
+export function main(id: string, Host: Array<string>, Tag: string) {
 
     if (!Bots[id]) return
     const Client = Bots[id]
@@ -18,6 +19,8 @@ export function main(id: string, Host: Array<string>) {
         fetch(`http://${Host[0]}:${Host[1]}/info`)
             .then(res => res.json())
             .then(body => {
+                Games[Tag] = body
+
                 if (body.OnlinePlayers > 0) {
                     Client.user.setActivity(`${body.OnlinePlayers} / ${body.TotalPlayers} Players`, { type: Discord.ActivityType.Watching })
                     Client.user.setStatus('online')
@@ -27,6 +30,8 @@ export function main(id: string, Host: Array<string>) {
                 }
             })
             .catch(() => {
+                Games[Tag] = null
+
                 Client.user.setActivity(`Server Offline`, { type: Discord.ActivityType.Watching })
                 Client.user.setStatus('dnd')
             })

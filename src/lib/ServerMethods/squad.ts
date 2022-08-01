@@ -1,3 +1,4 @@
+import { Games } from '@api/servers'
 import { Bots } from '@app/discord'
 import * as Gamedig from 'gamedig'
 import * as Discord from 'discord.js'
@@ -5,7 +6,7 @@ import * as Discord from 'discord.js'
 let Mode = {}
 
 
-export async function main(id: string, Host: Array<string>) {
+export async function main(id: string, Host: Array<string>, Tag: string) {
 
     if (!Bots[id]) return
     const Client = Bots[id]
@@ -23,6 +24,8 @@ export async function main(id: string, Host: Array<string>) {
             maxAttempts: 3,
             socketTimeout: 3000
         }).then((state) => {
+            Games[Tag] = state
+
             if (state.raw.numplayers > 0) {
                 Client.user.setActivity(`${state.raw.numplayers} / ${state.maxplayers} Players`, { type: Discord.ActivityType.Watching })
                 Client.user.setStatus('online')
@@ -32,9 +35,11 @@ export async function main(id: string, Host: Array<string>) {
                 Client.user.setStatus('idle')
             }
         }).catch(() => {
+            Games[Tag] = null
+
             Client.user.setActivity(`Server Offline`, { type: Discord.ActivityType.Watching })
             Client.user.setStatus('dnd')
-        });
+        })
         return setTimeout(main.bind(null, id, Host), 1000 * 8)
     }
 
@@ -52,7 +57,7 @@ export async function main(id: string, Host: Array<string>) {
             else Client.user.setActivity(`Jensens Range`, { type: Discord.ActivityType.Competing })
         }).catch(() => {
             Client.user.setActivity(`Server Offline`, { type: Discord.ActivityType.Watching })
-        });
+        })
         return setTimeout(main.bind(null, id, Host), 1000 * 5)
     }
 
@@ -70,7 +75,7 @@ export async function main(id: string, Host: Array<string>) {
             else Client.user.setActivity(`${state.map.split('_')[1].split('-').join(' vs ')}`, { type: Discord.ActivityType.Watching })
         }).catch(() => {
             Client.user.setActivity(`Server Offline`, { type: Discord.ActivityType.Watching })
-        });
+        })
         return setTimeout(main.bind(null, id, Host), 1000 * 5)
     }
 
