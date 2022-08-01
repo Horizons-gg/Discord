@@ -44,14 +44,14 @@ export async function main(interaction, flag) {
 
     //? Prepare Ticket
     let TicketNumber: number
-    const Order: any = await Collections.Tickets.find().sort({ id: 1 }).toArray()
-    if (Order.length > 0) TicketNumber = Order[Order.length - 1].id + 1
+    const Order: any = await Collections.Tickets.find().sort({ number: 1 }).toArray()
+    if (Order.length > 0) TicketNumber = Order[Order.length - 1].number + 1
     else TicketNumber = 1
 
 
     //? Create Channel
     const Channel = await Guild.channels.create({
-        name: `ticket-${zeroPad(TicketNumber, 3)}`,
+        name: `ticket-${User.user.username.replace(/[^a-zA-Z0-9]/g, '')}`,
         reason: `Opened Channel for Ticket #${TicketNumber}`,
         type: ChannelType.GuildText,
         parent: Config.ticket.open,
@@ -71,7 +71,7 @@ export async function main(interaction, flag) {
 
     //? Create Ticket
     await Collections.Tickets.insertOne({
-        id: TicketNumber,
+        number: TicketNumber,
         owner: User.id,
         status: 'open',
         channel: Channel.id,
@@ -89,7 +89,3 @@ export async function main(interaction, flag) {
     await interaction.reply({ content: `Your ticket has been opened in <#${Channel.id}>, please select an option from the menu to continue.`, ephemeral: true })
 
 }
-
-
-
-const zeroPad = (num, places) => String(num).padStart(places, '0')
