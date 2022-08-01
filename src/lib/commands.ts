@@ -59,7 +59,7 @@ const commands = [
                 ))
                 .addUserOption(option => option.setName('bot').setDescription('Target Bot to be added').setRequired(true))
                 .addStringOption(option => option.setName('token').setDescription('The Token for the Bot').setRequired(true))
-                .addStringOption(option => option.setName('note').setDescription('Add a note to this bot to help keep track of it').setRequired(true))
+                .addStringOption(option => option.setName('tag').setDescription('Add a tag to this bot to help keep track of it (Must be unique and have no spaces)').setRequired(true))
         )
 
         .addSubcommand(subcommand =>
@@ -73,7 +73,7 @@ const commands = [
                 .setDescription('Edit a bot in the network')
                 .addUserOption(option => option.setName('bot').setDescription('Target Bot to be edited').setRequired(true))
                 .addStringOption(option => option.setName('token').setDescription('The Token for the Bot').setRequired(false))
-                .addStringOption(option => option.setName('note').setDescription('The note for this bot that helps keep track of it').setRequired(false))
+                .addStringOption(option => option.setName('tag').setDescription('The tag for this bot that helps keep track of it (Must be unique and have no spaces)').setRequired(false))
                 .addStringOption(option => option.setName('host').setDescription('The server address and port of the server (Game: 0.0.0.0:1234 | Server: 0.0.0.0/domain.com)').setRequired(false))
                 .addStringOption(option => option.setName('method').setDescription('The Method the Bot Uses to Query Data (Only for Game Servers)').setRequired(false).addChoices(
                     { name: 'Valve Standard', value: 'valve' },

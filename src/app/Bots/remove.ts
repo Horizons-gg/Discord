@@ -13,7 +13,7 @@ export async function main(interaction) {
     const Guild = Client.guilds.cache.get(Config.discord.guild)
     const Bot = Guild.members.cache.get(User.id) || await Guild.members.fetch(User.id)
 
-    DisableBot(User.id)
+    DisableBot(User.id).catch(error => console.log(`Network Bot: ${error}`))
 
     Bot.roles.remove(Guild.roles.cache.filter(role => ['Bots', 'Game Servers', 'Dedicated Servers'].includes(role.name)))
     Collections.Bots.deleteOne({ id: User.id })

@@ -10,7 +10,6 @@ export async function main(id: string, Host: Array<string>) {
     if (!Bots[id]) return
     const Client = Bots[id]
 
-
     if (!Mode[id]) Mode[id] = 0
 
 

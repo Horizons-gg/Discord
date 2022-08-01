@@ -12,7 +12,11 @@ export function main(interaction) {
     const Type: string = Data[0].value
     const User: Discord.User = Data[1].user
     const Token: string = Data[2].value
-    const Note: string = Data[3].value
+    const Tag: string = Data[3].value.toLowerCase()
+
+
+    //? Validate the Tag
+    if (!/^[a-zA-Z0-9_]+$/.test(Tag)) return interaction.reply({ content: `<@${User.id}>'s Tag is invalid!`, ephemeral: true })
 
 
     //? Validate that the User is a Bot
@@ -21,14 +25,14 @@ export function main(interaction) {
 
     //? Validate that the Token is valid to the selected bot
     ValidateClient(User.id, Token)
-        .then(() => AddBot(interaction, Type, User, Token, Note))
+        .then(() => AddBot(interaction, Type, User, Token, Tag))
         .catch(error => interaction.reply({ content: error, ephemeral: true }))
 
 }
 
 
 
-async function AddBot(interaction, Type: string, Bot: Discord.User, Token: string, Note: string) {
+async function AddBot(interaction, Type: string, Bot: Discord.User, Token: string, Tag: string) {
     
     const Guild = Client.guilds.cache.get(Config.discord.guild)
     const User = Guild.members.cache.get(Bot.id) || await Guild.members.fetch(Bot.id)
@@ -44,7 +48,7 @@ async function AddBot(interaction, Type: string, Bot: Discord.User, Token: strin
         type: Type,
         id: Bot.id,
         token: Token,
-        note: Note,
+        tag: Tag,
         enabled: false
     })
         .then(() => interaction.reply({ content: `<@${Bot.id}> was successfully added as a bot to the server!`, ephemeral: true }))

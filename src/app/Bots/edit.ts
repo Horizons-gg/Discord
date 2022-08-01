@@ -24,7 +24,7 @@ export async function main(interaction) {
             .then(() => Update['token'] = option.value)
             .catch(error => console.log(error))
 
-        if (option.name === 'note') Update['note'] = option.value
+        if (option.name === 'tag') if (/^[a-zA-Z0-9_]+$/.test(option.value)) Update['tag'] = option.value.toLowerCase()
 
         if (option.name === 'host') Update['host'] = option.value
 
@@ -41,3 +41,8 @@ export async function main(interaction) {
 
     DisableBot(User.id).catch(error => console.log(error))
 }
+
+
+
+
+// TODO: Make sure user cannot add a tag that already exists

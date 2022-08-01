@@ -51,6 +51,10 @@ function MemberCount() {
 
 //? Network Bots
 export const Bots = {}
+export let API = {
+    servers: {},
+    games: {}
+}
 
 export function EnableBot(id: string) {
     return new Promise(async (resolve, reject) => {
@@ -78,7 +82,7 @@ export function EnableBot(id: string) {
             Client.user.setStatus('idle')
 
             if (DBCheck.type === 'game') Methods[DBCheck.method](id, DBCheck.host.split(':'))
-            // if (DBCheck.type === 'server') GameServer(Bots[id])
+            if (DBCheck.type === 'server') Methods.system(id, DBCheck.host)
         })
 
         Collections.Bots.updateOne({ id: id }, { $set: { enabled: true } })
