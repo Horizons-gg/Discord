@@ -51,7 +51,7 @@ export async function main(interaction, flag) {
 
     //? Create Channel
     const Channel = await Guild.channels.create({
-        name: `ticket-${User.user.username.replace(/[^a-zA-Z0-9]/g, '')}`,
+        name: `ticket-${User.user.username.replace(/[^a-zA-Z0-9]/g, '') || TicketNumber}`,
         reason: `Opened Channel for Ticket #${TicketNumber}`,
         type: ChannelType.GuildText,
         parent: Config.ticket.open

@@ -25,12 +25,12 @@ const commands = [
         .setDescription('Commands related to tickets')
 
         .addSubcommand(subcommand =>
-            subcommand.setName('assist').
-                setDescription('Replies with Support Ticket Quick access to assist confused users')
+            subcommand.setName('assist')
+                .setDescription('Replies with Support Ticket Quick access to assist confused users')
         )
         .addSubcommand(subcommand =>
-            subcommand.setName('create').
-                setDescription('Creates a new ticket under your account')
+            subcommand.setName('create')
+                .setDescription('Creates a new ticket under your account')
         )
 
         .addSubcommand(subcommand =>
@@ -43,6 +43,23 @@ const commands = [
                 .setDescription('Revoke a users access to this ticket')
                 .addUserOption(option => option.setName('user').setDescription('Target User').setRequired(true))
         ),
+
+    //!
+    //TODO: Ticket Priorities
+    //!
+
+
+    //? Role Commands
+    new SlashCommandBuilder()
+        .setName('roles')
+        .setDescription('Commands related to roles')
+        .setDefaultMemberPermissions(8)
+
+        .addSubcommand(subcommand => 
+            subcommand.setName('channel')
+                .setDescription('Sets the channel for role selection')
+                .addChannelOption(option => option.setName('channel').setDescription('Target Channel to be used for role selection').setRequired(true))
+            ),
 
 
     //? Network Bot Commands
