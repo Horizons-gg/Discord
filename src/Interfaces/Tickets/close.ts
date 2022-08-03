@@ -64,7 +64,7 @@ export async function main(interaction) {
                 { name: 'Region', value: `\`${Ticket.region}\``, inline: true },
                 { name: 'Ticket Number', value: `\`#${Ticket.number.toString().padStart(5, '0')}\``, inline: true },
                 { name: 'Ticket UID', value: `\`${Ticket._id.toString()}\``, inline: true },
-                { name: '\u200b', value: `\u200b`, inline: true },
+                { name: 'Ticket Priority', value: `\`${Ticket.priority || 'N/A'}\``, inline: true },
                 { name: 'Created', value: `<t:${Math.floor(new Date(Ticket.created).getTime() / 1000)}:F>`, inline: true },
                 { name: 'Closed', value: `<t:${Math.floor(new Date().getTime() / 1000)}:R>`, inline: true }
             ],

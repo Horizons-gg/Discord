@@ -16,12 +16,12 @@ export async function main(interaction) {
     const User = interaction.options._hoistedOptions[0].member
     const Channel: TextChannel = interaction.channel
 
-    if (Ticket.owner === User.id) return interaction.reply('You cannot remove the ticket owner from the ticket.')
+    if (Ticket.owner === User.id) return interaction.reply({ content: 'You cannot remove the ticket owner from the ticket.', ephemeral: true })
 
     if (interaction.channel.permissionOverwrites.cache.get(User.id)) Channel.permissionOverwrites.delete(User.id)
     else return interaction.reply({ content: 'User does not exist in this ticket.', ephemeral: true })
 
     interaction.reply({ embeds: [{ "description": `❌ <@${User.id}>'s access to this Ticket has been revoked!` }] })
-    User.send({ embeds: [{ "description": `⛔ <@${interaction.user.id}> has revoked your access to Ticket <#${interaction.channel.id}>` }] }).catch(() => console.log('Failed to send direct message'))
+    User.send({ embeds: [{ "description": `⛔ <@${interaction.user.id}> has revoked your access from Ticket <#${interaction.channel.id}>` }] }).catch(() => console.log('Failed to send direct message'))
     
 }

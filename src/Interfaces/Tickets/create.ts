@@ -76,6 +76,7 @@ export async function main(interaction, flag) {
         controls: Controls.id,
         designation: null,
         region: null,
+        priority: null,
         created: new Date(),
         closed: null,
         users: {},

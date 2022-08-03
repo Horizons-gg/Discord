@@ -42,11 +42,17 @@ const commands = [
             subcommand.setName('remove')
                 .setDescription('Revoke a users access to this ticket')
                 .addUserOption(option => option.setName('user').setDescription('Target User').setRequired(true))
-        ),
+        )
 
-    //!
-    //TODO: Ticket Priorities
-    //!
+        .addSubcommand(subcommand =>
+            subcommand.setName('priority')
+                .setDescription('Set the priority of this ticket')
+                .addStringOption(option => option.setName('level').setDescription('Specify to level of priority for this ticket').setRequired(true).addChoices(
+                    {name: 'Low Priority', value: 'low'},
+                    {name: 'Medium Priority', value: 'med'},
+                    {name: 'High Priority', value: 'high'}
+                ))
+        ),
 
 
     //? Role Commands
@@ -55,11 +61,11 @@ const commands = [
         .setDescription('Commands related to roles')
         .setDefaultMemberPermissions(8)
 
-        .addSubcommand(subcommand => 
+        .addSubcommand(subcommand =>
             subcommand.setName('channel')
                 .setDescription('Sets the channel for role selection')
                 .addChannelOption(option => option.setName('channel').setDescription('Target Channel to be used for role selection').setRequired(true))
-            ),
+        ),
 
 
     //? Network Bot Commands

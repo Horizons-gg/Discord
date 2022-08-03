@@ -17,7 +17,7 @@ export async function main(interaction) {
     const User = interaction.options._hoistedOptions[0].member
     const Channel: TextChannel = interaction.channel
 
-    if (Ticket.owner === User.id) return interaction.reply('You cannot add the ticket owner to the ticket.')
+    if (Ticket.owner === User.id) return interaction.reply({ content: 'You cannot add the ticket owner to the ticket.', ephemeral: true })
 
     Channel.permissionOverwrites.create(User.id, {
         'ViewChannel': true,
