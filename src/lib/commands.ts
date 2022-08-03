@@ -57,7 +57,7 @@ const commands = [
         .addSubcommand(subcommand =>
             subcommand.setName('description')
                 .setDescription('Set the description for this ticket')
-                .addStringOption(option => option.setName('description').setMaxLength(1024).setRequired(true))
+                .addStringOption(option => option.setName('description').setDescription('Set the description for this ticket').setMaxLength(1024).setRequired(true))
         ),
 
 
