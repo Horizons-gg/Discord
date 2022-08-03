@@ -77,6 +77,7 @@ export async function main(interaction, flag) {
         designation: null,
         region: null,
         priority: null,
+        description: null,
         created: new Date(),
         closed: null,
         users: {},

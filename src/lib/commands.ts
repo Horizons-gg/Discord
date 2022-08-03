@@ -48,10 +48,16 @@ const commands = [
             subcommand.setName('priority')
                 .setDescription('Set the priority of this ticket')
                 .addStringOption(option => option.setName('level').setDescription('Specify to level of priority for this ticket').setRequired(true).addChoices(
-                    {name: 'Low Priority', value: 'low'},
-                    {name: 'Medium Priority', value: 'med'},
-                    {name: 'High Priority', value: 'high'}
+                    { name: 'Low Priority', value: 'low' },
+                    { name: 'Medium Priority', value: 'med' },
+                    { name: 'High Priority', value: 'high' }
                 ))
+        )
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('description')
+                .setDescription('Set the description for this ticket')
+                .addStringOption(option => option.setName('description').setMaxLength(1024).setRequired(true))
         ),
 
 
