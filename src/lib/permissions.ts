@@ -1,6 +1,5 @@
 import Config from '@lib/config'
 import { Client } from '@app/discord'
-import * as Discord from 'discord.js'
 
 export async function Check(User, Roles: [string]) {
     return new Promise(async (resolve, reject) => {

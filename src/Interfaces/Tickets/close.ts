@@ -2,7 +2,7 @@ import Config from "@lib/config"
 
 import { Client } from "@app/discord"
 import { Collections } from "@app/mongo"
-import { Tickets } from "@interfaces/index"
+import { tickets as Tickets } from "@interfaces/index"
 
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "discord.js"
 
@@ -13,17 +13,17 @@ const Raw = Config.ticket.options
 const Options = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('Tickets-open')
+            .setCustomId('tickets-open')
             .setLabel('🔓 Open Ticket')
             .setStyle(ButtonStyle.Success),
 
         new ButtonBuilder()
-            .setCustomId('Tickets-archive')
+            .setCustomId('tickets-archive')
             .setLabel('📂 Archive Ticket')
             .setStyle(ButtonStyle.Primary),
 
         new ButtonBuilder()
-            .setCustomId('Tickets-delete')
+            .setCustomId('tickets-delete')
             .setLabel('🛡️ Delete Ticket')
             .setStyle(ButtonStyle.Danger)
             .setDisabled(false)

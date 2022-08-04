@@ -2,7 +2,7 @@ import Config from '@lib/config'
 import { Client } from '@app/discord'
 import { Collections } from '@app/mongo'
 
-import { Tickets } from '@interfaces/index'
+import { tickets as Tickets } from '@interfaces/index'
 
 
 

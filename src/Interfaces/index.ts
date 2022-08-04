@@ -1,2 +1,3 @@
-export * as Roles from './Roles'
-export * as Tickets from './Tickets'
+export * as application from './Application'
+export * as roles from './Roles'
+export * as tickets from './Tickets'

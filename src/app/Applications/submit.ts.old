@@ -1,0 +1,107 @@
+import { Positions } from '.'
+import Config from '@lib/config'
+
+import * as Discord from 'discord.js'
+import { Client } from '@app/discord'
+import { Collections } from '@app/mongo'
+
+
+
+
+export async function main(interaction) {
+
+
+    const Guild = Client.guilds.cache.get(Config.discord.guild)
+    const User: Discord.GuildMember = await Guild.members.fetch(interaction.user.id)
+
+    const PrevApp = await Collections.Applications.findOne({ "user.id": User.id })
+    if (PrevApp) if (PrevApp.status === 'pending') return interaction.reply({ content: 'You already have a pending application!', ephemeral: true })
+
+
+    let Application = {
+        user: interaction.user,
+        status: 'pending',
+
+        position: null,
+        region: null,
+        age: null,
+        name: null,
+        about: null,
+        availability: null,
+        experience: null,
+        skills: null,
+        referral: null,
+        resume: null
+    }
+
+    interaction.options._hoistedOptions.forEach(option => {
+        switch (option.name) {
+            case 'position': Application.position = option.value
+                break
+
+            case 'region': Application.region = option.value
+                break
+
+            case 'age': Application.age = option.value
+                break
+
+            case 'name': Application.name = option.value
+                break
+
+            case 'about': Application.about = option.value
+                break
+
+            case 'availability': Application.availability = option.value
+                break
+
+            case 'experience': Application.experience = option.value
+                break
+
+            case 'skills': Application.skills = option.value
+                break
+
+            case 'referral': Application.referral = option.user.id
+                break
+
+
+            default: break
+        }
+    })
+
+    Collections.Applications.insertOne(Application)
+        .then(res => {
+
+            const Channel: any = Guild.channels.cache.find(channel => channel.name === '📰forms')
+
+            Channel.send({
+                embeds: [{
+                    title: `${User.user.tag}'s Staff Application`,
+                    author: {
+                        name: Positions[Application.position],
+                    },
+                    description: `<@${User.id}> has submitted an application for \`${Positions[Application.position]}.\`\n
+                    **Region:** \`${Application.region}\`
+                    **Age:** \`${Application.age}\`
+                    **Preferred Name:** \`${Application.name}\`
+                    **Availability:** \`${Application.availability}\`
+                    **Experience:** \`${Application.experience}\`
+                    **Skills:** \`${Application.skills}\`
+                    `,
+                    fields: [
+                        { name: 'Statement', value: Application.about, inline: false },
+                        { name: 'Referral', value: Application.referral ? `<@${Application.referral}>` : 'N/A', inline: false },
+                    ],
+                    thumbnail: { url: User.user.displayAvatarURL({ size: 512, extension: 'jpg' }) },
+                    color: Discord.resolveColor('#ff26ac')
+                }],
+                components: []
+            })
+
+            interaction.reply({ content: `Your Application has been Submitted!\nWe'll get back to you as soon as we can, make sure that you have enabled DM's from Server Members in this Servers Privacy Settings!\n\n>>> **Application ID:** \`${res.insertedId.toString()}\``, ephemeral: true })
+
+        })
+        .catch(err => {
+            console.log(err)
+            interaction.reply({ content: `An error occurred while processing your application, please contact an administrator and provide the following error log.\n\n\`\`\`js\n${err}\`\`\``, ephemeral: true })
+        })
+}

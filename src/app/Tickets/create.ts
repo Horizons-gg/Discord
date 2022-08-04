@@ -1,4 +1,4 @@
-import { Tickets } from "@interfaces/index"
+import { tickets as Tickets } from "@interfaces/index"
 
 
 

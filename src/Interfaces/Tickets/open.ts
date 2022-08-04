@@ -2,7 +2,7 @@ import Config from "@lib/config"
 
 import { Client } from "@app/discord"
 import { Collections } from "@app/mongo"
-import { Tickets } from "@interfaces/index"
+import { tickets as Tickets } from "@interfaces/index"
 
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor, PermissionFlagsBits, TextChannel, SelectMenuBuilder, Message } from "discord.js"
 
@@ -13,12 +13,12 @@ const Raw = Config.ticket.options
 const Options: any = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('Tickets-close')
+            .setCustomId('tickets-close')
             .setLabel('🔒 Close Ticket')
             .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-            .setCustomId('Tickets-alert')
+            .setCustomId('tickets-alert')
             .setLabel('🛎️ Alert Staff')
             .setStyle(ButtonStyle.Secondary)
             .setDisabled(true)

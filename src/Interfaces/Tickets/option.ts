@@ -1,7 +1,7 @@
 import Config from "@lib/config"
 
 import { Collections } from "@app/mongo"
-import { Tickets } from "@interfaces/index"
+import { tickets as Tickets } from "@interfaces/index"
 
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor, PermissionFlagsBits, TextChannel, SelectMenuBuilder } from "discord.js"
 
@@ -12,7 +12,7 @@ const Raw = Config.ticket.options
 const Cancel = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('Tickets-cancel')
+            .setCustomId('tickets-cancel')
             .setLabel('Cancel Ticket')
             .setStyle(ButtonStyle.Danger)
     )
@@ -34,7 +34,7 @@ export async function main(interaction) {
     Regions.forEach(region => {
         Options.addComponents(
             new ButtonBuilder()
-                .setCustomId(`Tickets-region-${region}`)
+                .setCustomId(`tickets-region-${region}`)
                 .setLabel(region)
                 .setStyle(ButtonStyle.Primary)
         )

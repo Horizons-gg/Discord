@@ -3,7 +3,6 @@ import { TicketsConfig as Raw } from "@lib/config"
 
 import { Client } from "@app/discord"
 import { Collections } from "@app/mongo"
-import { Tickets } from "@interfaces/index"
 
 import { ActionRowBuilder, ButtonBuilder, SelectMenuBuilder, ButtonStyle, resolveColor, ChannelType, PermissionFlagsBits } from "discord.js"
 
@@ -12,7 +11,7 @@ import { ActionRowBuilder, ButtonBuilder, SelectMenuBuilder, ButtonStyle, resolv
 const Options: any = new ActionRowBuilder()
     .addComponents(
         new SelectMenuBuilder()
-            .setCustomId('Tickets-option')
+            .setCustomId('tickets-option')
             .setPlaceholder('Please Select a Support Option...')
             .addOptions(Raw)
     )
@@ -20,7 +19,7 @@ const Options: any = new ActionRowBuilder()
 const Cancel = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('Tickets-cancel')
+            .setCustomId('tickets-cancel')
             .setLabel('Cancel Ticket')
             .setStyle(ButtonStyle.Danger)
     )

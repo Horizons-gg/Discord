@@ -77,9 +77,42 @@ const commands = [
 
 
     //? Staff Application Commands
-    //!
-    //TODO: Start Working on Staff Application Commands
-    //!
+    new SlashCommandBuilder()
+        .setName('application')
+        .setDescription('Commands related to staff applications')
+
+        .addSubcommand(subcommand =>
+            subcommand.setName('create')
+                .setDescription('Create a new staff application')
+                // .addStringOption(option => option.setName('position').setDescription('The position you are applying for').setRequired(true)
+                //     .addChoices(
+                //         { name: 'Discord Moderator', value: 'discord-moderator' },
+                //         { name: 'Space Engineers Moderator', value: 'se-moderator' },
+                //         { name: 'Rust Moderator', value: 'rust-moderator' },
+                //         { name: 'Squad Moderator', value: 'squad-moderator' },
+                //         { name: 'Minecraft Moderator', value: 'mc-moderator' },
+                //         { name: 'Mod Developer', value: 'mod-developer' },
+                //         { name: 'Plugin Developer', value: 'plugin-developer' }
+                //     ))
+                // .addStringOption(option => option.setName('region').setDescription('What region do you live in?').setRequired(true)
+                //     .addChoices(
+                //         { name: 'Africa', value: 'africa' },
+                //         { name: 'Asia', value: 'asia' },
+                //         { name: 'Central America', value: 'central-america' },
+                //         { name: 'Europe', value: 'europe' },
+                //         { name: 'North America', value: 'north-america' },
+                //         { name: 'Oceania', value: 'oceania' },
+                //         { name: 'South America', value: 'south-america' }
+                //     ))
+                // .addIntegerOption(option => option.setName('age').setDescription('How old are you?').setRequired(true).setMinValue(13).setMaxValue(100))
+                // .addStringOption(option => option.setName('name').setDescription('Your preferred name that you would like to be referred to as.').setRequired(true).setMaxLength(30))
+                // .addStringOption(option => option.setName('statement').setDescription('Tell us about yourself, why do you want to be a part of the team etc.').setRequired(true).setMaxLength(1024))
+                // .addStringOption(option => option.setName('availability').setDescription('How often are you available and when.').setRequired(true).setMaxLength(200))
+                // .addStringOption(option => option.setName('experience').setDescription('What experience do you have with the position you are applying for?').setRequired(true).setMaxLength(600))
+                // .addStringOption(option => option.setName('skills').setDescription('What skills do you have?').setRequired(true).setMaxLength(500))
+                // .addUserOption(option => option.setName('referral').setDescription('If you have a referral from a staff member, please add them here.').setRequired(false))
+
+        ),
 
 
     //? Network Bot Commands
