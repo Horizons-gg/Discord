@@ -5,7 +5,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, resolveColor } from "disc
 const Row = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('Tickets-create')
+            .setCustomId('tickets.create')
             .setLabel('Create Ticket')
             .setStyle(ButtonStyle.Success)
     )

@@ -12,7 +12,7 @@ const Raw = Config.ticket.options
 const Cancel = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('tickets-cancel')
+            .setCustomId('tickets.cancel')
             .setLabel('Cancel Ticket')
             .setStyle(ButtonStyle.Danger)
     )
@@ -34,7 +34,7 @@ export async function main(interaction) {
     Regions.forEach(region => {
         Options.addComponents(
             new ButtonBuilder()
-                .setCustomId(`tickets-region-${region}`)
+                .setCustomId(`tickets.region.${region}`)
                 .setLabel(region)
                 .setStyle(ButtonStyle.Primary)
         )

@@ -13,17 +13,17 @@ const Raw = Config.ticket.options
 const Options = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('tickets-open')
+            .setCustomId('tickets.open')
             .setLabel('🔓 Open Ticket')
             .setStyle(ButtonStyle.Success),
 
         new ButtonBuilder()
-            .setCustomId('tickets-archive')
+            .setCustomId('tickets.archive')
             .setLabel('📂 Archive Ticket')
             .setStyle(ButtonStyle.Primary),
 
         new ButtonBuilder()
-            .setCustomId('tickets-delete')
+            .setCustomId('tickets.delete')
             .setLabel('🛡️ Delete Ticket')
             .setStyle(ButtonStyle.Danger)
             .setDisabled(false)

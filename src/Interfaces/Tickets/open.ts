@@ -13,12 +13,12 @@ const Raw = Config.ticket.options
 const Options: any = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('tickets-close')
+            .setCustomId('tickets.close')
             .setLabel('🔒 Close Ticket')
             .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-            .setCustomId('tickets-alert')
+            .setCustomId('tickets.alert')
             .setLabel('🛎️ Alert Staff')
             .setStyle(ButtonStyle.Secondary)
             .setDisabled(true)
@@ -108,7 +108,7 @@ export async function main(interaction, flag, fresh?, update?) {
         const List = new ActionRowBuilder()
             .addComponents(
                 new SelectMenuBuilder()
-                    .setCustomId('Tickets-faq')
+                    .setCustomId('tickets.faq')
                     .setPlaceholder('Select a FAQ to speed up the process!')
                     .addOptions(FAQArray)
             )

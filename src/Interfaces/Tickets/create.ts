@@ -11,7 +11,7 @@ import { ActionRowBuilder, ButtonBuilder, SelectMenuBuilder, ButtonStyle, resolv
 const Options: any = new ActionRowBuilder()
     .addComponents(
         new SelectMenuBuilder()
-            .setCustomId('tickets-option')
+            .setCustomId('tickets.option')
             .setPlaceholder('Please Select a Support Option...')
             .addOptions(Raw)
     )
@@ -19,7 +19,7 @@ const Options: any = new ActionRowBuilder()
 const Cancel = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId('tickets-cancel')
+            .setCustomId('tickets.cancel')
             .setLabel('Cancel Ticket')
             .setStyle(ButtonStyle.Danger)
     )
