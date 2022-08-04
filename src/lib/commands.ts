@@ -73,6 +73,14 @@ const commands = [
                 .addChannelOption(option => option.setName('channel').setDescription('Target Channel to be used for role selection').setRequired(true))
         ),
 
+    //TODO: Continue Working on Role Commands
+
+
+    //? Staff Application Commands
+    //!
+    //TODO: Start Working on Staff Application Commands
+    //!
+
 
     //? Network Bot Commands
     new SlashCommandBuilder().setName('bot')
