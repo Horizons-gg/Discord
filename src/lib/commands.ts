@@ -31,6 +31,23 @@ const commands = [
         )
 
         .addSubcommand(subcommand =>
+            subcommand.setName('open')
+                .setDescription('Opens the current ticket')
+        )
+        .addSubcommand(subcommand =>
+            subcommand.setName('close')
+                .setDescription('Closes the current ticket')
+        )
+        .addSubcommand(subcommand =>
+            subcommand.setName('archive')
+                .setDescription('Archives the current ticket')
+        )
+        .addSubcommand(subcommand =>
+            subcommand.setName('delete')
+                .setDescription('Deletes the current ticket')
+        )
+
+        .addSubcommand(subcommand =>
             subcommand.setName('add')
                 .setDescription('Grant a user access to this ticket')
                 .addUserOption(option => option.setName('user').setDescription('Target User').setRequired(true))
