@@ -1,24 +1,29 @@
 import Config from '@lib/config'
-import { Client as client, GatewayIntentBits, ActivityType } from 'discord.js'
-import { Refresh } from '@lib/commands'
+import * as Discord from 'discord.js'
 import * as Methods from '@lib/ServerMethods'
+import { Refresh } from '@lib/commands'
 import { app } from '@app/express'
 import { Collections } from '@app/mongo'
 
-export let Client: client
+import * as Events from '../Events'
+import * as Commands from '../Commands'
+import * as Notifications from '../Notifications'
+import * as Interfaces from '@interfaces/index'
+
+export let Client: Discord.Client
 
 export function connect() {
 
-    Client = new client({
+    Client = new Discord.Client({
         intents: [
-            GatewayIntentBits.GuildBans,
-            GatewayIntentBits.GuildEmojisAndStickers,
-            GatewayIntentBits.GuildMembers,
-            GatewayIntentBits.GuildMessageReactions,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.GuildPresences,
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.MessageContent,
+            Discord.GatewayIntentBits.GuildBans,
+            Discord.GatewayIntentBits.GuildEmojisAndStickers,
+            Discord.GatewayIntentBits.GuildMembers,
+            Discord.GatewayIntentBits.GuildMessageReactions,
+            Discord.GatewayIntentBits.GuildMessages,
+            Discord.GatewayIntentBits.GuildPresences,
+            Discord.GatewayIntentBits.Guilds,
+            Discord.GatewayIntentBits.MessageContent,
         ]
     })
 
@@ -32,6 +37,51 @@ export function connect() {
         setInterval(MemberCount, 1000 * 60), MemberCount()
 
         Collections.Bots.find({ enabled: true }).toArray().then(bots => bots.forEach(bot => EnableBot(bot.id).catch(error => console.log(error))))
+
+
+
+        //? Notifications
+        Client.on('guildMemberAdd', (member) => Notifications.guildMemberAdd(member))
+        Client.on('guildMemberRemove', (member) => Notifications.guildMemberRemove(member))
+
+
+        //? Interactions
+        Client.on('interactionCreate', (interaction: any) => {
+
+            //? Commands
+            try {
+                if (interaction.type === Discord.InteractionType.ApplicationCommand) Commands.SlashCommands[interaction.commandName](interaction)
+            } catch {
+                console.log(`Command "${interaction.commandName}" not found`)
+                interaction.reply({ content: 'An error occurred while processing your command, this command may no longer be in use or is not yet implemented.', ephemeral: true })
+            }
+
+
+            //? Interfaces
+            if (!interaction.customId) return
+            const Flag = interaction.customId.split('.') || interaction.customId
+
+            try {
+                Interfaces[Flag[0]][Flag[1]](interaction, Flag)
+            } catch {
+                console.log(`[ERROR] Unknown Interface: ${Flag[0]}.${Flag[1]}`)
+                interaction.reply({ content: 'An error occurred while processing your command, this command may no longer be in use or is not yet implemented.', ephemeral: true })
+            }
+
+        })
+
+
+        //? Messages
+        Client.on('messageCreate', message => {
+
+            const Channel: any = message.channel
+
+
+            //? Add Messages to Ticket History
+            if ([Config.ticket.open, Config.ticket.closed].includes(Channel.parentId)) Events.MessageCreate.Tickets(message)
+
+        })
+        
     })
 }
 
@@ -44,7 +94,7 @@ Refresh()
 
 //? Member Count
 function MemberCount() {
-    Client.user.setActivity(`${Client.guilds.cache.get(Config.discord.guild).memberCount} Members`, { type: ActivityType.Watching })
+    Client.user.setActivity(`${Client.guilds.cache.get(Config.discord.guild).memberCount} Members`, { type: Discord.ActivityType.Watching })
 }
 
 
@@ -66,7 +116,7 @@ export function EnableBot(id: string) {
         }
 
 
-        Bots[id] = new client({ intents: [GatewayIntentBits.Guilds] })
+        Bots[id] = new Discord.Client({ intents: [Discord.GatewayIntentBits.Guilds] })
 
         Bots[id].login(DBCheck.token).catch(error => reject(error))
 
@@ -74,7 +124,7 @@ export function EnableBot(id: string) {
             console.log(`Network Bot: ${Bots[id].user.tag} has started!`)
             resolve(`<@${id}> has successfully been enabled!`)
 
-            Client.user.setActivity('Preparing Bot...', { type: ActivityType.Watching })
+            Client.user.setActivity('Preparing Bot...', { type: Discord.ActivityType.Watching })
             Client.user.setStatus('idle')
 
             if (DBCheck.type === 'game') Methods[DBCheck.method](id, DBCheck.host.split(':'), DBCheck.tag)
