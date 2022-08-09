@@ -35,6 +35,7 @@ export function connect() {
         app.get('/discord', (req, res) => res.send(Client.guilds.cache.get(Config.discord.guild)))
 
         setInterval(MemberCount, 1000 * 60), MemberCount()
+        setInterval(BoostAlert, 1000 * 60 * 60), BoostAlert()
 
         Collections.Bots.find({ enabled: true }).toArray().then(bots => bots.forEach(bot => EnableBot(bot.id).catch(error => console.log(error))))
 
@@ -81,7 +82,7 @@ export function connect() {
             if ([Config.ticket.open, Config.ticket.closed].includes(Channel.parentId)) Events.MessageCreate.Tickets(message)
 
         })
-        
+
     })
 }
 
@@ -95,6 +96,16 @@ Refresh()
 //? Member Count
 function MemberCount() {
     Client.user.setActivity(`${Client.guilds.cache.get(Config.discord.guild).memberCount} Members`, { type: Discord.ActivityType.Watching })
+}
+
+//? Boost Alert
+function BoostAlert() {
+    const Guild: Discord.Guild = Client.guilds.cache.get(Config.discord.guild)
+    const Boosts = Guild.premiumSubscriptionCount
+    if (Boosts >= 14) return
+
+    const Channel: any = Guild.channels.cache.find(channel => channel.name === '💬staff-chat')
+    Channel.send(`${Guild.roles.cache.find(role => role.name === 'Staff')}\n>>> ⚠️ **The Server Requires ${14 - Boosts} Boost/s to retain its Vanity URL (discord.gg/horizons)** ⚠️`)
 }
 
 
