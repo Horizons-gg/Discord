@@ -40,7 +40,9 @@ export function main(id: string, Host: string, Tag: string) {
         })
         .catch(err => {
 
-            Systems[id] = null
+            Systems[Tag] = null
+
+            setTimeout(main.bind(null, id, Host), 1000 * 10)
 
             Client.user.setStatus('dnd')
             Client.user.setActivity('Connection Error', { type: Discord.ActivityType.Watching })
