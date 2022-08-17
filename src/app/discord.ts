@@ -100,6 +100,8 @@ function MemberCount() {
 
 //? Boost Alert
 function BoostAlert() {
+    if (Config.discord.guild !== '610606066451087370') return
+
     const Guild: Discord.Guild = Client.guilds.cache.get(Config.discord.guild)
     const Boosts = Guild.premiumSubscriptionCount
     if (Boosts >= 14) return
