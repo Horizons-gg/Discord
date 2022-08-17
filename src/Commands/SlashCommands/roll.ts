@@ -12,7 +12,7 @@ export function main(interaction: Discord.CommandInteraction) {
 function rolldice(interaction: any) {
 
     
-    const outcome = Math.floor(Math.random() * interaction.options.getInteger('sides')ty) + 1
+    const outcome = Math.floor(Math.random() * interaction.options.getInteger('sides')) + 1
 
     interaction.editReply(`The Dice has Landed on ${outcome}`)
 
