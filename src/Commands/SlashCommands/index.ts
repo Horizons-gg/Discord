@@ -1,5 +1,6 @@
 export { main as application } from './application'
 export { main as bot } from './bot'
+export { main as roll } from './roll'
 export { main as help } from './help'
 export { main as panel } from './panel'
 export { main as roles } from './roles'
