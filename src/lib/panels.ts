@@ -14,7 +14,7 @@ export default (panel) => {
         const Selection = new ActionRowBuilder()
             .addComponents(
                 new SelectMenuBuilder()
-                .setCustomId('Roles-pronouns')
+                .setCustomId('roles.pronouns')
                 .setPlaceholder('Select Your Pronouns...')
                 .setMinValues(0)
                 .setMaxValues(3)
@@ -55,7 +55,7 @@ export default (panel) => {
         const Row = new ActionRowBuilder()
             .addComponents(
                 new SelectMenuBuilder()
-                .setCustomId('Roles-games')
+                .setCustomId('roles.games')
                 .setPlaceholder("Select Games you're interested in...")
                 .setMinValues(0)
                 .setMaxValues(RolesConfig.length)
@@ -83,7 +83,7 @@ export default (panel) => {
         const Row = new ActionRowBuilder()
             .addComponents(
                 new SelectMenuBuilder()
-                .setCustomId('Roles-notifications')
+                .setCustomId('roles.notifications')
                 .setPlaceholder("Set Server Notifications...")
                 .setMinValues(0)
                 .setMaxValues(3)
