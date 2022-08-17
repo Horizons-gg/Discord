@@ -5,6 +5,12 @@ import Config from '@lib/config'
 const rest = new REST({ version: '10' }).setToken(Config.discord.token)
 
 const commands = [
+
+    //? Noah's learning idk
+    new SlashCommandBuilder().setName('roll').setDescription('Rolls a dice')
+        .addIntegerOption(option => option.setName('sides').setDescription('Sets how many sides for the dice').setMinValue(2).setMaxValue(24).setRequired(true)),
+
+
     //? General Usage Commands
     new SlashCommandBuilder().setName('help').setDescription('Replies with help information'),
     new SlashCommandBuilder().setName('se').setDescription('Replies with Space Engineers Server Connections'),
