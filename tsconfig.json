@@ -1,21 +1,39 @@
 {
+    "compilerOptions": {
+		"target": "ES2022",
+		"module": "ES2022",
+		"moduleResolution": "node",
+		
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true,
+
+		"outDir": "./dist",
+		"sourceMap": false,
+
+		"baseUrl": "./src",
+		"paths": {
+            "@lib/*": ["lib/*"],
+            "@app/*": ["app/*"],
+            "@api/*": ["api/*"],
+            "@interfaces/*": ["Interfaces/*"]
+        }
+	},
+
+    "ts-node": {
+		"transpileOnly": true,
+		"compilerOptions": {
+			"module": "commonjs"
+		}
+	},
+
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "types/**/*.ts"
     ],
     "exclude": [
         "node_modules"
-    ],
-    "compilerOptions": {
-        "outDir": "./bin",
-        "sourceMap": true,
-        
-        "baseUrl": ".",
-        "paths": {
-            "@lib/*": ["src/lib/*"],
-            "@app/*": ["src/app/*"],
-            "@api/*": ["src/api/*"],
-            "@models/*": ["src/models/*"],
-            "@interfaces/*": ["src/Interfaces/*"]
-        }
-    }
+    ]
 }

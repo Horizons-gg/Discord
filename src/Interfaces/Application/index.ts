@@ -1,5 +1,0 @@
-export { main as accept } from './accept'
-export { main as create } from './create'
-export { main as deny } from './deny'
-export { main as denyModal } from './denyModal'
-export { main as submit } from './submit'
