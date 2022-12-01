@@ -11,6 +11,8 @@ import ValidateClient from '@lib/discord/validate'
 
 //? Class Definition
 
+let Active: BotManager[] = []
+
 export default class BotManager implements Bot {
 
     _id: ObjectId
@@ -27,6 +29,9 @@ export default class BotManager implements Bot {
     method: Bot['method'] | null
 
 
+    client: Discord.Client | null
+
+
     constructor(id: string) {
         this._id = new ObjectId()
 
@@ -40,6 +45,8 @@ export default class BotManager implements Bot {
 
         this.host = null
         this.method = null
+
+        this.client = null
     }
 
 
@@ -95,7 +102,7 @@ export default class BotManager implements Bot {
     }
 
 
-    add(): Promise<string> {
+    create(): Promise<string> {
         return new Promise(async (resolve, reject) => {
 
             //? Validate Tag
@@ -137,8 +144,7 @@ export default class BotManager implements Bot {
         })
     }
 
-
-    remove(): Promise<string> {
+    delete(): Promise<string> {
         return new Promise(async (resolve, reject) => {
 
             //? Remove Bot from Database
@@ -161,11 +167,62 @@ export default class BotManager implements Bot {
 
 
 
+    connect(): Promise<string> {
+        return new Promise(async (resolve, reject) => {
+
+            //? Check Bot Setup
+            if (!this.enabled) return reject(`<@${this.id}> is not enabled!`)
+            if (this.client?.isReady()) return reject(`<@${this.id}> is already connected to Discords API!`)
+
+            if (this.type === 'game') {
+                if (!this.method) return reject(`<@${this.id}>'s method is not configured!`), this.disable().catch(() => { })
+                if (!this.host) return reject(`<@${this.id}>'s host is not configured!`), this.disable().catch(() => { })
+            }
+
+
+            //? Connect bot to Discord API
+            this.client = new Discord.Client({ intents: [Discord.GatewayIntentBits.Guilds] })
+            this.client.login(this.token || 'UNKNOWN').catch(reject)
+
+            this.client.once('ready', () => {
+                this.client?.user?.setActivity('Preparing Bot...', { type: Discord.ActivityType.Watching })
+                this.client?.user?.setStatus('idle')
+
+                resolve(`<@${this.id}> has been successfully connected to Discords API!`)
+            })
+
+            this.update().catch(err => console.error(err))
+
+        })
+    }
+
+    disconnect(): Promise<string> {
+        return new Promise(async (resolve, reject) => {
+
+            //? Check Bot Setup
+            if (this.enabled) return reject(`<@${this.id}> is not disabled!`)
+
+
+            //? Disconnect & Kill Connection to Discords API
+            this.client?.destroy()
+            this.client = null
+
+            resolve(`<@${this.id}> has been successfully disconnected from Discords API!`)
+
+            this.update().catch(err => console.error(err))
+
+        })
+    }
+
+
+
     enable(): Promise<string> {
         return new Promise(async (resolve, reject) => {
 
             this.enabled = true
-            this.update().then(() => resolve('Bot Successfully Enabled')).catch(reject)
+            this.update().then(() => {
+                this.connect().then(resolve).catch(reject)
+            }).catch(reject)
 
         })
     }
@@ -174,10 +231,20 @@ export default class BotManager implements Bot {
         return new Promise(async (resolve, reject) => {
 
             this.enabled = false
-            this.update().then(() => resolve('Bot Successfully Disabled')).catch(reject)
+            this.update().then(() => {
+                this.disconnect().then(resolve).catch(reject)
+            }).catch(reject)
 
         })
     }
+
+
+
+    setToken(token: string) { this.token = token, this.update().catch(err => console.error(err)) }
+    setType(type: Bot['type']) { this.type = type, this.update().catch(err => console.error(err)) }
+    setTag(tag: string) { this.tag = tag, this.update().catch(err => console.error(err)) }
+    setHost(host: string) { this.host = host, this.update().catch(err => console.error(err)) }
+    setMethod(method: Bot['method']) { this.method = method, this.update().catch(err => console.error(err)) }
 
 
 
