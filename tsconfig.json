@@ -18,7 +18,7 @@
             "@lib/*": ["lib/*"],
             "@app/*": ["app/*"],
             "@api/*": ["api/*"],
-            "@interfaces/*": ["Interfaces/*"]
+            "@interfaces/*": ["interfaces/*"]
         }
 	},
 

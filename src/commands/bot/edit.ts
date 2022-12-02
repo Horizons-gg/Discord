@@ -70,4 +70,6 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
     if (host) Bot.setHost(host)
     if (method) Bot.setMethod(method)
 
+    interaction.reply({ content: `<@${Bot.id}> Bot Updated`, ephemeral: true })
+
 }

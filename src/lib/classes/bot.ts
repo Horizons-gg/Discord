@@ -7,6 +7,8 @@ import Discord from 'discord.js'
 import { User, Guild } from '@lib/discord'
 import ValidateClient from '@lib/discord/validate'
 
+import * as Methods from '@lib/discord/methods'
+
 
 
 //? Class Definition
@@ -148,6 +150,10 @@ export default class BotManager implements Bot {
 
     delete(): Promise<string> {
         return new Promise(async (resolve, reject) => {
+            
+            //? Check if Bot is Running
+            const ActiveIndex = Active.findIndex(bot => bot.id == this.id)
+            if (ActiveIndex != -1) return reject(`<@${this.id}> is currently active! *Please disable the bot before deleting it!*`)
 
             //? Remove Bot from Database
             const Bots = await Collection('bots').catch(reject)
@@ -200,10 +206,15 @@ export default class BotManager implements Bot {
                 this.client?.user?.setActivity('Preparing Bot...', { type: Discord.ActivityType.Watching })
                 this.client?.user?.setStatus('idle')
 
+
+                const host = (this.host || 'horizons.gg:27015').split(':')
+
+                if (!this.client?.isReady()) return reject(`<@${this.id}> failed to connect to Discords API!`)
+                
+                if (this.type == 'server') Methods.system(this.client, this.host || 'horizons.gg', this.tag || 'UNKNOWN')
+                else Methods[this.method || 'valve'](this.client, [host[0], parseInt(host[1])], this.tag || 'UNKNOWN')
                 
                 Active.push(this)
-
-                setTimeout(main.bind(null, id, Host), 1000 * 10)
 
                 resolve(`<@${this.id}> has successfully connected to Discords API!`)
             })

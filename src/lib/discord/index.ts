@@ -7,6 +7,7 @@ import * as Events from './events'
 
 
 import * as Commands from '../../commands'
+import * as Interfaces from '../../interfaces'
 
 
 
@@ -37,7 +38,8 @@ export function Client(): Promise<Discord.Client> {
                 //! Register Commands
 
                 if (_client.application) _client.application.commands.set([
-                    Commands.bot.command
+                    Commands.bot.command,
+                    Commands.panel.command,
                 ])
 
                 // const Guild = _client.guilds.cache.get(Config.discord.guild)
@@ -62,15 +64,39 @@ export function Client(): Promise<Discord.Client> {
 
                 try {
 
+                    //? Slash Commands
                     if (interaction.isChatInputCommand() || interaction.isAutocomplete()) {
+
                         if (interaction.commandName) path += interaction.commandName
-                        if (interaction.options.getSubcommandGroup()) path += ('/' + interaction.options.getSubcommandGroup())
-                        if (interaction.options.getSubcommand()) path += ('/' + interaction.options.getSubcommand())
+                        if (interaction.options.getSubcommandGroup(false)) path += ('/' + interaction.options.getSubcommandGroup())
+                        if (interaction.options.getSubcommand(false)) path += ('/' + interaction.options.getSubcommand())
                     }
 
                     if (interaction.isChatInputCommand()) require(path).response(interaction)
                     if (interaction.isAutocomplete()) require(path).autocomplete(interaction)
-                    // if (interaction.isButton()) Buttons[interaction.customId.split('.')[0]](interaction, interaction.customId.split('.'))
+
+
+                    //? Interfaces
+                    path = path = '../../interfaces/'
+
+                    if (interaction.isButton()) require(`${path}buttons/${interaction.customId.includes('.') ? interaction.customId.split('.').join('/') : interaction.customId}`).default(interaction)
+                    if (interaction.isAnySelectMenu()) require(`${path}menus/${interaction.customId.includes('.') ? interaction.customId.split('.').join('/') : interaction.customId}`).default(interaction)
+                    if (interaction.isModalSubmit()) require(`${path}modals/${interaction.customId.includes('.') ? interaction.customId.split('.').join('/') : interaction.customId}`).default(interaction)
+
+
+                    if (interaction.isButton() || interaction.isAnySelectMenu() || interaction.isModalSubmit()) {
+
+                        let type: 'buttons' | 'menus' | 'modals' = 'buttons'
+                        if (interaction.isButton()) type = 'buttons'
+                        if (interaction.isAnySelectMenu()) type = 'menus'
+                        if (interaction.isModalSubmit()) type = 'modals'
+
+                        const flags = interaction.customId.split('.')
+                        if (flags.length == 0) Interfaces[type][flags[0]](interaction)
+                        if (flags.length == 1) Interfaces[type][flags[0]][flags[1]](interaction)
+                        if (flags.length == 2) Interfaces[type][flags[0]][flags[1]][flags[2]](interaction)
+
+                    }
 
                 } catch (err) {
 
