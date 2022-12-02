@@ -17,6 +17,7 @@
         "mongodb": "^4.12.1"
     },
     "devDependencies": {
+        "@types/gamedig": "^4.0.0",
         "ts-node": "^10.9.1",
         "tsconfig-paths": "^4.1.1",
         "tscpaths": "^0.0.9",

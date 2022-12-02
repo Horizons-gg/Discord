@@ -94,6 +94,8 @@ export default class BotManager implements Bot {
 
 
             //? Update Document
+            const Document = this
+            Document.client = null
             const UpdateStatus = await Bots.updateOne({ id: this.id }, { $set: this }).catch(reject)
             if (!UpdateStatus?.acknowledged) reject('Failed to update bot in the database!')
             else resolve(`Bot has been successfully updated!`)
@@ -170,6 +172,11 @@ export default class BotManager implements Bot {
     connect(): Promise<string> {
         return new Promise(async (resolve, reject) => {
 
+            //? Fetch Bot from Database
+            const FetchStatus = await this.fetch().catch(reject)
+            if (!FetchStatus) return
+
+
             //? Check Bot Setup
             if (!this.enabled) return reject(`<@${this.id}> is not enabled!`)
             if (this.client?.isReady()) return reject(`<@${this.id}> is already connected to Discords API!`)
@@ -180,6 +187,11 @@ export default class BotManager implements Bot {
             }
 
 
+            //? Check Activity
+            const ActiveIndex = Active.findIndex(bot => bot.id == this.id)
+            if (ActiveIndex != -1) await Active[ActiveIndex].disconnect().then(() => Active.splice(ActiveIndex, 1)).catch(err => console.log(err))
+
+
             //? Connect bot to Discord API
             this.client = new Discord.Client({ intents: [Discord.GatewayIntentBits.Guilds] })
             this.client.login(this.token || 'UNKNOWN').catch(reject)
@@ -188,10 +200,13 @@ export default class BotManager implements Bot {
                 this.client?.user?.setActivity('Preparing Bot...', { type: Discord.ActivityType.Watching })
                 this.client?.user?.setStatus('idle')
 
-                resolve(`<@${this.id}> has been successfully connected to Discords API!`)
-            })
+                
+                Active.push(this)
 
-            this.update().catch(err => console.error(err))
+                setTimeout(main.bind(null, id, Host), 1000 * 10)
+
+                resolve(`<@${this.id}> has successfully connected to Discords API!`)
+            })
 
         })
     }
@@ -203,13 +218,16 @@ export default class BotManager implements Bot {
             if (this.enabled) return reject(`<@${this.id}> is not disabled!`)
 
 
+            //? Check Activity
+            const ActiveIndex = Active.findIndex(bot => bot.id == this.id)
+            if (ActiveIndex == -1) return resolve(`<@${this.id}> is already inactive!`)
+
+
             //? Disconnect & Kill Connection to Discords API
-            this.client?.destroy()
-            this.client = null
+            Active[ActiveIndex].client?.destroy()
+            Active.splice(ActiveIndex, 1)
 
-            resolve(`<@${this.id}> has been successfully disconnected from Discords API!`)
-
-            this.update().catch(err => console.error(err))
+            resolve(`<@${this.id}> has successfully disconnected from Discords API!`)
 
         })
     }

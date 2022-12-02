@@ -26,7 +26,7 @@ export const response = (interaction: Discord.ChatInputCommandInteraction) => {
 
     const Bot = new BotManager((interaction.options.getMember('bot') as Discord.GuildMember).id)
 
-    Bot.remove()
+    Bot.delete()
         .then(res => interaction.reply({ content: res, ephemeral: true }))
         .catch(err => interaction.reply({ content: err, ephemeral: true }))
 

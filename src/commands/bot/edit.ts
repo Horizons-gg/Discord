@@ -65,15 +65,9 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
     const host = interaction.options.getString('host')
     const method = interaction.options.getString('method') as Bot['method']
 
-    if (token) Bot.token = token
-    if (tag) Bot.tag = tag
-    if (host) Bot.host = host
-    if (method) Bot.method = method
-
-    
-    Bot.update()
-        .then(res => interaction.reply({ content: res, ephemeral: true }))
-        .catch(err => interaction.reply({ content: err, ephemeral: true }))
-
+    if (token) Bot.setToken(token)
+    if (tag) Bot.setTag(tag)
+    if (host) Bot.setHost(host)
+    if (method) Bot.setMethod(method)
 
 }

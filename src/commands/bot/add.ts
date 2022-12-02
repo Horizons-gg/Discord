@@ -52,7 +52,7 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
     Bot.type = interaction.options.getString('type') as Bot['type']
     Bot.tag = interaction.options.getString('tag')
 
-    Bot.add()
+    Bot.create()
         .then(res => interaction.reply({ content: res, ephemeral: true }))
         .catch(err => interaction.reply({ content: err, ephemeral: true }))
 
