@@ -10,10 +10,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"esModuleInterop": true,
 
-		"outDir": "./dist",
-		"sourceMap": false,
-
-		"baseUrl": "./src",
+		"baseUrl": ".",
 		"paths": {
             "@lib/*": ["lib/*"],
             "@app/*": ["app/*"],
@@ -30,8 +27,7 @@
 	},
 
     "include": [
-        "src/**/*.ts",
-        "types/**/*.ts"
+        "**/*.ts"
     ],
     "exclude": [
         "node_modules"
