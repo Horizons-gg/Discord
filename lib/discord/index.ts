@@ -39,8 +39,10 @@ export function Client(): Promise<Discord.Client> {
                 if (_client.application) _client.application.commands.set([
                     Commands.setup.command,
                     Commands.bot.command,
-                    Commands.panel.command,
 
+                    Commands.staff.command,
+
+                    Commands.panel.command,
                     Commands.se.command,
 
                     Commands.support.command,

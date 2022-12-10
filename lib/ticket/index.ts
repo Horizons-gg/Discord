@@ -1,5 +1,7 @@
 //? Dependencies
 
+import Config from '@lib/config'
+
 import { ObjectId } from 'mongodb'
 import Discord from 'discord.js'
 

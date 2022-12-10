@@ -25,4 +25,20 @@ declare global {
         }
     }
 
+
+    interface StaffSetup {
+        _id: 'staff'
+
+        
+        onLeaveRole: string
+
+        positions: {
+            title: string
+            description: string
+            weight: number
+
+            roles: string[]
+        }[]
+    }
+
 }
