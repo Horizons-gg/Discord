@@ -30,7 +30,7 @@ export default Client
 
 //? Common Functions
 
-export function Collection(collection: 'setup' | 'users' | 'tickets' | 'bots' | 'applications' | 'sections' | 'roles'): Promise<MongoCollection> {
+export function Collection(collection: 'setup' | 'positions' | 'staff' | 'users' | 'tickets' | 'bots' | 'applications' | 'sections' | 'roles'): Promise<MongoCollection> {
     return new Promise((resolve, reject) => {
         Client()
             .then(client => resolve(client.db(Config.mongo.db).collection(collection)))

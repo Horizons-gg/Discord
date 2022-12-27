@@ -1,6 +1,8 @@
 //? Exports
 
-export * as section from './section'
+export * as create from './create'
+export * as remove from './remove'
+export * as edit from './edit'
 
 
 
@@ -19,12 +21,14 @@ export const command = new Discord.SlashCommandSubcommandGroupBuilder()
     .setName('positions')
     .setDescription('Position Related Infrastructure')
 
-    .addSubcommand(Subcommands.section.command)
+    .addSubcommand(Subcommands.create.command)
+    .addSubcommand(Subcommands.remove.command)
+    .addSubcommand(Subcommands.edit.command)
 
 
 
 //? Response
 
 export const response = (interaction: Discord.ChatInputCommandInteraction) => {
-    
+
 }

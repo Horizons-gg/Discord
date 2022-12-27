@@ -1,8 +1,11 @@
 //? Dependencies
 
+import { ObjectId } from 'mongodb'
 import Discord from 'discord.js'
 
 import { Collection } from '@lib/mongodb'
+
+import Positions from '@lib/discord/autocomplete/positions'
 
 
 
@@ -13,40 +16,10 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
     .setDescription('Remove a Position from the Database')
 
     .addStringOption(option => option
-        .setName('title')
-        .setDescription('The Title of the Position')
+        .setName('position')
+        .setDescription('Position to be Removed from the Network')
         .setRequired(true)
-    )
-
-    .addIntegerOption(option => option
-        .setName('weight')
-        .setDescription('The Weight Determines the Authority of the Position (Higher the Weight, Higher the Authority)')
-        .setRequired(true)
-
-        .setMinValue(1)
-        .setMaxValue(1000)
-    )
-
-    .addRoleOption(option => option
-        .setName('role1')
-        .setDescription('Role to add to Users of this Position')
-        .setRequired(true)
-    )
-    .addRoleOption(option => option
-        .setName('role2')
-        .setDescription('Role to add to Users of this Position')
-    )
-    .addRoleOption(option => option
-        .setName('role3')
-        .setDescription('Role to add to Users of this Position')
-    )
-    .addRoleOption(option => option
-        .setName('role4')
-        .setDescription('Role to add to Users of this Position')
-    )
-    .addRoleOption(option => option
-        .setName('role5')
-        .setDescription('Role to add to Users of this Position')
+        .setAutocomplete(true)
     )
 
 
@@ -55,6 +28,17 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
 
 export const response = async (interaction: Discord.ChatInputCommandInteraction) => {
 
-    
+    if (!ObjectId.isValid(interaction.options.getString('position', true))) return interaction.reply({ content: 'Invalid Position ID!', ephemeral: true })
+
+    const Positions = await Collection('positions')
+    Positions.deleteOne({ _id: new ObjectId(interaction.options.getString('position', true)) })
+
+    interaction.reply({ content: `Position "${interaction.options.getString('position', true)}" has been Deleted!`, ephemeral: true })
 
 }
+
+
+
+//? Autocomplete
+
+export const autocomplete = async (interaction: Discord.AutocompleteInteraction) => interaction.respond(await Positions(interaction.options.getFocused()))

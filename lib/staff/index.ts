@@ -34,9 +34,9 @@ export default class StaffManager implements StaffMember {
 
 
 
-    set setPosition() {
+    // set setPosition() {
 
-    }
+    // }
 
 
 

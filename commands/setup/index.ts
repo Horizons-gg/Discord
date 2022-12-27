@@ -1,6 +1,7 @@
 //? Exports
 
 export * as support from './support'
+export * as positions from './positions'
 
 
 
@@ -22,6 +23,7 @@ export const command = new Discord.SlashCommandBuilder()
     .setDefaultMemberPermissions(8)
 
     .addSubcommandGroup(Subcommands.support.command)
+    .addSubcommandGroup(Subcommands.positions.command)
 
 
 

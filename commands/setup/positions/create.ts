@@ -1,5 +1,6 @@
 //? Dependencies
 
+import {ObjectId} from 'mongodb'
 import Discord from 'discord.js'
 
 import { Collection } from '@lib/mongodb'
@@ -55,6 +56,23 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
 
 export const response = async (interaction: Discord.ChatInputCommandInteraction) => {
 
-    
+    const Positions = await Collection('positions')
+
+    let Position: Position = {
+        _id: new ObjectId(),
+        title: interaction.options.getString('title', true),
+        weight: interaction.options.getInteger('weight', true),
+        roles: []
+    };
+
+    ['role1', 'role2', 'role3', 'role4', 'role5'].forEach(name => {
+        const role = interaction.options.getRole(name)
+        if (role) Position['roles'].push(role.id)
+    })
+
+
+    Positions.insertOne(Position)
+        .then(res => interaction.reply({ content: `>>> __**Position "${Position.title}" has been successfully Created!**__\n**GUID:** \`${res.insertedId}\`\n**Weight:** \`${Position.weight}\`\n\n**Roles:** ${Position.roles.map((role: string) => `<@&${role}>`).join(', ')}`, ephemeral: true }))
+        .catch(err => interaction.reply({ content: `\`\`\`${err}\`\`\``, ephemeral: true }))
 
 }
