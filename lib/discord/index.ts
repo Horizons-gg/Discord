@@ -17,6 +17,15 @@ export default Client
 
 
 
+//? Handle Methods
+
+import * as Messages from './messages'
+
+
+export { Messages }
+
+
+
 //? Common Methods
 
 import Guild from './common/guild'

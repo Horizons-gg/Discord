@@ -1,15 +1,17 @@
 //? Dependencies
 
-import { ObjectId } from 'mongodb'
+import Discord from 'discord.js'
 
 import { Collection } from '@lib/mongodb'
 import { Guild as GetGuild, User as GetUser } from '@lib/discord'
+
+import { OpenedTicket } from './controller'
 
 
 
 //? Method
 
-export default function (channel: string) {
+export default function (channel: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
 
         const Setup = (await (await Collection('setup')).findOne({ _id: 'support' }) || {}) as Support
@@ -27,9 +29,12 @@ export default function (channel: string) {
             .then(async () => {
 
                 const Guild = await GetGuild()
-                const Channel = Guild.channels.cache.get(channel) || await Guild.channels.fetch(channel)
+                const Channel = (Guild.channels.cache.get(channel) || await Guild.channels.fetch(channel)) as Discord.TextChannel
 
                 if (!Channel) return reject('Channel does not exist.')
+
+                const Controller = Channel.messages.cache.get(Ticket.controller) || await Channel.messages.fetch(Ticket.controller)
+                Controller.edit(OpenedTicket(Ticket, await GetUser(Ticket.owner)))
 
                 Channel.edit({ parent: Setup.sections?.opened })
                     .then(() => resolve('Ticket has been opened.'))

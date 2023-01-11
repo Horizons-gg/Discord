@@ -1,15 +1,21 @@
 //? Dependencies
 
+import Discord from 'discord.js'
+
 import { ObjectId } from 'mongodb'
 
 import { Collection } from '@lib/mongodb'
 import { Guild as GetGuild, User as GetUser } from '@lib/discord'
 
+import * as Colors from '@lib/discord/colors'
+
+import { OpenedTicket } from './controller'
+
 
 
 //? Method
 
-export default function (owner: string, details: Ticket['details']) {
+export default function (owner: string, details: Ticket['details']): Promise<Discord.TextChannel> {
     return new Promise(async (resolve, reject) => {
 
         const Setup = (await (await Collection('setup')).findOne({ _id: 'support' }) || {}) as Support
@@ -17,12 +23,15 @@ export default function (owner: string, details: Ticket['details']) {
 
 
         const Guild = await GetGuild()
+        const User = await GetUser(owner)
 
         Guild.channels.create({
-            name: `new-ticket`,
+            name: `new-${User.user.username.replace(/[^a-zA-Z0-9]/g, '') || 'unknown'}`,
             parent: Setup.sections.opened
         })
             .then(async channel => {
+
+                const Controller = await channel.send({ embeds: [new Discord.EmbedBuilder().setDescription('> Preparing Ticket Controller, Please Standby...').setColor(Colors.info)] }).then(msg => msg.pin())
 
                 const Ticket: Ticket = {
                     _id: new ObjectId(),
@@ -31,6 +40,7 @@ export default function (owner: string, details: Ticket['details']) {
 
                     owner: owner,
                     channel: channel.id,
+                    controller: Controller.id,
 
                     details: details,
 
@@ -45,10 +55,15 @@ export default function (owner: string, details: Ticket['details']) {
 
                 channel.permissionOverwrites.create(owner, {
                     ViewChannel: true
-                });
+                })
 
-                (await Collection('tickets')).insertOne(Ticket)
-                    .then(() => resolve(channel))
+                const Tickets = await Collection('tickets')
+                Tickets.insertOne(Ticket)
+                    .then(() => {
+                        Controller.edit(OpenedTicket(Ticket, User))
+                            .then(() => resolve(channel))
+                            .catch(reject)
+                    })
 
             })
             .catch(err => {

@@ -14,14 +14,16 @@ declare global {
     interface Ticket {
         _id: ObjectId
 
-        state: 'open' | 'closed'
+        state: 'open' | 'closed' | 'archived'
         
         owner: string
         channel: string
+        controller: string
 
         details: {
             title: string
             service: string
+            region: string
             description: string
         }
 
@@ -30,7 +32,7 @@ declare global {
                 id: string
                 username: string
                 discriminator: string
-                avatar: string
+                avatar: string | null
             }[]
 
             messages: {

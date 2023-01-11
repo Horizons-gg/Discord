@@ -2,6 +2,8 @@
 
 import Discord from 'discord.js'
 
+import { Messages } from '@lib/discord'
+
 import { Collection } from '@lib/mongodb'
 import * as Ticket from '@lib/ticket'
 
@@ -20,7 +22,7 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
 export const response = async (interaction: Discord.ChatInputCommandInteraction) => {
 
     if (interaction.channel && interaction.user) Ticket.delete(interaction.channel.id, interaction.user.id)
-        .then(res => interaction.reply({ content: `${res}`, ephemeral: true }))
-        .catch(err => interaction.reply({ content: `Error: \`${err}\``, ephemeral: true }))
+        .then(res => Messages.responseStandard(res, interaction, 'Ticket Deleted'))
+        .catch(err => Messages.responseError(err, interaction, 'Failed to Delete Ticket'))
 
 }

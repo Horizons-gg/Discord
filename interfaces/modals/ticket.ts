@@ -2,9 +2,9 @@
 
 import Discord from 'discord.js'
 
-import * as Ticket from '@lib/ticket'
+import { Messages } from '@lib/discord'
 
-import { User } from '@lib/discord'
+import * as Ticket from '@lib/ticket'
 
 
 
@@ -15,13 +15,14 @@ export default async function (interaction: Discord.ModalSubmitInteraction) {
     Ticket.create(interaction.user.id, {
         title: interaction.fields.getTextInputValue('title'),
         service: interaction.fields.getTextInputValue('service'),
+        region: interaction.fields.getTextInputValue('region') || 'N/A',
         description: interaction.fields.getTextInputValue('description')
     })
         .then(channel => {
-            interaction.reply({ content: `Ticket has been opened in: ${channel}`, ephemeral: true })
+            Messages.responseStandard(`Ticket has been opened in: ${channel}`, interaction, 'New Ticket Created')
         })
         .catch(err => {
-            interaction.reply({ content: `Error: \`${err}\``, ephemeral: true })
+            Messages.responseError(err, interaction, 'Failed to Create Ticket')
         })
 
 }

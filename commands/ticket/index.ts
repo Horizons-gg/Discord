@@ -3,6 +3,7 @@
 export * as open from './open'
 export * as close from './close'
 
+export * as archive from './archive'
 export * as delete from './delete'
 
 
@@ -27,6 +28,7 @@ export const command = new Discord.SlashCommandBuilder()
     .addSubcommand(Subcommands.open.command)
     .addSubcommand(Subcommands.close.command)
 
+    .addSubcommand(Subcommands.archive.command)
     .addSubcommand(Subcommands.delete.command)
 
 

@@ -21,7 +21,7 @@ export default new Discord.ModalBuilder()
 
                     .setPlaceholder('E.g. My Ship Vanished!')
                     .setMinLength(3)
-                    .setMaxLength(30)
+                    .setMaxLength(50)
 
                     .setRequired(true)
             ),
@@ -38,6 +38,20 @@ export default new Discord.ModalBuilder()
                     .setMaxLength(30)
 
                     .setRequired(true)
+            ),
+
+        new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
+            .addComponents(
+                new Discord.TextInputBuilder()
+                    .setLabel('The Region your Issue is Related to')
+                    .setStyle(Discord.TextInputStyle.Short)
+                    .setCustomId('region')
+
+                    .setPlaceholder('Australia, Europe, United States, etc.')
+                    .setMinLength(3)
+                    .setMaxLength(30)
+
+                    .setRequired(false)
             ),
 
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()

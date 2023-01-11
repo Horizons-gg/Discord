@@ -22,7 +22,9 @@ export default function (): Promise<Discord.Client> {
                 intents: [
                     Discord.GatewayIntentBits.Guilds,
                     Discord.GatewayIntentBits.GuildMembers,
-                    Discord.GatewayIntentBits.GuildMessages
+                    Discord.GatewayIntentBits.GuildMessages,
+
+                    Discord.GatewayIntentBits.MessageContent,
                 ]
             })
 
@@ -59,6 +61,8 @@ export default function (): Promise<Discord.Client> {
 
 
             //! Events
+
+            _client.on('messageCreate', Events.messageCreate)
 
             _client.on('guildMemberAdd', Events.guildMemberAdd)
             _client.on('guildMemberRemove', Events.guildMemberRemove)

@@ -19,10 +19,12 @@ export default function (channel: string, user: string): Promise<string> {
         if (!Ticket) return reject('Ticket does not exist.')
 
         const User = await GetUser(user)
-        if (!User.roles.cache.hasAny(...Setup.permissions.delete)) return reject('You do not have permission to delete tickets.')
+        if (!User.roles.cache.hasAny(...Setup.permissions.archive)) return reject('You do not have permission to archive tickets.')
+
+        if (Ticket.state != 'closed') return reject('Ticket must be closed in order to archive it.')
 
 
-        await Tickets.deleteOne({ channel: channel })
+        await Tickets.updateOne({ channel: channel }, { $set: { state: 'archived' } })
             .then(async () => {
 
                 const Guild = await GetGuild()
@@ -30,14 +32,14 @@ export default function (channel: string, user: string): Promise<string> {
 
                 if (!Channel) return reject('Channel does not exist.')
 
-                Channel.delete(`Ticket deleted by ${User.user.tag} (${User.id})`)
-                    .then(() => resolve('Ticket has been deleted.'))
-                    .catch(err => reject('Failed to delete ticket channel!'))
+                Channel.delete(`Ticket Archived by ${User.user.tag} (${User.id})`)
+                    .then(() => resolve('Ticket has been archived.'))
+                    .catch(err => reject('Failed to archive ticket channel!'))
 
             })
             .catch(err => {
                 console.error(err)
-                reject('Failed to delete ticket in database, read console for more information.')
+                reject('Failed to archive ticket in database, read console for more information.')
             })
 
     })
