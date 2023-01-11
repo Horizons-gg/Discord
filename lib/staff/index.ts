@@ -15,26 +15,26 @@ export default class StaffManager implements StaffMember {
     _id: ObjectId
 
     id: StaffMember['id']
-    
+
 
     position: StaffMember['position']
 
     availability: StaffMember['availability']
 
 
-    
+
     constructor(id: string) {
         this._id = new ObjectId()
 
         this.id = id
-        
+
         this.position = null
         this.availability = null
     }
 
 
 
-    // set setPosition() {
+    // set setPosition(position: StaffMember['position']) {
 
     // }
 

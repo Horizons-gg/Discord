@@ -16,13 +16,13 @@ declare global {
 
         state: 'open' | 'closed'
         
-        owner: Discord.GuildMember | undefined
-        channel: Discord.TextBasedChannel | undefined
+        owner: string
+        channel: string
 
         details: {
-            title: string | undefined
-            service: string | undefined
-            description: string | undefined
+            title: string
+            service: string
+            description: string
         }
 
         log: {

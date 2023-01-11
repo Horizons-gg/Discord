@@ -47,6 +47,8 @@ export default function (): Promise<Discord.Client> {
 
                     Commands.support.command,
 
+                    Commands.ticket.command,
+
                 ]).then(() => console.info('+ Successfully Registered Application Commands')).catch(err => console.error('- Failed to Register Application Commands!\n', err))
 
                 // const Guild = _client.guilds.cache.get(Config.discord.guild)

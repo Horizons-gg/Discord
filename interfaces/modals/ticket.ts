@@ -2,7 +2,7 @@
 
 import Discord from 'discord.js'
 
-import TicketManager from '@lib/ticket'
+import * as Ticket from '@lib/ticket'
 
 import { User } from '@lib/discord'
 
@@ -12,19 +12,16 @@ import { User } from '@lib/discord'
 
 export default async function (interaction: Discord.ModalSubmitInteraction) {
 
-    const Ticket = new TicketManager()
-
-    Ticket.owner = await User(interaction.user.id)
-
-    Ticket.details = {
+    Ticket.create(interaction.user.id, {
         title: interaction.fields.getTextInputValue('title'),
         service: interaction.fields.getTextInputValue('service'),
         description: interaction.fields.getTextInputValue('description')
-    }
-
-
-    Ticket.initialize()
-        .then(() => interaction.reply({ content: `Ticket Created in ${Ticket.channel}`, ephemeral: true }))
-        .catch(error => interaction.reply({ content: `Error: ${error}`, ephemeral: true }))
+    })
+        .then(channel => {
+            interaction.reply({ content: `Ticket has been opened in: ${channel}`, ephemeral: true })
+        })
+        .catch(err => {
+            interaction.reply({ content: `Error: \`${err}\``, ephemeral: true })
+        })
 
 }

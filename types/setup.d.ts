@@ -11,12 +11,15 @@ declare global {
     interface Support {
         _id: 'support'
 
-        sections?: {
+        
+        onDutyRole: string
+
+        sections: {
             opened: string
             closed: string
         }
 
-        permissions?: {
+        permissions: {
             close: string[]
             open: string[]
             archive: string[]
