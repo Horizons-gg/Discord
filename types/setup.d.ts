@@ -13,6 +13,7 @@ declare global {
 
         
         onDutyRole: string
+        receivingSupportRole: string
 
         sections: {
             opened: string

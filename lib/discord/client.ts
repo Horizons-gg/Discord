@@ -23,6 +23,7 @@ export default function (): Promise<Discord.Client> {
                     Discord.GatewayIntentBits.Guilds,
                     Discord.GatewayIntentBits.GuildMembers,
                     Discord.GatewayIntentBits.GuildMessages,
+                    Discord.GatewayIntentBits.GuildPresences,
 
                     Discord.GatewayIntentBits.MessageContent,
                 ]

@@ -9,7 +9,7 @@ import { Guild as GetGuild, User as GetUser } from '@lib/discord'
 
 import * as Colors from '@lib/discord/colors'
 
-import { OpenedTicket } from './controller'
+import { AutocompleteService, OpenedTicket } from './controller'
 
 
 
@@ -57,6 +57,8 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
                     ViewChannel: true
                 })
 
+                User.roles.add(Setup.receivingSupportRole)
+
                 const Tickets = await Collection('tickets')
                 Tickets.insertOne(Ticket)
                     .then(() => {
@@ -64,6 +66,62 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
                             .then(() => resolve(channel))
                             .catch(reject)
                     })
+
+
+                //! Staff On-Duty
+                const OnDuty = await Guild.roles.fetch(Setup.onDutyRole)
+                if (!OnDuty) return console.error('On-Duty Role does not exist, please update Support Setup!')
+
+                const AvailableStaff = OnDuty.members.filter(member => ['online', 'dnd', 'idle'].includes(member.presence?.status || 'offline'))
+                const AvailableArray = AvailableStaff.map(member => `<@${member.id}>`)
+                channel.send({
+                    content: `@ here`,
+                    embeds: [
+                        new Discord.EmbedBuilder()
+                            .setDescription(AvailableArray.length > 0 ? `>>> There is Currently ${AvailableArray.length} Staff Member/s Available!\n\n${AvailableArray.join('\n')}` : `>>> There are Currently No Staff Members Available, Please be Patient and we will get back to you as soon as possible!`)
+                            .setColor(AvailableArray.length > 0 ? Colors.primary : Colors.warning)
+                    ]
+                })
+
+                AvailableStaff.forEach(member => {
+                    member.send({
+                        embeds: [
+                            new Discord.EmbedBuilder()
+                                .setTitle('⚠️ Support Ticket Alert ⚠️')
+                                .setAuthor({ name: AutocompleteService(Ticket.details.service) })
+                                .setDescription(`\`\`\`${Ticket.details.description}\`\`\``)
+                                .setColor(Colors.warning)
+
+                                .setFields([
+                                    { name: 'Ticket Owner', value: `<@${Ticket.owner}>`, inline: true },
+                                    { name: 'Service Designation', value: `\`${AutocompleteService(Ticket.details.service)}\``, inline: true },
+                                    { name: 'Region', value: `\`${Ticket.details.region}\``, inline: true },
+
+                                    { name: 'Ticket Number', value: `\`#00000\``, inline: true },
+                                    { name: 'Ticket UID', value: `\`${Ticket._id}\``, inline: true },
+                                    { name: 'Ticket Priority', value: `\`N/A\``, inline: true },
+
+                                    { name: 'Created', value: `<t:${Math.floor(new Date(Ticket.created).getTime() / 1000)}:F>`, inline: true }
+                                ])
+
+                                .setThumbnail(User.user.avatarURL())
+                        ],
+
+                        components: [
+                            new Discord.ActionRowBuilder<Discord.MessageActionRowComponentBuilder>()
+                                .addComponents([
+                                    new Discord.ButtonBuilder()
+                                        .setLabel('View Ticket')
+                                        .setURL(`https://discord.com/channels/${Guild.id}/${Ticket.channel}`)
+                                        .setStyle(Discord.ButtonStyle.Link)
+                                        .setEmoji('🔗')
+                                ])
+                        ]
+                    })
+
+
+                })
+
 
             })
             .catch(err => {

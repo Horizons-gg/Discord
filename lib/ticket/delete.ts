@@ -34,6 +34,11 @@ export default function (channel: string, user: string): Promise<string> {
                     .then(() => resolve('Ticket has been deleted.'))
                     .catch(err => reject('Failed to delete ticket channel!'))
 
+
+                const Owner = await GetUser(Ticket.owner)
+                Owner.roles.remove(Setup.receivingSupportRole)
+                    .catch(err => console.error(err))
+
             })
             .catch(err => {
                 console.error(err)

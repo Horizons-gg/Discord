@@ -12,12 +12,6 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
     .setName('section')
     .setDescription('Set the Support Sections for the Server')
 
-    .addRoleOption(option => option
-        .setName('role')
-        .setDescription('On Duty Role')
-        .setRequired(true)
-    )
-
     .addChannelOption(option => option
         .setName('opened')
         .setDescription('Category for Opened Tickets')
@@ -32,6 +26,18 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
         .setRequired(true)
     )
 
+    .addRoleOption(option => option
+        .setName('onduty')
+        .setDescription('On Duty Role')
+        .setRequired(true)
+    )
+
+    .addRoleOption(option => option
+        .setName('receivingsupport')
+        .setDescription('Receiving Support Role')
+        .setRequired(true)
+    )
+
 
 
 //? Response
@@ -42,7 +48,8 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
     const Support = (await Setup.findOne({ _id: 'support' }) || { _id: 'support' }) as Support
 
 
-    Support.onDutyRole = interaction.options.getRole('role', true).id
+    Support.onDutyRole = interaction.options.getRole('onduty', true).id
+    Support.receivingSupportRole = interaction.options.getRole('receivingsupport', true).id
 
     Support.sections = {
         opened: interaction.options.getChannel('opened', true).id,

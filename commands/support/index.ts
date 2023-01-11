@@ -1,6 +1,7 @@
 //? Exports
 
 export * as ticket from './ticket'
+export * as panel from './panel'
 
 
 
@@ -21,6 +22,7 @@ export const command = new Discord.SlashCommandBuilder()
     .setDMPermission(false)
 
     .addSubcommand(Subcommands.ticket.command)
+    .addSubcommand(Subcommands.panel.command)
 
 
 

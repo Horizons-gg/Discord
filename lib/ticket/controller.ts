@@ -8,7 +8,7 @@ import * as Colors from '@lib/discord/colors'
 
 //? Methods
 
-function AutocompleteService(service: string): string {
+export function AutocompleteService(service: string): string {
 
     const lService = service.toLowerCase()
 
@@ -47,7 +47,7 @@ export const OpenedTicket = (Ticket: Ticket, User: Discord.GuildMember): Discord
                     { name: 'Ticket UID', value: `\`${Ticket._id}\``, inline: true },
                     { name: 'Ticket Priority', value: `\`N/A\``, inline: true },
 
-                    { name: 'Creation Timestamp', value: `<t:${Math.floor(new Date(Ticket.created).getTime() / 1000)}:F>`, inline: true }
+                    { name: 'Created', value: `<t:${Math.floor(new Date(Ticket.created).getTime() / 1000)}:F>`, inline: true }
                 ])
 
                 .setThumbnail(User.user.avatarURL())

@@ -6,6 +6,8 @@ export * as close from './close'
 export * as archive from './archive'
 export * as delete from './delete'
 
+export * as user from './user'
+
 
 
 
@@ -24,6 +26,8 @@ export const command = new Discord.SlashCommandBuilder()
     .setName('ticket')
     .setDescription('Quick Commands for Ticket Management')
     .setDMPermission(false)
+
+    .addSubcommandGroup(Subcommands.user.command)
 
     .addSubcommand(Subcommands.open.command)
     .addSubcommand(Subcommands.close.command)

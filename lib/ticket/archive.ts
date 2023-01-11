@@ -36,6 +36,11 @@ export default function (channel: string, user: string): Promise<string> {
                     .then(() => resolve('Ticket has been archived.'))
                     .catch(err => reject('Failed to archive ticket channel!'))
 
+                    
+                const Owner = await GetUser(Ticket.owner)
+                Owner.roles.remove(Setup.receivingSupportRole)
+                    .catch(err => console.error(err))
+
             })
             .catch(err => {
                 console.error(err)
