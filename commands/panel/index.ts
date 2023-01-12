@@ -2,6 +2,10 @@
 
 import Discord from 'discord.js'
 
+import { Messages } from '@lib/discord'
+
+import * as Panels from './panels'
+
 
 
 //? Command
@@ -12,31 +16,29 @@ export const command = new Discord.SlashCommandBuilder()
     .setDMPermission(false)
     .setDefaultMemberPermissions(8)
 
+    .addStringOption(option => option
+        .setName('panel')
+        .setDescription('Panel to Send')
+        .setRequired(true)
+
+        .setChoices(
+            { name: 'Role Selection', value: 'role_selection' }
+        )
+    )
+
 
 
 //? Response
 
 export const response = (interaction: Discord.ChatInputCommandInteraction) => {
 
-    const Modal = new Discord.ModalBuilder()
-        .setTitle('Test Modal')
-        .setCustomId('test')
+    if (!interaction.channel) return Messages.responseError('Channel Not Found!', interaction, 'Failed to Create Panel')
+    interaction.deferReply()
 
-        .addComponents(
+    const Panel = (Panels as any)[interaction.options.getString('panel', true)]() as Discord.MessageCreateOptions
 
-            new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
-                .addComponents(
-
-                    new Discord.TextInputBuilder()
-                        .setLabel('Daniels a Fat German Nazi')
-                        .setStyle(Discord.TextInputStyle.Short)
-                        .setCustomId('daniel')
-
-                )
-
-        )
-
-
-    interaction.showModal(Modal)
+    interaction.channel.send(Panel)
+        .then(() => interaction.deleteReply())
+        .catch(err => Messages.responseError(err, interaction, 'Failed to Create Panel').catch(err => console.error(err)))
 
 }

@@ -93,9 +93,20 @@ export default function (): Promise<Discord.Client> {
                     //? Interfaces
                     path = path = '../../interfaces/'
 
-                    if (interaction.isButton()) require(`${path}buttons/${interaction.customId.includes('.') ? interaction.customId.split('.').join('/') : interaction.customId}`).default(interaction)
-                    if (interaction.isAnySelectMenu()) require(`${path}menus/${interaction.customId.includes('.') ? interaction.customId.split('.').join('/') : interaction.customId}`).default(interaction)
-                    if (interaction.isModalSubmit()) require(`${path}modals/${interaction.customId.includes('.') ? interaction.customId.split('.').join('/') : interaction.customId}`).default(interaction)
+                    let args: string[] = []
+                    let param: string = ''
+
+                    if (interaction.isButton() || interaction.isAnySelectMenu() || interaction.isModalSubmit()) {
+                        const temp = interaction.customId.split('-')
+
+                        param = temp.splice(0, 1)[0]
+                        args = temp
+                    }
+
+
+                    if (interaction.isButton()) require(`${path}buttons/${param.includes('.') ? param.split('.').join('/') : param}`).default(interaction, args)
+                    if (interaction.isAnySelectMenu()) require(`${path}menus/${param.includes('.') ? param.split('.').join('/') : param}`).default(interaction, args)
+                    if (interaction.isModalSubmit()) require(`${path}modals/${param.includes('.') ? param.split('.').join('/') : param}`).default(interaction, args)
 
                 } catch (err) {
 
