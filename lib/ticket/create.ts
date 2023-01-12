@@ -113,7 +113,7 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
                 if (States.dnd.length > 0) AvailableDisplay.addFields({ name: `🟥 DND (${States.dnd.length})`, value: States.dnd.map(member => `<@${member.id}>`).join('\n'), inline: true })
 
                 channel.send({
-                    content: `${AutocompleteService(Ticket.details.service)[2] ? `@here ${Guild.roles.cache.find(role => role.name == AutocompleteService(Ticket.details.service)[2]) || `\`Failed to Find Role for: "${AutocompleteService(Ticket.details.service)[2]}" \``}` : '@ here'}`,
+                    content: `${AutocompleteService(Ticket.details.service)[2] ? `@here ${Guild.roles.cache.find(role => role.name == AutocompleteService(Ticket.details.service)[2]) || `\`Failed to Find Role for: "${AutocompleteService(Ticket.details.service)[2]}" \``}` : '@here'}`,
                     embeds: [AvailableDisplay]
                 })
 
