@@ -20,6 +20,11 @@ declare global {
         channel: string
         controller: string
 
+        number: number
+        priority: ('low' | 'medium' | 'high') | null
+        ntk: string | null
+        conclusion: string | null
+
         details: {
             title: string
             service: string

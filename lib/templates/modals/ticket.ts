@@ -48,7 +48,6 @@ export default new Discord.ModalBuilder()
                     .setCustomId('region')
 
                     .setPlaceholder('Australia, Europe, United States, etc.')
-                    .setMinLength(3)
                     .setMaxLength(30)
 
                     .setRequired(false)

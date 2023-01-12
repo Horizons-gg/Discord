@@ -11,8 +11,8 @@
             "cwd": "${workspaceRoot}",
             "runtimeExecutable": "npm",
             "runtimeArgs": [
-                "run-script",
-                "start:dev"
+                "run",
+                "start"
             ]
         }
     ]
