@@ -8,7 +8,7 @@ import * as Colors from './colors'
 
 //? Methods
 
-export const responseStandard = (message: string, interaction: Discord.CommandInteraction | Discord.ChatInputCommandInteraction | Discord.ButtonInteraction | Discord.ModalSubmitInteraction, title?: string) =>
+export const responseStandard = (message: string, interaction: Discord.CommandInteraction | Discord.ChatInputCommandInteraction | Discord.ButtonInteraction | Discord.ModalSubmitInteraction, title?: string, persistent?: boolean) =>
     interaction.reply({
         ephemeral: true,
         embeds: [
@@ -18,6 +18,9 @@ export const responseStandard = (message: string, interaction: Discord.CommandIn
                 .setDescription(`>>> ${message}`)
         ]
     })
+        .then(() => {
+            if (!persistent) setTimeout(() => interaction.deleteReply(), 5000)
+        })
 
 
 export const responseError = (message: string, interaction: Discord.CommandInteraction | Discord.ChatInputCommandInteraction | Discord.ButtonInteraction | Discord.ModalSubmitInteraction, title?: string) =>

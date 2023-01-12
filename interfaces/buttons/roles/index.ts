@@ -46,7 +46,7 @@ function addRole(user: Discord.GuildMember, role: Discord.Role): Promise<string>
     return new Promise((resolve, reject) => {
 
         user.roles.add(role)
-            .then(() => resolve(`Successfully Joined Role: \`${role}\``))
+            .then(() => resolve(`Successfully Joined Role: ${role}`))
             .catch(err => reject(err))
 
     })
@@ -56,7 +56,7 @@ function removeRole(user: Discord.GuildMember, role: Discord.Role): Promise<stri
     return new Promise((resolve, reject) => {
 
         user.roles.remove(role)
-            .then(() => resolve(`Successfully Left Role: \`${role}\``))
+            .then(() => resolve(`Successfully Left Role: ${role}`))
             .catch(err => reject(err))
 
     })

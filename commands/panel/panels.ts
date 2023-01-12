@@ -12,7 +12,7 @@ export const role_selection = (): Discord.MessageCreateOptions => {
     return {
         embeds: [
             new Discord.EmbedBuilder()
-                .setTitle('📜 Role Selection')
+                .setTitle('📜 Role Assignment')
                 .setDescription('>>> You can select your pronouns, activities, and hosted games to gain access to specified Sections of the Discord.\n\n*Click the Buttons once to receive the roll, and again to remove it.*')
                 .setColor(Colors.info)
         ],
