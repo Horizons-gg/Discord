@@ -19,7 +19,7 @@ export const responseStandard = (message: string, interaction: Discord.CommandIn
         ]
     })
         .then(() => {
-            if (!persistent) setTimeout(() => interaction.deleteReply(), 5000)
+            if (!persistent) setTimeout(() => interaction.deleteReply().catch(() => null), 5000)
         })
 
 
