@@ -54,7 +54,7 @@ export default async function () {
             member.presence.activities.forEach(activity => {
 
                 // Ignore Generic Activities
-                if (['Custom Status', 'Visual Studio Code', 'Spotify', 'Medal', 'Google Chrome'].includes(activity.name)) return
+                if (['Custom Status', 'Visual Studio Code', 'Spotify', 'Medal', 'Google Chrome', 'Voice.ai - Voice Changer'].includes(activity.name)) return
 
 
                 const ActivityIndex = User.activities.findIndex(a => a.name == activity.name)
