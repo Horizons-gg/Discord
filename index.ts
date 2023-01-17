@@ -6,6 +6,7 @@ import Discord from 'discord.js'
 
 import { Collection } from '@lib/mongodb'
 import Client from '@lib/discord'
+import SmartRoles from '@lib/discord/smartRoles'
 
 import BotManager from '@lib/bot'
 
@@ -42,5 +43,11 @@ Client().then(client => {
     }
 
     setInterval(UpdateMemberCount, 1000 * 60 * 5), UpdateMemberCount()
+
+
+
+    //! Smart Roles
+
+    setInterval(SmartRoles, 1000 * 60 * 1), SmartRoles()
 
 })
