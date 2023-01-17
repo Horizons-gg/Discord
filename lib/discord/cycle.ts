@@ -72,7 +72,8 @@ export default async function () {
 
         // Update User on Database
         const Users = await Collection('users')
-        Users.updateOne({ id: User.id }, { $set: { activities: User.activities, aliases: User.aliases } })
+        // Users.updateOne({ id: User.id }, { $set: { activities: User.activities, aliases: User.aliases } })
+        console.log(`Simulating DB Push for ${member.user.tag}`)
 
     })
 
