@@ -33,14 +33,14 @@ export default async function () {
     for (const member of Guild.members.cache.map(m => m)) {
 
         // Ignore Bots
-        if (member.user.bot) return
+        if (member.user.bot) continue
 
         // Fetch User from Database : Create if not found
         const User = await FetchUser(member)
 
 
         // Execute Smart Roles for Opt In Users
-        if (User.optIn) SmartRoles(member)
+        if (User.optIn) await SmartRoles(member)
 
 
         // Update Users Aliases
@@ -72,8 +72,7 @@ export default async function () {
 
         // Update User on Database
         const Users = await Collection('users')
-        // Users.updateOne({ id: User.id }, { $set: { activities: User.activities, aliases: User.aliases } })
-        console.log(`Simulating DB Push for ${member.user.tag}`)
+        Users.updateOne({ id: User.id }, { $set: { activities: User.activities, aliases: User.aliases } })
 
     }
 
