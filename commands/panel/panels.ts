@@ -75,6 +75,12 @@ export const role_selection = (): Discord.MessageCreateOptions => {
                         .setLabel('DayZ')
                         .setEmoji('🧟'),
 
+                        new Discord.ButtonBuilder()
+                        .setCustomId('roles-squad')
+                        .setStyle(Discord.ButtonStyle.Primary)
+                        .setLabel('Squad')
+                        .setEmoji('🪖'),
+
                     new Discord.ButtonBuilder()
                         .setCustomId('roles-mc')
                         .setStyle(Discord.ButtonStyle.Primary)
