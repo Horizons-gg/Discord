@@ -30,7 +30,7 @@ export default async function () {
 
     const Guild = await GetGuild()
 
-    Guild.members.cache.forEach(async member => {
+    for (const member of Guild.members.cache.map(m => m)) {
 
         // Ignore Bots
         if (member.user.bot) return
@@ -75,7 +75,7 @@ export default async function () {
         // Users.updateOne({ id: User.id }, { $set: { activities: User.activities, aliases: User.aliases } })
         console.log(`Simulating DB Push for ${member.user.tag}`)
 
-    })
+    }
 
 }
 
