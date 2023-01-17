@@ -30,17 +30,17 @@ export default async function () {
 
     const Guild = await GetGuild()
 
-    Guild.members.cache.forEach(async member => {
+    for (const member of Guild.members.cache.map(m => m)) {
 
         // Ignore Bots
-        if (member.user.bot) return
+        if (member.user.bot) continue
 
         // Fetch User from Database : Create if not found
         const User = await FetchUser(member)
 
 
         // Execute Smart Roles for Opt In Users
-        if (User.optIn) SmartRoles(member)
+        if (User.optIn) await SmartRoles(member)
 
 
         // Update Users Aliases
@@ -74,7 +74,7 @@ export default async function () {
         const Users = await Collection('users')
         Users.updateOne({ id: User.id }, { $set: { activities: User.activities, aliases: User.aliases } })
 
-    })
+    }
 
 }
 
