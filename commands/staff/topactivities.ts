@@ -124,9 +124,9 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
 
         const Layout: { value: string, limit: number }[] = [
             { value: `${i + 1}.`, limit: 5 },
-            { value: a.name, limit: 25 },
-            { value: `${a.score} pts`, limit: 15 },
-            { value: `${a.participants} pax`, limit: 15 }
+            { value: a.name, limit: 24 },
+            { value: `${a.score} pts`, limit: 11 },
+            { value: `${a.participants} pax`, limit: 11 }
         ]
 
         const Line = Layout.map(p => {
@@ -144,7 +144,7 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
 
     })
 
-    Embed.setDescription(`\`\`\`Index |          Activity         |      Score      |   PAX\n-------------------------------------------------------------\n${List.join('\n')}\`\`\``)
+    Embed.setDescription(`\`\`\`Index |         Activity         |    Score    |     PAX   \n-------------------------------------------------------------\n${List.join('\n')}\`\`\``)
 
 
     const Message: Discord.InteractionReplyOptions = {
