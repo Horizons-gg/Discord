@@ -147,10 +147,9 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
     Embed.setDescription(`\`\`\`Index |          Activity         |      Score      |   PAX\n-------------------------------------------------------------\n${List.join('\n')}\`\`\``)
 
 
-
     const Message: Discord.InteractionReplyOptions = {
         embeds: [Embed],
-        ephemeral: interaction.options.getBoolean('ephemeral') || true
+        ephemeral: interaction.options.getBoolean('ephemeral') == null ? true : interaction.options.getBoolean('ephemeral', true)
     }
 
     interaction.reply(Message)
