@@ -1,6 +1,7 @@
 //? Exports
 
 export * as onduty from './onduty'
+export * as topactivities from './topactivities'
 
 
 
@@ -23,6 +24,7 @@ export const command = new Discord.SlashCommandBuilder()
     .setDefaultMemberPermissions(8192)
 
     .addSubcommand(Subcommands.onduty.command)
+    .addSubcommand(Subcommands.topactivities.command)
 
 
 

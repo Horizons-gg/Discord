@@ -17,6 +17,15 @@ export default Client
 
 
 
+//? Standards
+
+import * as Colors from './colors'
+
+
+export { Colors }
+
+
+
 //? Handle Methods
 
 import * as Messages from './messages'
