@@ -6,6 +6,7 @@ import Discord from 'discord.js'
 
 import { Collection } from '@lib/mongodb'
 import Client from '@lib/discord'
+import UserCycle from '@lib/discord/cycle'
 
 import BotManager from '@lib/bot'
 
@@ -42,5 +43,11 @@ Client().then(client => {
     }
 
     setInterval(UpdateMemberCount, 1000 * 60 * 5), UpdateMemberCount()
+
+
+
+    //! User Cycle
+
+    setInterval(UserCycle, 1000 * 60 * 15), UserCycle()
 
 })
