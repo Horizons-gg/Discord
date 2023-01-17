@@ -6,7 +6,7 @@ import Discord from 'discord.js'
 
 import { Collection } from '@lib/mongodb'
 import Client from '@lib/discord'
-import SmartRoles from '@lib/discord/smartRoles'
+import UserCycle from '@lib/discord/cycle'
 
 import BotManager from '@lib/bot'
 
@@ -46,8 +46,8 @@ Client().then(client => {
 
 
 
-    //! Smart Roles
+    //! User Cycle
 
-    setInterval(SmartRoles, 1000 * 60 * 15), SmartRoles()
+    setInterval(UserCycle, 1000 * 60 * 15), UserCycle()
 
 })
