@@ -7,12 +7,25 @@ import { Guild as GetGuild, User as GetUser } from '@lib/discord'
 
 
 
+//? Supported Smart Roles
+
+const Supported = [
+    { role: '🚀Space Engineers', keys: ['Space Engineers'] },
+    { role: '🧟DayZ', keys: ['DayZ', 'DZSALauncher'] },
+    { role: '🔨Minecraft', keys: ['Minecraft'] },
+    { role: '🪖Squad', keys: ['Squad'] },
+    { role: '🗺️Arma', keys: ['ArmA', 'Arma 2', 'Arma 3', 'Arma: Reforger'] },
+    { role: '🎒SCUM', keys: ['Scum'] },
+    { role: '🏹Rust', keys: ['Rust'] },
+    { role: '🧨Crossfar', keys: ['Crossfar'] },
+    { role: '🌌Elite Dangerous', keys: ['Elite Dangerous'] },
+]
+
+
+
 //? User Cycle
 
 export default async function () {
-
-    let Activities: { name: string, count: number }[] = []
-
 
     const Guild = await GetGuild()
 
@@ -22,21 +35,26 @@ export default async function () {
             if (!member.presence) return
             if (!member.presence.activities.length) return
 
+            
             member.presence.activities.forEach(activity => {
 
-                const index = Activities.findIndex(a => a.name == activity.name)
-                if (index == -1) Activities.push({ name: activity.name, count: 1 })
-                else Activities[index].count++
+                Supported.forEach(async supportedRole => {
+                    
+                    if (!supportedRole.keys.includes(activity.name)) return
+
+                    const Role = Guild.roles.cache.find(role => role.name === supportedRole.role)
+                    
+                    if (!Role) return
+                    if (member.roles.cache.has(Role.id)) return
+                    
+                    member.roles.add(Role)
+                        .then(() => console.info(`Smart Roles: added '${Role.name}' to '${member.user.tag}'`))
+                        .catch(err => console.error(`Smart Roles: failed to add '${Role.name}' to '${member.user.tag}'`, err))
+
+                })
 
             })
 
         })
-
-
-    setTimeout(() => {
-
-        console.table(Activities.sort((a, b) => b.count - a.count))
-
-    }, 1000 * 5)
 
 }

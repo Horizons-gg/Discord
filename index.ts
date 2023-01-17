@@ -48,6 +48,6 @@ Client().then(client => {
 
     //! Smart Roles
 
-    setInterval(SmartRoles, 1000 * 60 * 1), SmartRoles()
+    setInterval(SmartRoles, 1000 * 60 * 15), SmartRoles()
 
 })
