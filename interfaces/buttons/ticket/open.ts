@@ -12,8 +12,8 @@ import * as Ticket from '@lib/ticket'
 
 export default async function (interaction: Discord.ButtonInteraction) {
 
-    if (interaction.channel) Ticket.open(interaction.channel.id)
-        .then(res => Messages.responseStandard(res, interaction, 'Ticket Opened'))
+    if (interaction.channel) Ticket.open(interaction.channel.id, interaction.user.id)
+        .then(() => Messages.noReply(interaction))
         .catch(err => Messages.responseError(err, interaction, 'Failed to Open Ticket'))
 
 }

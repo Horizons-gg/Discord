@@ -4,6 +4,7 @@ import Discord from 'discord.js'
 
 import { Collection } from '@lib/mongodb'
 import { Guild as GetGuild, User as GetUser } from '@lib/discord'
+import { Messages } from '@lib/discord'
 
 import { ClosedTicket } from './controller'
 
@@ -11,7 +12,7 @@ import { ClosedTicket } from './controller'
 
 //? Method
 
-export default function (channel: string): Promise<string> {
+export default function (channel: string, executer?: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
 
         const Setup = (await (await Collection('setup')).findOne({ _id: 'support' }) || {}) as Support
@@ -36,6 +37,8 @@ export default function (channel: string): Promise<string> {
 
                 const Controller = Channel.messages.cache.get(Ticket.controller) || await Channel.messages.fetch(Ticket.controller)
                 Controller.edit(ClosedTicket(Ticket, await GetUser(Ticket.owner)))
+
+                Messages.notifyStandard(`>>> Ticket has been closed${executer ? ` by <@${executer}>` : ''}`, Channel, '🔒 Ticket Closed', 'danger')
 
                 Channel.edit({ parent: Setup.sections?.closed })
                     .then(() => resolve('Ticket has been closed.'))

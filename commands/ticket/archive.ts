@@ -22,7 +22,6 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
 export const response = async (interaction: Discord.ChatInputCommandInteraction) => {
 
     if (interaction.channel && interaction.user) Ticket.archive(interaction.channel.id, interaction.user.id)
-        .then(res => Messages.responseStandard(res, interaction, 'Ticket Archived'))
         .catch(err => Messages.responseError(err, interaction, 'Failed to Archive Ticket'))
 
 }

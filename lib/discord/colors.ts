@@ -3,6 +3,10 @@
 import { resolveColor } from 'discord.js'
 
 
+//? Type
+
+export type Color = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'grey' | 'random'
+
 
 //? Colors
 
