@@ -31,15 +31,13 @@ export default (): Discord.MessageCreateOptions & Discord.InteractionReplyOption
                         .setCustomId('application.create')
                         .setLabel('Staff Application')
                         .setStyle(Discord.ButtonStyle.Primary)
-                        .setEmoji('📝')
-                        .setDisabled(true),
+                        .setEmoji('📝'),
 
                     new Discord.ButtonBuilder()
                         .setCustomId('report.create')
                         .setLabel('Report Member')
                         .setStyle(Discord.ButtonStyle.Danger)
                         .setEmoji('⚠️')
-                        .setDisabled(true)
                 )
         ]
     }

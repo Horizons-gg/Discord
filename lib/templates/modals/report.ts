@@ -7,20 +7,20 @@ import Discord from 'discord.js'
 //? Modal
 
 export default new Discord.ModalBuilder()
-    .setTitle('Support Ticket')
-    .setCustomId('ticket')
+    .setTitle('Member Report')
+    .setCustomId('report')
 
     .addComponents(
 
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('Title of your Issue')
+                    .setLabel('Who are you Reporting?')
                     .setStyle(Discord.TextInputStyle.Short)
-                    .setCustomId('title')
+                    .setCustomId('reported')
 
-                    .setPlaceholder('E.g. My Ship Vanished!')
-                    .setMinLength(3)
+                    .setPlaceholder('E.g. Bob#1234, IamBob...')
+                    .setMinLength(1)
                     .setMaxLength(50)
 
                     .setRequired(true)
@@ -29,11 +29,11 @@ export default new Discord.ModalBuilder()
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('The Service your Issue is Related to')
+                    .setLabel('Related Service')
                     .setStyle(Discord.TextInputStyle.Short)
                     .setCustomId('service')
 
-                    .setPlaceholder('Space Engineers, Discord, Software (TorchJs), etc...')
+                    .setPlaceholder('Discord, Space Engineers, DayZ, etc...')
                     .setMinLength(3)
                     .setMaxLength(30)
 
@@ -43,7 +43,7 @@ export default new Discord.ModalBuilder()
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('The Region your Issue is Related to')
+                    .setLabel('Region (If Applicable)')
                     .setStyle(Discord.TextInputStyle.Short)
                     .setCustomId('region')
 
@@ -56,11 +56,11 @@ export default new Discord.ModalBuilder()
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('Briefly Describe your Issue')
+                    .setLabel('Why are your Reporting this Member?')
                     .setStyle(Discord.TextInputStyle.Paragraph)
-                    .setCustomId('description')
+                    .setCustomId('reason')
 
-                    .setPlaceholder('E.g. I joined the server and my ship was gone!')
+                    .setPlaceholder('Please be detailed and include any evidence.')
                     .setMinLength(20)
                     .setMaxLength(800)
 

@@ -1,7 +1,10 @@
 //? Exports
 
-export * as ticket from './ticket'
 export * as panel from './panel'
+
+export * as ticket from './ticket'
+export * as application from './application'
+export * as report from './report'
 
 
 
@@ -21,8 +24,11 @@ export const command = new Discord.SlashCommandBuilder()
     .setDescription('Commands to Seek Support in Horizons')
     .setDMPermission(false)
 
-    .addSubcommand(Subcommands.ticket.command)
     .addSubcommand(Subcommands.panel.command)
+    
+    .addSubcommand(Subcommands.ticket.command)
+    .addSubcommand(Subcommands.application.command)
+    .addSubcommand(Subcommands.report.command)
 
 
 
