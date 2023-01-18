@@ -22,7 +22,8 @@ export const command = new Discord.SlashCommandBuilder()
         .setRequired(true)
 
         .setChoices(
-            { name: 'Role Selection', value: 'role_selection' }
+            { name: 'Role Selection', value: 'role_assignment' },
+            { name: 'Smart Roles', value: 'smart_roles' }
         )
     )
 

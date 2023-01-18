@@ -42,5 +42,7 @@ import User from './common/user'
 
 import * as Roles from './common/roles'
 
+import * as dbUser from './common/dbUser'
 
-export { Guild, User, Roles }
+
+export { Guild, User, Roles, dbUser }

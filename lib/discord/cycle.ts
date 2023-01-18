@@ -1,10 +1,9 @@
 //? Dependencies
 
 import Discord from 'discord.js'
-import { ObjectId } from 'mongodb'
 
 import { Collection } from '@lib/mongodb'
-import { Guild as GetGuild, User as GetUser } from '@lib/discord'
+import { Guild as GetGuild, dbUser } from '@lib/discord'
 
 
 
@@ -36,7 +35,7 @@ export default async function () {
         if (member.user.bot) continue
 
         // Fetch User from Database : Create if not found
-        const User = await FetchUser(member)
+        const User = await dbUser.Fetch(member.id)
 
 
         // Execute Smart Roles for Opt In Users
@@ -81,39 +80,6 @@ export default async function () {
 
 
 //? Functions
-
-function FetchUser(member: Discord.GuildMember): Promise<Member> {
-    return new Promise(async (resolve, reject) => {
-
-        const Users = await Collection('users')
-        const User = await Users.findOne({ id: member.id }) as Member
-
-        // Create New User in Database
-        if (!User) {
-            const User: Member = {
-                _id: new ObjectId(),
-
-                id: member.id,
-
-
-                optIn: true,
-
-                activities: [],
-                aliases: []
-            }
-
-            return Users.insertOne(User)
-                .then(() => resolve(User))
-                .catch(reject)
-        }
-
-        // Return User from Database
-        return resolve(User)
-
-    })
-}
-
-
 
 function SmartRoles(member: Discord.GuildMember) {
 

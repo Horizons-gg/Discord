@@ -18,13 +18,13 @@ export const noReply = (interaction: Discord.Interaction) => {
 
 //? Responses
 
-export const responseStandard = (message: string, interaction: Discord.CommandInteraction | Discord.ChatInputCommandInteraction | Discord.ButtonInteraction | Discord.ModalSubmitInteraction | Discord.AnySelectMenuInteraction, title?: string, persistent?: boolean) =>
+export const responseStandard = (message: string, interaction: Discord.CommandInteraction | Discord.ChatInputCommandInteraction | Discord.ButtonInteraction | Discord.ModalSubmitInteraction | Discord.AnySelectMenuInteraction, title?: string, persistent?: boolean, color?: _colors.Color) =>
     interaction.reply({
         ephemeral: true,
         embeds: [
             new Discord.EmbedBuilder()
                 .setTitle(title || 'Response')
-                .setColor(Colors.primary)
+                .setColor(Colors[color || 'primary'])
                 .setDescription(`>>> ${message}`)
         ]
     })
