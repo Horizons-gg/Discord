@@ -7,19 +7,33 @@ import Discord from 'discord.js'
 //? Modal
 
 export default new Discord.ModalBuilder()
-    .setTitle('Support Ticket')
-    .setCustomId('ticket')
+    .setTitle('Staff Application')
+    .setCustomId('application')
 
     .addComponents(
 
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('Title of your Issue')
+                    .setLabel('Preferred Name')
                     .setStyle(Discord.TextInputStyle.Short)
-                    .setCustomId('title')
+                    .setCustomId('name')
 
-                    .setPlaceholder('E.g. My Ship Vanished!')
+                    .setPlaceholder('E.g. John Doe')
+                    .setMinLength(2)
+                    .setMaxLength(30)
+
+                    .setRequired(true)
+            ),
+
+        new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
+            .addComponents(
+                new Discord.TextInputBuilder()
+                    .setLabel('Staff Position/s')
+                    .setStyle(Discord.TextInputStyle.Short)
+                    .setCustomId('position')
+
+                    .setPlaceholder('Discord Moderator, Space Engineers Moderator, etc...')
                     .setMinLength(3)
                     .setMaxLength(50)
 
@@ -29,12 +43,11 @@ export default new Discord.ModalBuilder()
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('The Service your Issue is Related to')
+                    .setLabel('What Region do you live in?')
                     .setStyle(Discord.TextInputStyle.Short)
-                    .setCustomId('service')
+                    .setCustomId('region')
 
-                    .setPlaceholder('Space Engineers, Discord, Software (TorchJs), etc...')
-                    .setMinLength(3)
+                    .setPlaceholder('Australia, Europe, United States, etc...')
                     .setMaxLength(30)
 
                     .setRequired(true)
@@ -43,25 +56,26 @@ export default new Discord.ModalBuilder()
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('The Region your Issue is Related to')
-                    .setStyle(Discord.TextInputStyle.Short)
-                    .setCustomId('region')
+                    .setLabel('Past Experience')
+                    .setStyle(Discord.TextInputStyle.Paragraph)
+                    .setCustomId('experience')
 
-                    .setPlaceholder('Australia, Europe, United States, etc...')
-                    .setMaxLength(30)
+                    .setPlaceholder('E.g. I have been a moderator on "Other Server" for 2 years...')
+                    .setMinLength(20)
+                    .setMaxLength(800)
 
-                    .setRequired(false)
+                    .setRequired(true)
             ),
 
         new Discord.ActionRowBuilder<Discord.ModalActionRowComponentBuilder>()
             .addComponents(
                 new Discord.TextInputBuilder()
-                    .setLabel('Briefly Describe your Issue')
+                    .setLabel('Statement')
                     .setStyle(Discord.TextInputStyle.Paragraph)
-                    .setCustomId('description')
+                    .setCustomId('statement')
 
-                    .setPlaceholder('E.g. I joined the server and my ship was gone!')
-                    .setMinLength(20)
+                    .setPlaceholder('E.g. I would like to become a moderator in Horizons because...')
+                    .setMinLength(50)
                     .setMaxLength(800)
 
                     .setRequired(true)
