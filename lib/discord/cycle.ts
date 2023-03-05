@@ -126,8 +126,8 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
     SupportedRoles.forEach(async supportedRole => {
 
         const Role = member.guild.roles.cache.find(role => role.name === supportedRole.role)
-        if (!Role) return console.log('No Role Found!')
-        if (!member.roles.cache.has(Role.id)) return console.log('Member does not have role!')
+        if (!Role) return
+        if (!member.roles.cache.has(Role.id)) return
 
         const activity = data.activities.find(a => supportedRole.keys.includes(a.name))
         if (!activity) return console.log(member.user.username, '|', supportedRole.role), file += `${member.user.username} | ${supportedRole.role}\n`
