@@ -15,6 +15,7 @@ export function AutocompleteService(service: string): string[] {
     if (lService.includes('general') || lService.includes('discord')) return ['💎 General', 'general']
     else if (lService.includes('space engineers')) return ['🚀 Space Engineers', 'se', 'SE Staff']
     else if (lService.includes('dayz')) return ['🧟 DayZ', 'dayz', 'DAYZ Staff']
+    else if (lService.includes('avorion')) return ['☄️ Avorion', 'avorion']
     else if (lService.includes('minecraft')) return ['⚒️ Minecraft', 'mc', 'MC Staff']
     else if (lService.includes('rust')) return ['🏹 Rust', 'rust', 'RUST Staff']
     else if (lService.includes('arma')) return ['🔫 ArmA', 'arma']

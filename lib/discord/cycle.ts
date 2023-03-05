@@ -40,7 +40,7 @@ export default async function () {
 
 
         // Execute Smart Roles for Opt In Users
-        if (User.optIn) await SmartRoles(member)
+        if (User.optIn) await SmartRolesAdd(member), await SmartRolesRemove(member, User)
 
 
         // Update Users Aliases
@@ -82,7 +82,7 @@ export default async function () {
 
 //? Functions
 
-function SmartRoles(member: Discord.GuildMember) {
+function SmartRolesAdd(member: Discord.GuildMember) {
 
     // Ignore members without a presence or activities
     if (!member.presence) return
@@ -106,6 +106,28 @@ function SmartRoles(member: Discord.GuildMember) {
                 .catch(err => console.error(`Smart Roles: failed to add '${Role.name}' to '${member.user.tag}'`, err))
 
         })
+
+    })
+
+}
+
+
+function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
+
+    // Ignore members without a presence or activities
+    // if (!member.presence) return
+    // if (!member.presence.activities.length) return
+
+
+    data.activities.forEach(async activity => {
+
+        const LastSeen = new Date(activity.lastSeen)
+        const Now = new Date()
+        const Difference = (Now.getTime() - LastSeen.getTime())
+
+        if (Difference < 1000 * 60 * 60 * 24 * 7 * 6) return
+
+        console.log(member.user.username, '|', activity.name)
 
     })
 
