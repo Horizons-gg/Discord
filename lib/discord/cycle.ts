@@ -118,6 +118,7 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
     // if (!member.presence) return
     // if (!member.presence.activities.length) return
 
+    if (data.activities.length == 0) return
 
     SupportedRoles.forEach(async supported => {
 
