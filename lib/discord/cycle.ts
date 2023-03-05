@@ -119,7 +119,10 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
     // if (!member.presence.activities.length) return
 
 
-    data.activities.forEach(async activity => {
+    SupportedRoles.forEach(async supported => {
+
+        const activity = data.activities.find(a => supported.keys.includes(a.name))
+        if (!activity) return console.log(member.user.username, '|', supported.role)
 
         const LastSeen = new Date(activity.lastSeen)
         const Now = new Date()
@@ -127,7 +130,7 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
 
         if (Difference < 1000 * 60 * 60 * 24 * 7 * 6) return
 
-        console.log(member.user.username, '|', activity.name)
+        console.log(member.user.username, '|', supported.role)
 
     })
 
