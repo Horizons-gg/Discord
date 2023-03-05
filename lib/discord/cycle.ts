@@ -123,18 +123,22 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
 
     if (data.activities.length == 0) return
 
-    SupportedRoles.forEach(async supported => {
+    SupportedRoles.forEach(async supportedRole => {
 
-        const activity = data.activities.find(a => supported.keys.includes(a.name))
-        if (!activity) return console.log(member.user.username, '|', supported.role), file += `${member.user.username} | ${supported.role}\n`
+        const Role = member.guild.roles.cache.find(role => role.name === supportedRole.role)
+        if (!Role) return console.log('No Role Found!')
+        if (!member.roles.cache.has(Role.id)) return console.log('Member does not have role!')
+
+        const activity = data.activities.find(a => supportedRole.keys.includes(a.name))
+        if (!activity) return console.log(member.user.username, '|', supportedRole.role), file += `${member.user.username} | ${supportedRole.role}\n`
 
         const LastSeen = new Date(activity.lastSeen)
         const Now = new Date()
         const Difference = (Now.getTime() - LastSeen.getTime())
 
-        if (Difference < 1000 * 60 * 60 * 24 * 7 * 6) return
+        if (Difference < 1000 * 60 * 60 * 24 * 7 * 8) return
 
-        console.log(member.user.username, '|', supported.role), file += `${member.user.username} | ${supported.role}\n`
+        console.log(member.user.username, '|', supportedRole.role), file += `${member.user.username} | ${supportedRole.role}\n`
 
     })
 
