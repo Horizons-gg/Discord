@@ -126,7 +126,7 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
     SupportedRoles.forEach(async supported => {
 
         const activity = data.activities.find(a => supported.keys.includes(a.name))
-        if (!activity) return console.log(member.user.username, '|', supported.role), file += member.user.username, '|', supported.role + '\n'
+        if (!activity) return console.log(member.user.username, '|', supported.role), file += `${member.user.username} | ${supported.role}\n`
 
         const LastSeen = new Date(activity.lastSeen)
         const Now = new Date()
@@ -134,7 +134,7 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
 
         if (Difference < 1000 * 60 * 60 * 24 * 7 * 6) return
 
-        console.log(member.user.username, '|', supported.role), file += member.user.username, '|', supported.role + '\n'
+        console.log(member.user.username, '|', supported.role), file += `${member.user.username} | ${supported.role}\n`
 
     })
 
@@ -142,5 +142,6 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
 
 import fs from 'fs'
 setTimeout(() => {
-    fs.writeFileSync('data.txt', file, 'utf8')
-}, 1000 * 20)
+    console.log('Written Data!')
+    fs.writeFileSync('./data.txt', file, 'utf8')
+}, 1000 * 60)
