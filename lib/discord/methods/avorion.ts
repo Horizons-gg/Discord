@@ -17,7 +17,7 @@ export default function main(Client: Discord.Client, Host: [string, number], Tag
             //! Games[Tag] = state
 
             if (data.onlinePlayers === 0) Client.user.setActivity('No Players Online', { type: Discord.ActivityType.Watching }), Client.user.setStatus('idle')
-            else Client.user.setActivity(`${data.onlinePlayers} / ${data.totalPlayers} Players`, { type: Discord.ActivityType.Watching }), Client.user.setStatus('online')
+            else Client.user.setActivity(`${data.onlinePlayers} / 50 Players`, { type: Discord.ActivityType.Watching }), Client.user.setStatus('online')
         }).catch(error => {
             //! Games[Tag] = null
 

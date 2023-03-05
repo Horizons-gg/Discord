@@ -21,6 +21,7 @@ export default async function (interaction: Discord.ButtonInteraction) {
 
     if (Name == 'se') resolve(User, '🚀Space Engineers').then(msg => Messages.responseStandard(msg, interaction, 'Roles Modified')).catch(err => Messages.responseError(err, interaction, 'Failed to Modify Roles'))
     if (Name == 'dayz') resolve(User, '🧟DayZ').then(msg => Messages.responseStandard(msg, interaction, 'Roles Modified')).catch(err => Messages.responseError(err, interaction, 'Failed to Modify Roles'))
+    if (Name == 'avorion') resolve(User, '☄️Avorion').then(msg => Messages.responseStandard(msg, interaction, 'Roles Modified')).catch(err => Messages.responseError(err, interaction, 'Failed to Modify Roles'))
     if (Name == 'squad') resolve(User, '🪖Squad').then(msg => Messages.responseStandard(msg, interaction, 'Roles Modified')).catch(err => Messages.responseError(err, interaction, 'Failed to Modify Roles'))
     if (Name == 'mc') resolve(User, '🔨Minecraft').then(msg => Messages.responseStandard(msg, interaction, 'Roles Modified')).catch(err => Messages.responseError(err, interaction, 'Failed to Modify Roles'))
 

@@ -79,7 +79,16 @@ export const role_assignment = (): Discord.MessageCreateOptions => {
                         .setCustomId('roles-squad')
                         .setStyle(Discord.ButtonStyle.Primary)
                         .setLabel('Squad')
-                        .setEmoji('🪖'),
+                        .setEmoji('🪖')
+                ),
+
+            new Discord.ActionRowBuilder<Discord.MessageActionRowComponentBuilder>()
+                .addComponents(
+                    new Discord.ButtonBuilder()
+                        .setCustomId('roles-avorion')
+                        .setStyle(Discord.ButtonStyle.Primary)
+                        .setLabel('Avorion')
+                        .setEmoji('☄️'),
 
                     new Discord.ButtonBuilder()
                         .setCustomId('roles-mc')

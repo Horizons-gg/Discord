@@ -12,6 +12,7 @@ import { Guild as GetGuild, dbUser } from '@lib/discord'
 const SupportedRoles = [
     { role: '🚀Space Engineers', keys: ['Space Engineers'] },
     { role: '🧟DayZ', keys: ['DayZ', 'DZSALauncher'] },
+    { role: '☄️Avorion', keys: ['Avorion'] },
     { role: '🔨Minecraft', keys: ['Minecraft'] },
     { role: '🪖Squad', keys: ['Squad'] },
     { role: '🗺️Arma', keys: ['ArmA', 'Arma 2', 'Arma 3', 'Arma: Reforger'] },
