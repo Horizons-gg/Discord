@@ -128,6 +128,8 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
 
         const activity = data.activities.find(a => supportedRole.keys.includes(a.name))
         if (!activity) return member.roles.remove(Role)
+            .then(() => console.info(`Smart Roles: removed '${Role.name}' from '${member.user.tag}'`))
+            .catch(err => console.error(`Smart Roles: failed to remove '${Role.name}' from '${member.user.tag}'`, err))
 
         const LastSeen = new Date(activity.lastSeen)
         const Now = new Date()
@@ -136,6 +138,8 @@ function SmartRolesRemove(member: Discord.GuildMember, data: Member) {
         if (Difference < 1000 * 60 * 60 * 24 * 7 * 8) return
 
         member.roles.remove(Role)
+            .then(() => console.info(`Smart Roles: removed '${Role.name}' from '${member.user.tag}'`))
+            .catch(err => console.error(`Smart Roles: failed to remove '${Role.name}' from '${member.user.tag}'`, err))
 
     })
 
