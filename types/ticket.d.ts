@@ -1,7 +1,6 @@
 //? Type Dependencies
 
 import type { ObjectId } from "mongodb"
-import type Discord from "discord.js"
 
 
 

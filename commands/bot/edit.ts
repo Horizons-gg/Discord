@@ -43,6 +43,7 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
         .addChoices(
             { name: 'Valve Standard', value: 'valve' },
             { name: 'Arma 3', value: 'arma3' },
+            { name: 'Avorion', value: 'avorion' },
             { name: 'Eco', value: 'eco' },
             { name: 'Minecraft', value: 'minecraft' },
             { name: 'Squad', value: 'squad' }
