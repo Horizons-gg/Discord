@@ -40,7 +40,7 @@ export default async function () {
 
 
         // Execute Smart Roles for Opt In Users
-        if (User.optIn) await SmartRolesAdd(member), await SmartRolesRemove(member, User)
+        // if (User.optIn) await SmartRolesAdd(member), await SmartRolesRemove(member, User)
 
 
         // Update Users Aliases
