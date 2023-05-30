@@ -160,7 +160,7 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
 
             })
             .catch(err => {
-                console.error(err)
+                console.error(err.code, err.message)
                 reject('Failed to Create Channel for Ticket, read console for more information.')
             })
 
