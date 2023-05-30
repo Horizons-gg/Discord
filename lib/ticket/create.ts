@@ -31,8 +31,9 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
 
         const Guild = await GetGuild()
         const User = await GetUser(owner)
+        
 
-        let ChannelName: [string, number] = [`${AutocompleteService(details.service)[1]}-${((User.nickname || User.user.username).replace(/[^a-zA-Z0-9]/g, '')).toLocaleLowerCase() || 'unknown'}`, 0]
+        let ChannelName: [string, number] = [`${AutocompleteService(details.service)[1]}-${((User.nickname || User.displayName || User.user.username).replace(/[^a-zA-Z0-9]/g, '')).toLocaleLowerCase() || 'unknown'}`, 0]
 
         while (Guild.channels.cache.find(channel => channel.name == (ChannelName[1] > 0 ? `${ChannelName[0]}-${ChannelName[1].toString().padStart(2, '0')}` : ChannelName[0]))) {
             ChannelName[1]++

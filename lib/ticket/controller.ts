@@ -30,7 +30,7 @@ export function AutocompleteService(service: string): string[] {
 
 //? Displays
 
-export const OpenedTicket = (Ticket: Ticket, User: Discord.GuildMember): Discord.MessageCreateOptions => {
+export const OpenedTicket = (Ticket: Ticket, User: Discord.GuildMember): Discord.MessageEditOptions => {
     return {
         embeds: [
             new Discord.EmbedBuilder()
