@@ -20,7 +20,7 @@ export default (member: Discord.GuildMember | Discord.PartialGuildMember) => {
         embeds: [
             new Discord.EmbedBuilder()
                 .setColor(Colors.danger)
-                .setDescription(`${member.user.tag} left the server`)
+                .setDescription(`${member.user.username} left the server`)
         ]
     })
 

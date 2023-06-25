@@ -21,7 +21,7 @@ export default (member: Discord.GuildMember) => {
         embeds: [
             new Discord.EmbedBuilder()
                 .setColor(Colors.success)
-                .setDescription(`<@${member.id}> (${member.user.tag}) joined the server`)
+                .setDescription(`<@${member.id}> (${member.user.username}) joined the server`)
         ]
     })
 
@@ -33,7 +33,7 @@ export default (member: Discord.GuildMember) => {
         embeds: [
             new Discord.EmbedBuilder()
                 .setTitle(`${member.user.username} has joined the server!`)
-                .setDescription(`**${member.user.tag}** just joined the Discord.`)
+                .setDescription(`**${member.user.username}** just joined the Discord.`)
                 .setThumbnail(member.user.avatarURL({ extension: 'jpg', 'size': 512 }))
                 .setColor(Colors.random())
         ]
