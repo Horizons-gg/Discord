@@ -25,13 +25,13 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
 
 
         //! Check Users Open Tickets
-        const OpenTickets: number = (await Tickets.find({owner: owner, state: 'open'}).toArray()).length
+        const OpenTickets: number = (await Tickets.find({ owner: owner, state: 'open' }).toArray()).length
         if (OpenTickets >= 5) return reject('You have too many open tickets, please close some existing tickets before opening any new ones.')
 
 
         const Guild = await GetGuild()
         const User = await GetUser(owner)
-        
+
 
         let ChannelName: [string, number] = [`${AutocompleteService(details.service)[1]}-${((User.nickname || User.displayName || User.user.username).replace(/[^a-zA-Z0-9]/g, '')).toLocaleLowerCase() || 'unknown'}`, 0]
 
@@ -46,7 +46,7 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
             .then(async channel => {
 
                 const Controller = await channel.send({ embeds: [new Discord.EmbedBuilder().setDescription('> Preparing Ticket Controller, Please Standby...').setColor(Colors.info)] }).then(msg => msg.pin())
-                
+
                 const LastTicketQuery = (await Tickets.find({}, { projection: { number: 1 } }).sort({ _id: -1 }).limit(1).toArray())
                 const TicketNumber: number = LastTicketQuery[0] ? LastTicketQuery[0].number + 1 : 1
 
@@ -155,6 +155,13 @@ export default function (owner: string, details: Ticket['details']): Promise<Dis
                                 ])
                         ]
                     })
+                        .catch(err => {
+                            console.info(`Failed to Alert Staff Member: ${member.user.tag} (${member.id})`)
+                            console.error(err)
+                            reject(`Failed to Create Channel for Ticket, read console for more information.`)
+
+                            member.roles.remove(Setup.onDutyRole)
+                        })
 
                 })
 
