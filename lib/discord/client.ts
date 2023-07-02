@@ -47,6 +47,7 @@ export default function (): Promise<Discord.Client> {
 
                     Commands.panel.command,
                     Commands.se.command,
+                    Commands.npb.command,
 
                     Commands.support.command,
 
