@@ -8,6 +8,8 @@ import { Collection } from '@lib/mongodb'
 
 import * as Ticket from '@lib/ticket'
 
+import * as Verification from '@lib/discord/common/verify'
+
 
 
 //? Handler
@@ -20,6 +22,16 @@ export default async (message: Discord.Message) => {
 
 
     if (Channel.parentId == Setup.sections.opened || Channel.parentId == Setup.sections.closed) Ticket.log(message)
+
+
+
+    if (message.channel.type === Discord.ChannelType.DM) {
+        Verification.attempt(message.author.id, message.content)
+            .then(() => message.react('✅').catch(() => { }))
+            .catch(error => {
+                if (error === 'INVALID_KEY') return message.react('❌').catch(() => { })
+            })
+    }
 
 
 }
