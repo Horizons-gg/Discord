@@ -51,7 +51,7 @@ export default async (member: Discord.GuildMember) => {
 
     const AccountAge = (new Date().valueOf() - member.user.createdAt.valueOf()) / 1000 / 60 / 60 / 24
 
-    if (AccountAge < 7) {
+    if (AccountAge < 12) {
 
         const Key = await Verification.initialize(member).catch(error => {
             console.log(error)
