@@ -25,6 +25,8 @@ const Sessions: {
 export function initialize(user: Discord.GuildMember, time?: number): Promise<string> {
     return new Promise(async (resolve, reject) => {
 
+        if (user.user.bot) return reject('You cannot Request Account Verification for a Discord Bot!')
+
         const Time = time || 15
         const Key = Math.random().toString(36).substring(2, 15)
 
