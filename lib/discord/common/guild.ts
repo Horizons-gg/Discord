@@ -10,7 +10,7 @@ import Client from '../client'
 
 //? Method
 
-export default function (): Promise<Discord.Guild> {
+export default function (cached?: boolean): Promise<Discord.Guild> {
     return new Promise((resolve, reject) => {
 
         Client().then(async client => {

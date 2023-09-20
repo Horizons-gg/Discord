@@ -27,6 +27,10 @@ export default function (): Promise<Discord.Client> {
 
                     Discord.GatewayIntentBits.MessageContent,
                     Discord.GatewayIntentBits.DirectMessages,
+                ],
+
+                partials: [
+                    Discord.Partials.Channel,
                 ]
             })
 
