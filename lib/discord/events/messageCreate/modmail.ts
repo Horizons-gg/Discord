@@ -14,6 +14,7 @@ import * as Verification from '@lib/discord/common/verify'
 export async function Send(message: string, user: Discord.User) {
 
     if (message.length <= 0) return
+    if (message.length > 1900) return user.send('Your message is too long!')
 
     const Guild = await GuildRaw()
 
@@ -48,6 +49,7 @@ export async function Respond(message: Discord.Message, sender: Discord.User) {
 
     if (message.author.bot) return
     if (message.content.length <= 0) return
+    if (message.content.length > 1900) return message.reply('Your message is too long!')
 
     const Guild = await GuildRaw()
     const Reference = message.channel.messages.cache.get(message.reference?.messageId as string) || await message.channel.messages.fetch(message.reference?.messageId as string)
