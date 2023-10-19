@@ -32,17 +32,18 @@ Client().then(client => {
 
     //! Live Member Count
 
+    let StatusSwitch = false
     function UpdateMemberCount() {
         client.user?.setPresence({
             status: 'online',
             activities: [{
                 type: Discord.ActivityType.Watching,
-                name: `${client.guilds.cache.get(Config.discord.guild)?.memberCount} Members`
+                name: StatusSwitch ? `${client.guilds.cache.get(Config.discord.guild)?.memberCount} Members` : `Message me for help!`
             }]
-        })
+        }), StatusSwitch = !StatusSwitch
     }
 
-    setInterval(UpdateMemberCount, 1000 * 60 * 5), UpdateMemberCount()
+    setInterval(UpdateMemberCount, 1000 * 15), UpdateMemberCount()
 
 
 
