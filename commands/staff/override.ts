@@ -37,7 +37,7 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
     const User = await GetUser(interaction.user.id)
     const Administrator = Guild.roles.cache.find(r => r.name == 'Administrator') as Discord.Role
 
-    if (!User || !User.roles.cache.has(Administrator.id)) return
+    if (!User || !User.roles.cache.has(Administrator.id)) return //todo: Add Failure Response
 
 
     //? Continue Process
