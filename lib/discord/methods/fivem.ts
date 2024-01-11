@@ -11,7 +11,7 @@ export default function main(Client: Discord.Client, Host: [string, number], Tag
     if (!Client?.isReady()) return
 
 
-    fetch(`http://${Host[0]}:${Host[1] || 30120}`)
+    fetch(`http://${Host[0]}:${Host[1] || 30120}/dynamic.json`)
         .then(res => res.json())
         .then(data => {
             //! Games[Tag] = state
