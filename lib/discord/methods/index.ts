@@ -6,6 +6,7 @@ export { default as eco } from './eco'
 export { default as minecraft } from './minecraft'
 export { default as squad } from './squad'
 export { default as valve } from './valve'
+export { default as fivem } from './fivem'
 
 
 //todo: Don't forget to send state to API

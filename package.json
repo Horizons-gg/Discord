@@ -6,7 +6,7 @@
         "type": "git",
         "url": "git+https://github.com/Horizons-gg/Discord.git"
     },
-    "author": "Jessica Lancelot",
+    "author": "Dakoda Lancelot",
     "license": "ISC",
     "dependencies": {
         "cookie-parser": "^1.4.6",
