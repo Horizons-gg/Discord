@@ -46,7 +46,8 @@ export const command = new Discord.SlashCommandSubcommandBuilder()
             { name: 'Avorion', value: 'avorion' },
             { name: 'Eco', value: 'eco' },
             { name: 'Minecraft', value: 'minecraft' },
-            { name: 'Squad', value: 'squad' }
+            { name: 'Squad', value: 'squad' },
+            { name: 'FiveM', value: 'fivem' },
         )
     )
 
