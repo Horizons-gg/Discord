@@ -21,6 +21,7 @@ export function AutocompleteService(service: string): string[] {
     else if (lService.includes('arma')) return ['🔫 ArmA', 'arma']
     else if (lService.includes('squad')) return ['🪖 Squad', 'squad', 'SQUAD Staff']
     else if (lService.includes('eco')) return ['🌏 Eco', 'eco', 'ECO Staff']
+    else if (lService.includes('fivem')) return ['🐌 FiveM', 'fivem', 'FiveM Staff']
 
     else return [`⚙️ ${service}`, 'new']
 
