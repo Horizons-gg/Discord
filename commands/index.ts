@@ -5,7 +5,7 @@ export * as staff from './staff'
 
 export * as panel from './panel'
 export * as se from './se'
-export * as npb from './npb'
+export * as timeout from './timeout'
 
 export * as support from './support'
 export * as ticket from './ticket'
