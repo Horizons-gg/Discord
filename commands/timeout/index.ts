@@ -23,8 +23,8 @@ export const command = new Discord.SlashCommandBuilder()
     )
 
     .addStringOption(option => option
-        .setName('length')
-        .setDescription('Select the length of the timeout')
+        .setName('duration')
+        .setDescription('Select the duration of the timeout')
         .setRequired(true)
         .addChoices(
             { name: '60 seconds', value: '60000,60 Seconds,Donator' },
@@ -56,7 +56,7 @@ export const response = async (interaction: Discord.ChatInputCommandInteraction)
     if (!Member) return interaction.reply({ content: `Failed to fetch member: <@${MemberId || 0}>`, ephemeral: true })
 
 
-    const timeoutRaw = interaction.options.getString('length')?.split(',') || ['60000', '60 Seconds', 'Donator']
+    const timeoutRaw = interaction.options.getString('duration')?.split(',') || ['60000', '60 Seconds', 'Donator']
     const timeoutLength = parseInt(timeoutRaw[0] || '60000')
     
     const minRoleRaw = timeoutRaw[2]
