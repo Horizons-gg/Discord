@@ -1,23 +1,25 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 import App from 'app'
 import Messages from "lib/messages.ts"
 
 import CheckPerms from "./check.ts"
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('kick')
-        .setDescription('Kick a user from your voice channel')
+    name: 'kick',
+    description: 'Kick a user from your voice channel',
+    type: ApplicationCommandOptionType.Subcommand,
 
-        .addUserOption(option => option
-            .setName('user')
-            .setDescription('User to kick')
-            .setRequired(true)
-        ),
+    options: [
+        {
+            name: 'user',
+            description: 'User to kick',
+            type: ApplicationCommandOptionType.User,
+            required: true
+        }
+    ],
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    async execute(interaction) {
         const isAuth = await CheckPerms(interaction)
         if (!isAuth) return
 
@@ -33,4 +35,4 @@ export default {
             .then(() => Messages.reply(interaction, { description: `Kicked ${user} from your voice channel`, color: 'success', ephemeral: true }))
             .catch(() => Messages.reply(interaction, { description: `Failed to kick ${user} from your voice channel`, color: 'danger', ephemeral: true }))
     }
-}
+} as ChatSubcommand

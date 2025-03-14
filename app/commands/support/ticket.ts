@@ -1,24 +1,19 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 
 import Ticket from 'module/tickets'
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('ticket')
-        .setDescription('Open a New Support Ticket'),
+    name: 'ticket',
+    description: 'Open a New Support Ticket',
+    type: ApplicationCommandOptionType.Subcommand,
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
-        await interaction.deferReply({ ephemeral: true })
-
+    execute(interaction) {
         Ticket.create(interaction.user.id)
             .then(res => {
-                if (typeof res === 'string') return interaction.editReply({ content: res })
+                if (typeof res === 'string') return interaction.reply(res)
 
-                interaction.editReply({
-                    content: `Your Ticket has been Created in ${res}`
-                })
+                interaction.reply(`Your Ticket has been Created in ${res}`)
             })
     }
-}
+} as ChatSubcommand

@@ -1,19 +1,18 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 
 import Ticket from 'module/tickets'
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('close')
-        .setDescription('Close the ticket in the current channel'),
+    name: 'close',
+    description: 'Close the ticket in the current channel',
+    type: ApplicationCommandOptionType.Subcommand,
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    async execute(interaction) {
         await interaction.deferReply({ ephemeral: true })
 
         Ticket.close(interaction)
             .then(() => interaction.deleteReply())
             .catch(msg => interaction.editReply({ content: msg }))
     }
-}
+} as ChatSubcommand

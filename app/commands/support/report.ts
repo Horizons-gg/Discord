@@ -1,15 +1,14 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 
 import Modal from 'modals/report.ts'
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('report')
-        .setDescription('Report a Member to our Staff'),
+    name: 'report',
+    description: 'Report a Member to our Staff',
+    type: ApplicationCommandOptionType.Subcommand,
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    execute(interaction) {
         interaction.showModal(Modal)
     }
-}
+} as ChatSubcommand

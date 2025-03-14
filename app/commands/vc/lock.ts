@@ -1,17 +1,16 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 import App from 'app'
 import Messages from "lib/messages.ts"
 
 import CheckPerms from "./check.ts"
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('lock')
-        .setDescription('Lock your voice channel'),
+    name: 'lock',
+    description: 'Lock your voice channel',
+    type: ApplicationCommandOptionType.Subcommand,
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    async execute(interaction) {
         const isAuth = await CheckPerms(interaction)
         if (!isAuth) return
 
@@ -22,4 +21,4 @@ export default {
             .then(() => Messages.reply(interaction, { description: '🔒 Your channel has been locked.', color: 'success', ephemeral: true }))
             .catch(() => Messages.reply(interaction, { description: '❌ Unable to lock your channel.', color: 'danger', ephemeral: true }))
     }
-}
+} as ChatSubcommand

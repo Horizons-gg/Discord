@@ -1,33 +1,25 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 import App from 'app'
 
 import Message from 'lib/messages.ts'
 import Verification from 'module/verification'
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('start')
-        .setDescription('Initiate the Account Verification Process on the target account (Use to Filter out Bots)')
+    name: 'start',
+    description: 'Initiate the Account Verification Process on the target account (Use to Filter out Bots)',
+    type: ApplicationCommandOptionType.Subcommand,
 
-        .addUserOption(
-            new Discord.SlashCommandUserOption()
-                .setName('target')
-                .setDescription('Target User')
-                .setRequired(true)
-        )
+    options: [
+        {
+            name: 'target',
+            description: 'Target User',
+            type: ApplicationCommandOptionType.User,
+            required: true
+        }
+    ],
 
-        .addIntegerOption(
-            new Discord.SlashCommandIntegerOption()
-                .setName('time')
-                .setDescription('Time to Verify before the user is kicked in minutes')
-                .setMinValue(5)
-                .setMaxValue(86400)
-                .setRequired(false)
-        ),
-
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    async execute(interaction) {
         const Guild = await App.guild()
         const User = await App.user(interaction.user.id)
         const Administrator = Guild.roles.cache.find(r => r.name == 'Administrator') as Discord.Role
@@ -56,4 +48,4 @@ export default {
             })
         }
     }
-}
+} as ChatSubcommand

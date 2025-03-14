@@ -54,8 +54,8 @@ for (const mod in Modules) {
         Modules[mod](client)
         console.log(`Successfully mounted "${mod}"`)
         continue
-    } catch {
-        console.warn(`Failed to mount "${mod}", skipping...`)
+    } catch (e) {
+        console.warn(`Failed to mount "${mod}", skipping...\n\t- ${(e as Error).message}`)
         continue
     }
 }

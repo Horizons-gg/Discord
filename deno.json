@@ -16,6 +16,7 @@
         "discord.js": "npm:discord.js",
         "mongodb": "npm:mongodb",
         "gamedig": "npm:gamedig",
+        "xml2js": "npm:xml2js",
 
         "config": "./lib/config.ts",
         "app": "./app/index.ts",

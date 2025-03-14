@@ -1,4 +1,4 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 
 
 import open from './open.ts'
@@ -7,22 +7,16 @@ import add from './add.ts'
 import remove from './remove.ts'
 
 
-
 export default {
-    data: new Discord.SlashCommandBuilder()
-        .setName('ticket')
-        .setDescription('Ticket Commands')
-        .setDMPermission(false)
+    name: 'ticket',
+    description: 'Ticket Commands',
+    type: ApplicationCommandType.ChatInput,
+    dmPermission: false,
 
-        .addSubcommand(open.data)
-        .addSubcommand(close.data)
-        .addSubcommand(add.data)
-        .addSubcommand(remove.data),
-
-    subcommands: {
+    options: [
         open,
         close,
         add,
         remove,
-    }
-}
+    ]
+} as ChatCommand

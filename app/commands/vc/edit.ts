@@ -1,41 +1,41 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 import App from 'app'
 import Messages from "lib/messages.ts"
 
 import CheckPerms from "./check.ts"
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('edit')
-        .setDescription('Edit your voice channel')
+    name: 'edit',
+    description: 'Edit your voice channel',
+    type: ApplicationCommandOptionType.Subcommand,
 
-        .addStringOption(option => option
-            .setName('name')
-            .setDescription('Change the name of your voice channel')
-            .setRequired(false)
+    options: [
+        {
+            name: 'name',
+            description: 'Change the name of your voice channel',
+            type: ApplicationCommandOptionType.String,
+            required: false,
+            minLength: 2,
+            maxLength: 15
+        },
+        {
+            name: 'limit',
+            description: 'Change the user limit of your voice channel',
+            type: ApplicationCommandOptionType.Integer,
+            required: false,
+            minValue: 1,
+            maxValue: 99
+        },
+        {
+            name: 'ptt',
+            description: 'Enable Push-to-Talk for your voice channel',
+            type: ApplicationCommandOptionType.Boolean,
+            required: false
+        }
+    ],
 
-            .setMinLength(2)
-            .setMaxLength(15)
-        )
-
-        .addIntegerOption(option => option
-            .setName('limit')
-            .setDescription('Change the user limit of your voice channel')
-            .setRequired(false)
-
-            .setMinValue(1)
-            .setMaxValue(99)
-        )
-
-        .addBooleanOption(option => option
-            .setName('ptt')
-            .setDescription('Enable Push-to-Talk for your voice channel')
-            .setRequired(false)
-        ),
-
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    async execute(interaction) {
         const isAuth = await CheckPerms(interaction)
         if (!isAuth) return
 
@@ -55,4 +55,4 @@ export default {
             Messages.reply(interaction, { title: '❌ Unable to update your channel.', description: (error as Error).message, color: 'danger', ephemeral: true })
         }
     }
-}
+} as ChatSubcommand

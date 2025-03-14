@@ -1,4 +1,5 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
+
 
 import ticket from './ticket.ts'
 import panel from './panel.ts'
@@ -6,22 +7,16 @@ import application from './application.ts'
 import report from './report.ts'
 
 
-
 export default {
-    data: new Discord.SlashCommandBuilder()
-        .setName('support')
-        .setDescription('Commands to Seek Support in Horizons')
-        .setDMPermission(false)
-
-        .addSubcommand(ticket.data)
-        .addSubcommand(panel.data)
-        .addSubcommand(application.data)
-        .addSubcommand(report.data),
-
-    subcommands: {
+    name: 'support',
+    description: 'Commands to Seek Support in Horizons',
+    type: ApplicationCommandType.ChatInput,
+    dmPermission: false,
+    
+    options: [
         ticket,
         panel,
         application,
         report,
-    }
-}
+    ]
+} as ChatCommand

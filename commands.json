@@ -1,0 +1,197 @@
+[
+	{
+		"name": "support",
+		"description": "Commands to Seek Support in Horizons",
+		"type": 1,
+		"dmPermission": false,
+		"options": [
+			{
+				"name": "ticket",
+				"description": "Open a New Support Ticket",
+				"type": 1
+			},
+			{
+				"name": "panel",
+				"description": "Open the support panel",
+				"type": 1,
+				"options": [
+					{
+						"name": "noreply",
+						"description": "Stop the bot from replying to the command",
+						"type": 5,
+						"required": false
+					},
+					{
+						"name": "variant",
+						"description": "The variant of the panel",
+						"type": 3,
+						"required": false,
+						"choices": [
+							{
+								"name": "Default",
+								"value": "default"
+							},
+							{
+								"name": "Support Only",
+								"value": "support"
+							}
+						]
+					}
+				]
+			},
+			{
+				"name": "application",
+				"description": "Submit an Application",
+				"type": 1
+			},
+			{
+				"name": "report",
+				"description": "Report a Member to our Staff",
+				"type": 1
+			}
+		]
+	},
+	{
+		"name": "ticket",
+		"description": "Ticket Commands",
+		"type": 1,
+		"dmPermission": false,
+		"options": [
+			{
+				"name": "open",
+				"description": "Open the ticket in the current channel",
+				"type": 1
+			},
+			{
+				"name": "close",
+				"description": "Close the ticket in the current channel",
+				"type": 1
+			},
+			{
+				"name": "add",
+				"description": "Add a user to the ticket",
+				"type": 1,
+				"options": [
+					{
+						"name": "user",
+						"description": "User to add to the ticket",
+						"type": 6,
+						"required": true
+					}
+				]
+			},
+			{
+				"name": "remove",
+				"description": "Remove a user to the ticket",
+				"type": 1
+			}
+		]
+	},
+	{
+		"name": "verify",
+		"description": "Manual Verification Commands",
+		"dmPermission": false,
+		"type": 1,
+		"options": [
+			{
+				"name": "start",
+				"description": "Initiate the Account Verification Process on the target account (Use to Filter out Bots)",
+				"type": 1,
+				"options": [
+					{
+						"name": "target",
+						"description": "Target User",
+						"type": 6,
+						"required": true
+					}
+				]
+			},
+			{
+				"name": "override",
+				"description": "Override a Users Verification Process",
+				"type": 1,
+				"options": [
+					{
+						"name": "target",
+						"description": "Target User",
+						"type": 6,
+						"required": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "vc",
+		"description": "Voice Channel Commands",
+		"type": 1,
+		"dmPermission": false,
+		"options": [
+			{
+				"name": "lock",
+				"description": "Lock your voice channel",
+				"type": 1
+			},
+			{
+				"name": "unlock",
+				"description": "Unlock your voice channel",
+				"type": 1
+			},
+			{
+				"name": "edit",
+				"description": "Edit your voice channel",
+				"type": 1,
+				"options": [
+					{
+						"name": "name",
+						"description": "Change the name of your voice channel",
+						"type": 3,
+						"required": false,
+						"minLength": 2,
+						"maxLength": 15
+					},
+					{
+						"name": "limit",
+						"description": "Change the user limit of your voice channel",
+						"type": 4,
+						"required": false,
+						"minValue": 1,
+						"maxValue": 99
+					},
+					{
+						"name": "ptt",
+						"description": "Enable Push-to-Talk for your voice channel",
+						"type": 5,
+						"required": false
+					}
+				]
+			},
+			{
+				"name": "kick",
+				"description": "Kick a user from your voice channel",
+				"type": 1,
+				"options": [
+					{
+						"name": "user",
+						"description": "User to kick",
+						"type": 6,
+						"required": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "joke",
+		"description": "Tell a joke",
+		"type": 1,
+		"options": [
+			{
+				"name": "keyword",
+				"description": "Keyword to search for a joke",
+				"type": 3,
+				"required": false
+			}
+		]
+	}
+]

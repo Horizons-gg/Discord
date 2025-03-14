@@ -1,4 +1,4 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 import App from 'app'
 
 import Colors from 'lib/colors.ts'
@@ -7,17 +7,20 @@ import Verification from 'module/verification'
 
 
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('override')
-        .setDescription('Override a Users Verification Process')
-        .addUserOption(
-            new Discord.SlashCommandUserOption()
-                .setName('target')
-                .setDescription('Target User')
-                .setRequired(true)
-        ),
+    name: 'override',
+    description: 'Override a Users Verification Process',
+    type: ApplicationCommandOptionType.Subcommand,
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    options: [
+        {
+            name: 'target',
+            description: 'Target User',
+            type: ApplicationCommandOptionType.User,
+            required: true
+        }
+    ],
+
+    execute(interaction) {
         const Guild = App.guild()
         const User = App.user(interaction.user.id)
         const Administrator = Guild.roles.cache.find(r => r.name == 'Administrator') as Discord.Role
@@ -63,4 +66,4 @@ export default {
                 color: 'danger'
             }))
     }
-}
+} as ChatSubcommand

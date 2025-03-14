@@ -13,6 +13,7 @@ declare global {
             guild: string
 
             clickNcreate: string
+            se_sandboxPath: string
 
             roles: {
                 management: string
@@ -49,16 +50,6 @@ declare global {
             address: string
             enabled: boolean
         }[]
-    }
-
-    interface Ticket {
-        owner?: string
-        designation?: string
-        state?: 'open' | 'closed' | 'pending'
-        priority?: 'low' | 'high'
-        created?: number
-        notify?: number
-        members?: string[]
     }
 
 }

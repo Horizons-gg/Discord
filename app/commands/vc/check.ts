@@ -4,7 +4,6 @@ import App from 'app'
 import Messages from 'lib/messages.ts'
 
 
-
 export default async function CheckPerms(interaction: Discord.ChatInputCommandInteraction) {
     const member = interaction.member as Discord.GuildMember
     const channel = member.voice.channel as Discord.VoiceChannel

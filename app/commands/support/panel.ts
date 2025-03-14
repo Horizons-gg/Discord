@@ -1,28 +1,32 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 import Colors from 'lib/colors.ts'
 
 
-
 export default {
-    data: new Discord.SlashCommandSubcommandBuilder()
-        .setName('panel')
-        .setDescription('Open the support panel')
-        .addBooleanOption(option => option
-            .setName('noreply')
-            .setDescription('Stop the bot from replying to the command')
-            .setRequired(false)
-        )
-        .addStringOption(option => option
-            .setName('variant')
-            .setDescription('The variant of the panel')
-            .setRequired(false)
-            .setChoices([
+    name: 'panel',
+    description: 'Open the support panel',
+    type: ApplicationCommandOptionType.Subcommand,
+
+    options: [
+        {
+            name: 'noreply',
+            description: 'Stop the bot from replying to the command',
+            type: ApplicationCommandOptionType.Boolean,
+            required: false
+        },
+        {
+            name: 'variant',
+            description: 'The variant of the panel',
+            type: ApplicationCommandOptionType.String,
+            required: false,
+            choices: [
                 { name: 'Default', value: 'default' },
                 { name: 'Support Only', value: 'support' },
-            ])
-        ),
+            ]
+        }
+    ],
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    async execute(interaction) {
         await interaction.deferReply({ ephemeral: false })
 
         const variantId = interaction.options.getString('variant') || 'default'
@@ -75,6 +79,5 @@ export default {
         } else {
             await interaction.editReply(variant())
         }
-
     }
-}
+} as ChatSubcommand

@@ -1,21 +1,18 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 
 import start from './start.ts'
 import override from './override.ts'
 
 
-
 export default {
-    data: new Discord.SlashCommandBuilder()
-        .setName('verify')
-        .setDescription('Manual Verification Commands')
-        .setDMPermission(false)
+    name: 'verify',
+    description: 'Manual Verification Commands',
+    dmPermission: false,
+    type: ApplicationCommandType.ChatInput,
 
-        .addSubcommand(start.data)
-        .addSubcommand(override.data),
-
-    subcommands: {
+    options: [
         start,
         override
-    }
-}
+    ]
+
+} as ChatCommand

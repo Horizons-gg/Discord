@@ -1,17 +1,21 @@
-import Discord from 'discord.js'
+import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js'
 
 
 export default {
-    data: new Discord.SlashCommandBuilder()
-        .setName('joke')
-        .setDescription('Tell a joke')
-        .addStringOption(option => option
-            .setName('keyword')
-            .setDescription('Keyword to search for a joke')
-            .setRequired(false),
-        ),
+    name: 'joke',
+    description: 'Tell a joke',
+    type: ApplicationCommandType.ChatInput,
 
-    async execute(interaction: Discord.ChatInputCommandInteraction) {
+    options: [
+        {
+            name: 'keyword',
+            description: 'Keyword to search for a joke',
+            type: ApplicationCommandOptionType.String,
+            required: false,
+        }
+    ],
+
+    async execute(interaction) {
         const keyword = interaction.options.getString('keyword')
 
         const joke: { type: 'single' | 'twopart', setup: string, delivery: string, joke: string } = await fetch(`https://v2.jokeapi.dev/joke/Any${keyword ? `?contains=${keyword}` : ''}`)
@@ -31,12 +35,12 @@ export default {
         if (joke.type === 'twopart') {
             const channel = interaction.channel as Discord.TextChannel
             await interaction.reply({ content: joke.setup })
-            
+
             await channel.sendTyping()
-            
+
             setTimeout(() => {
                 interaction.followUp({ content: joke.delivery })
             }, 5000)
         }
     }
-}
+} as ChatCommand

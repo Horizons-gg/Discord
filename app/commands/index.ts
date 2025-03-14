@@ -4,21 +4,11 @@ import verify from './verify/index.ts'
 
 import vc from './vc/index.ts'
 
-import joke from './joke/index.ts'
+import joke from './joke.ts'
 
 
 
-const commands = [
-    support.data,
-    ticket.data,
-    verify.data,
-
-    vc.data,
-
-    joke.data,
-]
-
-const response: { [key: string]: any } = {
+export default [
     support,
     ticket,
     verify,
@@ -26,7 +16,4 @@ const response: { [key: string]: any } = {
     vc,
 
     joke,
-}
-
-
-export { commands, response }
+]
