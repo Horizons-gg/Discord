@@ -46,6 +46,7 @@ export class Bot {
             case 'dayz': return Method.dayz(this)
             case 'mc': return Method.mc(this)
             case 'valve': return Method.valve(this)
+            case 'scum': return Method.scum(this)
 
             default: {
                 this.client.destroy()
