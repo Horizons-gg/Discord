@@ -8,7 +8,7 @@ const Gamedig = (await import('npm:gamedig')).GameDig
 export default function initialize(bot: Bot) {
 
     async function fetchData() {
-        const res = await fetch(`https://www.battlemetrics.com/servers/scum/34136285`)
+        const res = await fetch(`https://www.battlemetrics.com/servers/scum/34156170`)
         const body = await res.text()
         const players = body.split('<dt>Player count</dt>')[1].split('<dd>')[1].split('</dd>')[0]
         const onlinePlayers = players.split('/')[0]
