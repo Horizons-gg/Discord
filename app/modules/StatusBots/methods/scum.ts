@@ -39,6 +39,6 @@ export default function initialize(bot: Bot) {
     setInterval(async () => {
         const data = await fetchData()
         updatePresence(data)
-    }, 1000 * 10)
+    }, 1000 * 60 * 10)
 
 }
