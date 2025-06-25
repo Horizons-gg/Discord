@@ -11,13 +11,19 @@ export default function initialize(bot: Bot) {
         const res = await fetch(`https://www.battlemetrics.com/servers/scum/34156170`)
         const body = await res.text()
         if (!body) return null
-        const players = body.split('<dt>Player count</dt>')[1].split('<dd>')[1].split('</dd>')[0]
-        const onlinePlayers = players.split('/')[0]
-        const maxPlayers = players.split('/')[1]
-        if (!onlinePlayers || !maxPlayers) return null
-        return {
-            players: parseInt(onlinePlayers.trim()),
-            maxplayers: parseInt(maxPlayers.trim())
+
+        try {
+            const players = body.split('<dt>Player count</dt>')[1].split('<dd>')[1].split('</dd>')[0]
+            const onlinePlayers = players.split('/')[0]
+            const maxPlayers = players.split('/')[1]
+            if (!onlinePlayers || !maxPlayers) return null
+            return {
+                players: parseInt(onlinePlayers.trim()),
+                maxplayers: parseInt(maxPlayers.trim())
+            }
+        } catch (e) {
+            console.error('Error parsing SCUM server data:', e)
+            return null
         }
     }
 
