@@ -41,4 +41,5 @@ export default function initialize(bot: Bot) {
         updatePresence(data)
     }, 1000 * 60 * 10)
 
+    fetchData().then(updatePresence)
 }
