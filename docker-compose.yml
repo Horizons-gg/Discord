@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    container_name: discord-bot
+    # volumes:
+      # - ./data:/app/data
+    restart: unless-stopped
+    environment:
+      - MONGO_URI=mongodb://192.168.0.3:27017/horizons

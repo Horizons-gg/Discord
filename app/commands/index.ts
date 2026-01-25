@@ -9,9 +9,9 @@ import joke from './joke.ts'
 
 
 export default [
-    support,
-    ticket,
-    verify,
+    // support,
+    // ticket,
+    // verify,
 
     vc,
 

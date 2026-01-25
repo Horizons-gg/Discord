@@ -4,9 +4,9 @@ import ticket from './ticket/index.ts'
 
 
 const buttons: { [key: string]: any } = {
-    application,
-    report,
-    ticket
+    // application,
+    // report,
+    // ticket
 }
 
 

@@ -31,7 +31,7 @@ export default async function (client: Discord.Client) {
             status: 'online',
             activities: [{
                 type: Discord.ActivityType.Watching,
-                name: Status ? `${NumberWithCommas(client.guilds.cache.get(config.discord.guild)?.memberCount || 0)} Members` : `Message me for help!`
+                name: `${NumberWithCommas(client.guilds.cache.get(config.discord.guild)?.memberCount || 0)} Members` //Status ? `${NumberWithCommas(client.guilds.cache.get(config.discord.guild)?.memberCount || 0)} Members` : `Message me for help!`
             }]
         }), Status = !Status
     }
