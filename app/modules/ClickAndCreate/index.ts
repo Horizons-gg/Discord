@@ -19,9 +19,10 @@ export default function ClickAndCreate(client: Discord.Client) {
                     name: `${member?.user.username} Channel`,
                     type: Discord.ChannelType.GuildVoice,
                     parent: parent.id,
+                    position: newState.channel.position + 1
                 })
 
-                vc.permissionOverwrites.create(member, { Connect: true })
+                // vc.permissionOverwrites.create(member, { Connect: true })
                 vc.send(`${member}\n>>> Hey ${member?.user.username}, welcome to your personal voice channel!\n\nIf you would like to modify this channel such as its name, user limit, or access, use the \`/vc\` command.`)
 
                 member?.voice.setChannel(vc)
@@ -29,6 +30,7 @@ export default function ClickAndCreate(client: Discord.Client) {
         }
 
         if (oldState.channel?.parentId === parent.id) {
+            if (App.config.clickNcreateIgnore.includes(oldState.channel.id)) return
             if (oldState.channel?.members.size === 0 && oldState.channel?.id !== App.config.clickNcreate) {
                 oldState.channel.delete()
             }

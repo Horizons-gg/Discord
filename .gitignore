@@ -3,3 +3,4 @@ node_modules/
 
 app.exe
 config.json
+config.*

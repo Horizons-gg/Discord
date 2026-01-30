@@ -13,6 +13,7 @@ declare global {
             guild: string
 
             clickNcreate: string
+            clickNcreateIgnore: string[]
             se_sandboxPath: string
 
             roles: {
