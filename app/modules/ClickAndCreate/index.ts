@@ -19,7 +19,7 @@ export default function ClickAndCreate(client: Discord.Client) {
                     name: `${member?.user.username} Channel`,
                     type: Discord.ChannelType.GuildVoice,
                     parent: parent.id,
-                    position: newState.channel.position + 1
+                    position: newState.channel.position
                 })
 
                 // vc.permissionOverwrites.create(member, { Connect: true })
