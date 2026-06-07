@@ -13,12 +13,14 @@ export class Bot {
     token: string
     method: string
     address: [string, number]
+    rawAddress: string
 
 
     constructor(name: string, token: string, method: string, address: string) {
         this.name = name
         this.token = token
         this.method = method
+        this.rawAddress = address
 
         const [host, port] = address.split(':') as [string, string | number]
         this.address = [host, parseInt(port as string)]

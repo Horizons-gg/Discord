@@ -6,7 +6,7 @@ import { Bot } from '../index.ts'
 export default function initialize(bot: Bot) {
 
     async function fetchData() {
-        return await fetch(`http://${bot.address.join(':')}`)
+        return await fetch(`http://${bot.rawAddress}`)
             .then(res => res.json())
             .catch(() => null)
     }
