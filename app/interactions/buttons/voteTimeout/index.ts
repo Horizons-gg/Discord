@@ -11,6 +11,11 @@ export interface VoteState {
 
 export const activeVotes = new Map<string, VoteState>()
 
+function voterList(voters: Set<string>) {
+    if (voters.size === 0) return '*No votes yet*'
+    return [...voters].map(id => `<@${id}>`).join('\n')
+}
+
 export async function endVote(messageId: string, message: Discord.Message) {
     const state = activeVotes.get(messageId)
     if (!state) return
@@ -29,8 +34,12 @@ export async function endVote(messageId: string, message: Discord.Message) {
         .setColor(passed ? 0xFF0000 : 0x00AA00)
         .setDescription(
             passed
-                ? `Vote passed! **${target.user.username}** has been timed out for 60 seconds.\n\n✅ Yes: ${yesVoters.size} | ❌ No: ${noVoters.size}`
-                : `Vote failed. **${target.user.username}** was not timed out.\n\n✅ Yes: ${yesVoters.size} | ❌ No: ${noVoters.size}`
+                ? `Vote passed! **${target.user.username}** has been timed out for 60 seconds.`
+                : `Vote failed. **${target.user.username}** was not timed out.`
+        )
+        .setFields(
+            { name: `✅ Yes (${yesVoters.size})`, value: voterList(yesVoters), inline: true },
+            { name: `❌ No (${noVoters.size})`, value: voterList(noVoters), inline: true },
         )
 
     await message.edit({ embeds: [resultEmbed], components: [disabledRow] })
@@ -60,8 +69,8 @@ export default async function voteTimeout(interaction: Discord.ButtonInteraction
 
     const updatedEmbed = Discord.EmbedBuilder.from(interaction.message.embeds[0])
         .setFields(
-            { name: '✅ Yes', value: `${state.yesVoters.size} vote${state.yesVoters.size !== 1 ? 's' : ''}`, inline: true },
-            { name: '❌ No', value: `${state.noVoters.size} vote${state.noVoters.size !== 1 ? 's' : ''}`, inline: true },
+            { name: `✅ Yes (${state.yesVoters.size})`, value: voterList(state.yesVoters), inline: true },
+            { name: `❌ No (${state.noVoters.size})`, value: voterList(state.noVoters), inline: true },
         )
 
     await interaction.update({ embeds: [updatedEmbed], components: [state.row] })

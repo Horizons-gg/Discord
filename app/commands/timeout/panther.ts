@@ -38,8 +38,8 @@ export default {
             .setDescription(`Should **${target.user.username}** be timed out for 60 seconds?\n\nVote ends <t:${endsAt}:R>`)
             .setColor(0xFFA500)
             .addFields(
-                { name: '✅ Yes', value: '0 votes', inline: true },
-                { name: '❌ No', value: '0 votes', inline: true },
+                { name: '✅ Yes (0)', value: '*No votes yet*', inline: true },
+                { name: '❌ No (0)', value: '*No votes yet*', inline: true },
             )
 
         const reply = await interaction.reply({ embeds: [embed], components: [row], fetchReply: true })
