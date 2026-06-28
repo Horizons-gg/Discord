@@ -2,7 +2,7 @@ import Discord, { ApplicationCommandType, ApplicationCommandOptionType } from 'd
 
 export default {
     name: 'spam',
-    description: 'Ping member(s) every second for a set duration',
+    description: 'Ping member(s) a set number of times as fast as possible',
     type: ApplicationCommandType.ChatInput,
 
     options: [
@@ -13,12 +13,12 @@ export default {
             required: true,
         },
         {
-            name: 'seconds',
-            description: 'How many seconds to spam (1–120)',
+            name: 'count',
+            description: 'Number of pings to send (1–500)',
             type: ApplicationCommandOptionType.Integer,
             required: true,
             min_value: 1,
-            max_value: 120,
+            max_value: 500,
         },
         {
             name: 'member2',
@@ -55,17 +55,15 @@ export default {
             interaction.options.getUser('member4'),
         ].filter(Boolean) as Discord.User[]
 
-        const seconds = interaction.options.getInteger('seconds', true)
+        const count = interaction.options.getInteger('count', true)
         const channel = interaction.channel as Discord.TextChannel
         const mention = users.map(u => `<@${u.id}>`).join(' ')
 
-        await interaction.reply({ content: `Spamming ${mention} for ${seconds} second${seconds === 1 ? '' : 's'}.`, ephemeral: true })
+        await interaction.reply({ content: `Sending ${count} ping${count === 1 ? '' : 's'} to ${mention}.`, ephemeral: true })
 
-        let elapsed = 0
-        const interval = setInterval(() => {
-            elapsed++
-            channel.send(mention)
-            if (elapsed >= seconds) clearInterval(interval)
-        }, 1000)
+        for (let i = 0; i < count; i++) {
+            const msg = await channel.send(mention)
+            setTimeout(() => msg.delete().catch(() => null), 1000)
+        }
     }
 } as ChatCommand
