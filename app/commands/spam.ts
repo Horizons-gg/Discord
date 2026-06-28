@@ -13,6 +13,14 @@ export default {
             required: true,
         },
         {
+            name: 'seconds',
+            description: 'How many seconds to spam (1–120)',
+            type: ApplicationCommandOptionType.Integer,
+            required: true,
+            min_value: 1,
+            max_value: 120,
+        },
+        {
             name: 'member2',
             description: 'Additional member to ping',
             type: ApplicationCommandOptionType.User,
@@ -29,14 +37,6 @@ export default {
             description: 'Additional member to ping',
             type: ApplicationCommandOptionType.User,
             required: false,
-        },
-        {
-            name: 'seconds',
-            description: 'How many seconds to spam (1–60)',
-            type: ApplicationCommandOptionType.Integer,
-            required: true,
-            min_value: 1,
-            max_value: 120,
         },
     ],
 
